@@ -1,36 +1,50 @@
 
 
-# Coding Breakout Group 
-## Congressional Hackathon 7.0 
+# Congressional Hackathon 7.0
 
-### Getting Started
+## Coding Breakout Group
 
-#### !!!BEFORE YOU BEGIN!!! Please sign the [Participation Agreement and IP Disclaimer](https://forms.cloud.microsoft/g/S1ZZEiN25V)!
+The coding breakout session will take place in the United States Capitol Visitor Center with presentations following in the afternoon. See **[Event Details](#event-details)** below for more information.
 
-This repository is publicly readable, so anyone can read and clone it. To clone this repository:
-```
-git clone https://github.com/LibraryOfCongress/Congressional-Hackathon-2025.git
-```
+Happy hacking! 🏛️💻
 
-If you would like to contribute code to this repository, ask the Hackathon organizers (Craig or Kat) to add you to it as a contributor.
+## Before You Begin
 
-In order to contribute, you will need a Personal Access Token (PAT). You can find instructions for creating a GitHub PAT here: 
-[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Select the `Tokens (clasic)` option when generating it.
+1. **Sign the required forms**: All participants must sign the **[Participation Agreement and IP Disclaimer](https://forms.cloud.microsoft/g/S1ZZEiN25V)** before contributing any code.
 
-Each team in the coding breakout will be given their own branch to push code to. Pull your team's branch:
-```
-git pull team-1
-```
+1. **Request contributor access**: Ask the Hackathon organizers (Craig or Kat) to add you to this repository as a contributor.
 
-To push code, commit it (with a commit message!) and push it to your branch!
-```
-git commit -am "My awesome commit"
-git push
-```
+13. **Set up authentication**: You'll need a GitHub Personal Access Token (PAT). Follow the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) and select the "Tokens (classic)" option.
 
-#### Importing Work from Another Repository
+## Contributing
 
-If you need to bring work from another repository into this one:
+This repository is publicly readable, so anyone can read and clone it. **Be mindful of sensitive information** - never commit API keys, passwords, or other secrets to the repository. A basic `.gitignore` has been provided, but more templates are linked in the **[Resources](#resources)** section below. 
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/LibraryOfCongress/Congressional-Hackathon-2025.git
+   cd Congressional-Hackathon-2025
+   ```
+
+1. Each team in the coding breakout will be given their own branch to push code to. Pull your team's branch:
+
+    ```bash
+    git pull <team-1-branch-name>
+    ```
+
+1. Work in your team's branch. Write clear, well-documented code and try to include a README file for your specific project.
+
+1. To push code, commit it (with a commit message!) and push it to your branch!
+
+    ```bash
+    git commit -am "My awesome commit"
+    git push origin <team-1-branch-name>
+    ```
+
+### Importing Work from Another Repository
+
+If you would like to bring work from another repository into this one, follow the steps below:
 
 ```bash
 # 1) Be in this hackathon repo
@@ -55,19 +69,25 @@ git merge other-repo/main
 git push -u origin imported-work-branch
 ```
 
-### Event Details
+## Event Details
 
-**Seventh Congressional Hackathon Coding Breakout Group**
 **Location:** United States Capitol Visitor Center, Room CVC 217
+
 **Date:** Wednesday, September 17, 2025
+
 **Time:** 9:00am – 12 noon ET
+
 **Registration link:** https://forms.cloud.microsoft/g/S1ZZEiN25V
 
 **Things to bring/prepare in advance:**
-•	A laptop and charger (wi-fi will be provided)
-•	Create a GitHub account (free)
-•	API keys for public APIs (see a list below)
-•	Your preferred AI coding assistant
+
+*	A laptop and charger (wi-fi will be provided)
+
+*	Create a GitHub account (free)
+
+*	API keys for public APIs (see a list below)
+
+*	Your preferred AI coding assistant
 
 ### Agenda
 
@@ -83,9 +103,11 @@ git push -u origin imported-work-branch
   | 4:30 PM    | Breakout Group Presentations (CVC Auditorium)|
   | 5:00 PM    | Reception (HCV 201) |
 
-### Sample Problem Statement 
+## Breakout Topics
 
-Coding breakout groups will choose a topic of particular interest to them and explore ways they can use their talents to address the issue. The following problem statement illustrates an example of the kind of problem a group might choose to take on:
+Coding breakout groups will choose a topic of particular interest to them and explore ways they can use their talents to address the issue. The following problem statement illustrates an example of the kind of problem a group might choose to take on.
+
+### Sample Problem Statement 
 
 Both Congressional staff and the public would benefit from rapid access to Congressional hearing transcripts. The official transcripts are produced very meticulously before publication to ensure complete accuracy for the public record, but unfortunately this attention to detail requires a great deal of time. Now that we have access to Large Language Models (LLMs) and high-quality automated transcription, is it possible to automatically generate a transcript within minutes of the end of a hearing, rather than weeks or months?
 
@@ -104,21 +126,37 @@ Both Congressional staff and the public would benefit from rapid access to Congr
 ### Code of Conduct
 
 Everyone who participates in the Coding Breakout group must sign the Participation Agreement and IP Disclaimer and abide by our Code of Conduct during the event to help create a welcoming, respectful, and friendly event based on mutual respect, trust, and goodwill:
+
 * Be Respectful - treat others with respect in what you say and do. Be open to giving and receiving feedback kindly. Avoid language that differentiates anyone based on their background or identity. Be considerate of the needs and boundaries of others.
+
 * Be Mindful – remember that we are privileged to be coming together in the Capitol to work on issues that matter to the public and our nation. Keep the focus on the institutions and traditions that unite us, and keep the environment open and courteous by refraining from politics and other controversial topics. 
+
 * Be Welcoming - be supportive, encouraging, and open to learning from the expertise and perspectives of others. Assume that everyone brings valuable lived experiences and good intentions to the event.
+
 * Be Helpful – the goal of the Hackathon is to bring people together to see how we can all work together to build civic technologies that serve Congress and the public. You don’t have to be an expert on everything to participate; listening, sharing resources, and offering your perspective all count. Every contribution matters.
  
 ### Resources 
+
 * This GitHub repository: https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/
+
 * Open-source APIs
+
     * Congress.gov API: https://www.congress.gov/
+
     * US Code: https://uscode.house.gov/ 
+
     * Code of Federal Regulations: https://www.ecfr.gov/developers/documentation/api/v1
+
     * Regulations.gov: https://www.regulations.gov/ 
+
     * BLS Data API: https://www.bls.gov/developers/ 
+
     * Census.gov APIs: https://www.census.gov/data/developers/data-sets.html 
+
     * Data.gov, home of the U.S. Government's open data: [https://catalog.data.gov/dataset](https://catalog.data.gov/dataset?q=-aapi+api+OR++res_format%3Aapidata)
+    
 * Daniel Schuman’s Guide to data sources about Congress: https://congressionaldata.org/a-biased-yet-reliable-guide-to-sources-of-information-and-data-about-congress/
+
 * Daniel Schuman's List of Legislative Tech Ideas: https://github.com/DanielSchuman/Policy/wiki/Leg-Tech
 
+* A collection of useful `.gitignore` templates: https://github.com/github/gitignore
