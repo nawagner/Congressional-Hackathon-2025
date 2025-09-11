@@ -28,6 +28,33 @@ git commit -am "My awesome commit"
 git push
 ```
 
+#### Importing Work from Another Repository
+
+If you need to bring work from another repository into this one:
+
+```bash
+# 1) Be in this hackathon repo
+cd /path/to/Congressional-Hackathon-2025
+
+# 2) (optional) Create/switch to a branch for clarity
+git switch -c imported-work-branch
+
+# 3) Add the other repo as a new remote
+git remote add other-repo git@github.com:<org-or-user>/other-repo.git
+# or: git remote add other-repo https://github.com/<org-or-user>/other-repo.git
+
+# 4) Fetch the other repository's branches
+git fetch other-repo
+
+# 5) Merge or cherry-pick the work you want
+git merge other-repo/main
+# or cherry-pick specific commits:
+# git cherry-pick <commit-hash>
+
+# 6) Push your branch with the imported work
+git push -u origin imported-work-branch
+```
+
 ### Event Details
 
 **Seventh Congressional Hackathon Coding Breakout Group**
