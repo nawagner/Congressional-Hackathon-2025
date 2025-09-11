@@ -1,0 +1,97 @@
+
+
+# Coding Breakout Group 
+## Congressional Hackathon 7.0 
+
+### Getting Started
+
+#### !!!BEFORE YOU BEGIN!!! Please sign the [Participation Agreement and IP Disclaimer](https://forms.cloud.microsoft/g/S1ZZEiN25V)!
+
+This repository is publicly readable, so anyone can read and clone it. To clone this repository:
+```
+git clone https://github.com/LibraryOfCongress/Congressional-Hackathon-2025.git
+```
+
+If you would like to contribute code to this repository, ask the Hackathon organizers (Craig or Kat) to add you to it as a contributor.
+
+In order to contribute, you will need a Personal Access Token (PAT). You can find instructions for creating a GitHub PAT here: 
+[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Select the `Tokens (clasic)` option when generating it.
+
+Each team in the coding breakout will be given their own branch to push code to. Pull your team's branch:
+```
+git pull team-1
+```
+
+To push code, commit it (with a commit message!) and push it to your branch!
+```
+git commit -am "My awesome commit"
+git push
+```
+
+### Event Details
+
+**Seventh Congressional Hackathon Coding Breakout Group**
+**Location:** United States Capitol Visitor Center, Room CVC 217
+**Date:** Wednesday, September 17, 2025
+**Time:** 9:00am – 12 noon ET
+**Registration link:** https://forms.cloud.microsoft/g/S1ZZEiN25V
+
+**Things to bring/prepare in advance:**
+•	A laptop and charger (wi-fi will be provided)
+•	Create a GitHub account (free)
+•	API keys for public APIs (see a list below)
+•	Your preferred AI coding assistant
+
+### Agenda
+
+| Time       | Activity  |
+  |---|---|
+  | 9:00 AM    | Brief level-setting and affinity mapping exercise to identify key areas of interest among the coding participants. (CVC 217) |
+  | 9:15 AM    | Break into small groups based on areas of interest and start hacking! |
+  | 11:45 AM   | Wrap up coding work and prepare coding breakout presentations |
+  | 12:00 Noon | Break for lunch! |
+  | 1:00 PM    | Opening Remarks (CVC Auditorium) |
+  | 1:30 PM    | Lightning Round Presentations (CVC Auditorium) |
+  | 3:00 PM    | Breakout Groups |
+  | 4:30 PM    | Breakout Group Presentations (CVC Auditorium)|
+  | 5:00 PM    | Reception (HCV 201) |
+
+### Sample Problem Statement 
+
+Coding breakout groups will choose a topic of particular interest to them and explore ways they can use their talents to address the issue. The following problem statement illustrates an example of the kind of problem a group might choose to take on:
+
+Both Congressional staff and the public would benefit from rapid access to Congressional hearing transcripts. The official transcripts are produced very meticulously before publication to ensure complete accuracy for the public record, but unfortunately this attention to detail requires a great deal of time. Now that we have access to Large Language Models (LLMs) and high-quality automated transcription, is it possible to automatically generate a transcript within minutes of the end of a hearing, rather than weeks or months?
+
+##### Participants could investigate the following:
+
+* Determine how & where to source audio and/or transcripts from House & Senate committee meetings;
+* Investigating effective methods of diarization (distinguishing between speakers) and speaker identification (putting names to each voice);
+* Generate succinct, useful and accurate summaries for the events;
+* Create an interface or way of presenting the transcripts and summaries to their intended audience (Congressional staff, the public, etc.)
+
+##### What some other countries are doing:
+* [Digitalization of the Hansard, beyond automatic transcriptions](https://events.bussola-tech.co/modernisation-of-hansard)
+* [Artificial Intelligence in Parliaments - Implementation of Speech to Text Technologies in Hansard](https://events.bussola-tech.co/modernizing-hansard-with-ai)
+* [Multilingual parliaments powered by AI](https://library.bussola-tech.co/p/multilingual-parliaments-powered)
+
+### Code of Conduct
+
+Everyone who participates in the Coding Breakout group must sign the Participation Agreement and IP Disclaimer and abide by our Code of Conduct during the event to help create a welcoming, respectful, and friendly event based on mutual respect, trust, and goodwill:
+* Be Respectful - treat others with respect in what you say and do. Be open to giving and receiving feedback kindly. Avoid language that differentiates anyone based on their background or identity. Be considerate of the needs and boundaries of others.
+* Be Mindful – remember that we are privileged to be coming together in the Capitol to work on issues that matter to the public and our nation. Keep the focus on the institutions and traditions that unite us, and keep the environment open and courteous by refraining from politics and other controversial topics. 
+* Be Welcoming - be supportive, encouraging, and open to learning from the expertise and perspectives of others. Assume that everyone brings valuable lived experiences and good intentions to the event.
+* Be Helpful – the goal of the Hackathon is to bring people together to see how we can all work together to build civic technologies that serve Congress and the public. You don’t have to be an expert on everything to participate; listening, sharing resources, and offering your perspective all count. Every contribution matters.
+ 
+### Resources 
+* This GitHub repository: https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/
+* Open-source APIs
+    * Congress.gov API: https://www.congress.gov/
+    * US Code: https://uscode.house.gov/ 
+    * Code of Federal Regulations: https://www.ecfr.gov/developers/documentation/api/v1
+    * Regulations.gov: https://www.regulations.gov/ 
+    * BLS Data API: https://www.bls.gov/developers/ 
+    * Census.gov APIs: https://www.census.gov/data/developers/data-sets.html 
+    * Data.gov, home of the U.S. Government's open data: [https://catalog.data.gov/dataset](https://catalog.data.gov/dataset?q=-aapi+api+OR++res_format%3Aapidata)
+* Daniel Schuman’s Guide to data sources about Congress: https://congressionaldata.org/a-biased-yet-reliable-guide-to-sources-of-information-and-data-about-congress/
+* Daniel Schuman's List of Legislative Tech Ideas: https://github.com/DanielSchuman/Policy/wiki/Leg-Tech
+
