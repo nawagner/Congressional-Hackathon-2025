@@ -4,7 +4,7 @@
 
 ## Coding Breakout Group
 
-The coding breakout session will take place in the United States Capitol Visitor Center with presentations following in the afternoon. See **[Event Details](#event-details)** below for more information.
+The coding breakout session will take place in the United States Capitol Visitor Center room CVC 217. See **[Event Details](#event-details)** below for more information.
 
 Happy hacking! 🏛️💻
 
@@ -77,7 +77,7 @@ git push -u origin imported-work-branch
 
 **Date:** Wednesday, September 17, 2025
 
-**Time:** 9:00am – 12 noon ET
+**Time:** 9:00am – 5:00pm ET
 
 **Registration link:** https://forms.cloud.microsoft/g/S1ZZEiN25V
 
@@ -95,15 +95,15 @@ git push -u origin imported-work-branch
 
 | Time       | Activity  |
   |---|---|
-  | 9:00 AM    | Brief level-setting and affinity mapping exercise to identify key areas of interest among the coding participants. (CVC 217) |
+  | 9:00 AM    | Introduction, overview and brief level-setting and affinity mapping exercise to identify key areas of interest among the coding participants. (CVC 217) |
   | 9:15 AM    | Break into small groups based on areas of interest and start hacking! |
-  | 11:45 AM   | Wrap up coding work and prepare coding breakout presentations |
-  | 12:00 Noon | Break for lunch! |
+  | 12:00 Noon | Lunch! |
   | 1:00 PM    | Opening Remarks (CVC Auditorium) |
   | 1:30 PM    | Lightning Round Presentations (CVC Auditorium) |
   | 3:00 PM    | Breakout Groups |
+  | 4:00 PM    | Prepare coding breakout presentations|
   | 4:30 PM    | Breakout Group Presentations (CVC Auditorium)|
-  | 5:00 PM    | Reception (HCV 201) |
+  | 5:00 PM    | CVC 217 closes - head to Hackathon Reception (HVC 201) |
 
 ## Breakout Topics
 
@@ -119,6 +119,8 @@ Both Congressional staff and the public would benefit from rapid access to Congr
 * Investigating effective methods of diarization (distinguishing between speakers) and speaker identification (putting names to each voice);
 * Generate succinct, useful and accurate summaries for the events;
 * Create an interface or way of presenting the transcripts and summaries to their intended audience (Congressional staff, the public, etc.)
+
+A JSON-formatted list of all Committee YouTube Channels can be found in this repo here: [Committee-YouTube-Channels.json](Committee-YouTube-Channels.json)
 
 ##### What some other countries are doing:
 * [Digitalization of the Hansard, beyond automatic transcriptions](https://events.bussola-tech.co/modernisation-of-hansard)
