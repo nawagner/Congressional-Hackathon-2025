@@ -1,5 +1,7 @@
 # Legislative Branch Data Map
 
+_Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/issues/new) for additions or edits._
+
 ## Table of Contents
 
 - [Main Websites](#main-websites)
