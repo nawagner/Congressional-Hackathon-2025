@@ -45,7 +45,7 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 |----|----|----|----|----|----|----|
 | [Member Info](https://member-info.house.gov/members.xml) | House members. Best for: Member roster. | XML | Daily | House | Based on Clerk and CAO data; updated after memberData.xml is updated | Members / IDs |
 | [Clerk MemberData XML](https://clerk.house.gov/xml/lists/MemberData.xml) | House members. Best for: Member list. | XML | Daily | House | Published by House Clerk | Members / IDs |
-| [Clerk Financial Disclosure Reports]([https://clerk.house.gov/xml/lists/MemberData.xml](https://disclosures-clerk.house.gov/FinancialDisclosure)) | House members. Best for: Member financial disclosure reports. | PDF | Daily | House | Published by House Clerk | Members / Ethics |
+| [Clerk Financial Disclosure Reports](https://disclosures-clerk.house.gov/FinancialDisclosure) | House members. Best for: Member financial disclosure reports. | PDF | Daily | House | Published by House Clerk | Members / Ethics |
 | [Clerk Foriegn Travel Reports](https://disclosures-clerk.house.gov/ForeignTravel) | House members. Best for: Foreign travel reports. | PDF and Text | Daily | House | Published by House Clerk | Members / Travel |
 | [Clerk Gift Travel Filings](https://disclosures-clerk.house.gov/GiftTravelFilings) | House members. Best for: Gift travel filings. | ZIP | Annual | House | Published by House Clerk | Members / Travel |
 | [Clerk Unsolicited Mass Communications](https://masscommsdisclosure.house.gov/) | House members. Best for: Mass communications. | PDF  | Daily | House | Published by House Clerk | Members / Communications |
