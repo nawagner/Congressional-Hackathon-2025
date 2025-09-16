@@ -24,22 +24,23 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 
 ### Main Websites
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [House.gov](https://house.gov) | House homepage. Best for: Members, legislation, events. | Web | Daily | House | Maintained by CAO | General / Portal |
 | [Senate.gov](https://senate.gov) | Senate homepage. Best for: Members, legislation, events. | Web | Daily | Senate |  | General / Portal |
+| [Congress.gov](https://congress.gov) | Bill tracker. Best for: Legislative activity. | XML, JSON, USLM | Near real-time | LOC | Maintained by LOC | Legislation / Tracking |
+| [House Live Video](https://live.house.gov) | Streaming video. Best for: House floor & events. | Streaming | Real-time | House |  | Media / Video |
+| [Clerk.House.gov](https://clerk.house.gov) | House Clerk. Best for: Members, Member photos, votes, floor, disclosures. | Web/XML | Daily | House | Primary House data feeds | General / Portal |
 | [LOC.gov](https://loc.gov) | Library of Congress. Best for: Research & collections. | Web | Daily | LOC | Includes CRS & Law Library | General / Portal |
 | [GPO.gov](https://gpo.gov) | GPO portal. Best for: Publications & services. | PDF, XML | Daily | GPO | Entry to govinfo.gov | General / Portal |
 | [CRS.gov](https://crs.gov) | CRS portal. Best for: Policy analysis. | PDF | As published | LOC (CRS) | Limited public access | Research / Policy |
-| [Clerk.House.gov](https://clerk.house.gov) | House Clerk. Best for: Members, votes, floor, disclosures. | Web/XML | Daily | House | Primary House data feeds | General / Portal |
-| [Congress.gov](https://congress.gov) | Bill tracker. Best for: Legislative activity. | XML, JSON, USLM | Near real-time | LOC | Maintained by LOC | Legislation / Tracking |
 | [GovInfo.gov](https://govinfo.gov) | Primary docs. Best for: Bills, laws, reports. | XML, TXT, USLM | Daily | GPO | Bulk & API access available | Legislation / Docs |
 | [CBO.gov](https://cbo.gov) | CBO portal. Best for: Cost estimates & reports. | PDF, XLSX | As published | CBO |  | Legislation / Fiscal Analysis |
 | [GAO.gov](https://gao.gov) | GAO portal. Best for: Audits & evaluations. | PDF, XLSX | As published | GAO |  | Oversight / GAO |
 
 ### Members
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [Member Info](https://member-info.house.gov/members.xml) | House members. Best for: Member roster. | XML | Daily | House | Based on Clerk and CAO data; updated after memberData.xml is updated | Members / IDs |
 | [Clerk MemberData XML](https://clerk.house.gov/xml/lists/MemberData.xml) | House members. Best for: Member list. | XML | Daily | House | Published by House Clerk | Members / IDs |
@@ -50,40 +51,35 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 
 ### Events
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
+| [Senate Floor Video](https://www.senate.gov/legislative/floor_activity_pail.htm) | Streaming video. Best for: Senate floor. | Streaming | Real-time | Senate |  | Media / Video |
 | [House Floor Summary](https://clerk.house.gov/floorsummary/floor-download.aspx) | Floor summary. Best for: House floor actions. | Various | Real-time | House | Download formats available | Legislation / Floor |
-| [Docs.House.gov Committee](https://docs.house.gov/committee) | Committee repository. Best for: Hearings & docs. | XML | Daily | House | Covers ~15 years | Committees / Hearings |
+| [Docs.House.gov Committee](https://docs.house.gov/committee) | Committee repository. Best for: Hearings & docs. | XML | Daily | House | Covers \~15 years | Committees / Hearings |
 | [Senate Schedule XML](https://www.senate.gov/legislative/2025_schedule.xml) | Senate schedule. Best for: Floor calendar. | XML | Daily | Senate |  | Legislation / Floor |
 | [Senate Hearings XML](https://www.senate.gov/general/committee_schedules/hearings.xml) | Hearing schedule. Best for: Senate committees. | XML | Daily | Senate |  | Committees / Hearings |
 | [Senate LIS Floor Activity](https://www.senate.gov/legislative/LIS/floor_activity/) | Floor activity. Best for: Senate floor actions. | XML | Real-time | Senate |  | Legislation / Floor |
 
 ### Legislative
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [Appropriations Status Tables (CRS)](https://crsreports.congress.gov/AppropriationsStatusTable) | Appropriations status overview. Best for: Bills, reports, JES. | HTML/PDF | In-session | LOC (CRS) | No line-item breakout | Legislation / Appropriations |
-| [House Clerk – Roll Call Votes](https://clerk.house.gov/Votes) | Floor votes. Best for: Member positions (House). | XML | Real-time | House | IDs = Bioguide | Legislation / Votes |
-| [Senate – Roll Call Votes](https://www.senate.gov/legislative/votes_new.htm) | Floor votes. Best for: Member positions (Senate). | XML | Real-time | Senate | IDs = LIS | Legislation / Votes |
+| [House Clerk Roll Call Votes](https://clerk.house.gov/Votes) | Floor votes. Best for: Member positions (House). | XML | Near real-time | House | IDs = Bioguide | Legislation / Votes |
+| [Senate Roll Call Votes](https://www.senate.gov/legislative/votes_new.htm) | Floor votes. Best for: Member positions (Senate). | XML | Near real-time | Senate | IDs = LIS | Legislation / Votes |
 | [House Activity Report (End of Congress)](https://www.congress.gov/116/crpt/hrpt718/CRPT-116hrpt718.pdf) | Committee roll-up. Best for: Hearings, markups, votes. | PDF | End of Congress | House | Summarizes all committee work | Committees / Reporting |
-| [Congress.gov](https://congress.gov) | Canonical bill tracker. Best for: Bill status & summaries. | XML, JSON, USLM | Near real-time | LOC | Often lags by 1+ day | Legislation / Tracking |
-| [Congress.gov API](https://api.congress.gov) | Programmatic bill API. Best for: Data feeds. | XML, JSON, USLM | Near real-time | LOC |  | Legislation / API |
+| [Congress.gov API](https://api.congress.gov) | API of most datasets on Congress.gov. | XML, JSON, USLM | Near real-time | LOC |  | Legislation / API |
 | [GPO GovInfo Bulk](https://www.govinfo.gov/bulkdata) | Primary legislative docs. Best for: Bill text in bulk. | USLM, XML, TXT | Daily | GPO | Authoritative text | Legislation / Docs |
 | [Docs.House.gov Floor](https://docs.house.gov/floor) | Floor schedule/docs. Best for: Bills set for House floor. | XML | Real-time | House | Weekly schedule feed | Legislation / Floor |
 | [House Rules Committee](https://rules.house.gov) | Rules & amendments. Best for: Floor process docs. | XML, PDF | Per meeting | House | Includes all offered amendments | Legislation / Floor |
-| [Congress.gov API](https://api.congress.gov) | Bill API. Best for: Bill/member data. | XML, JSON, USLM | Near real-time | LOC |  | Legislation / API |
 | [GovInfo API](https://api.govinfo.gov/docs/) | Document API. Best for: Legislation & other docs. | API | Real-time | GPO |  | Legislation / API |
-| [Congress.gov](https://congress.gov) | Legislative tracker. Best for: Bills, laws, summaries. | XML, JSON, USLM | Near real-time | LOC | Sometimes lags | Legislation / Tracking |
-| [US Code (OLRC)](https://uscode.house.gov) | US Code. Best for: Statutory text. | XML, XHTML | As updated | House (OLRC) | Maintained by OLRC | Legislation / Law |
-| [House Clerk – LegVotes](https://clerk.house.gov/legislative/legvotes.aspx) | Roll call votes. Best for: House floor votes. | XML | Real-time | House | IDs = Bioguide | Legislation / Votes |
+| [US Code (OLRC)](https://uscode.house.gov) | US Code. Best for: Statutory text. | XML, XHTML | As updated | Office of Law Revision Counsel (OLRC) | Maintained by House OLRC | Legislation / Law |
 | [Docs.House.gov Floor](https://docs.house.gov/floor) | Floor schedule/docs. Best for: Bills on floor. | XML | Real-time | House |  | Legislation / Floor |
 
 ### Other
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
-| [House Live Video](https://live.house.gov) | Streaming video. Best for: House floor & events. | Streaming | Real-time | House |  | Media / Video |
-| [Senate Floor Video](https://www.senate.gov/legislative/floor_activity_pail.htm) | Streaming video. Best for: Senate floor. | Streaming | Real-time | Senate |  | Media / Video |
 | [CRS Reports](https://crsreports.congress.gov) | CRS portal. Best for: Policy reports. | PDF | Weekly | LOC (CRS) | Limited set | Research / Policy |
 | [House History](https://history.house.gov) | Historical resources. Best for: House history. | Web | As needed | House |  | History |
 | [XML.House.gov](https://xml.house.gov) | Data standards. Best for: XML/USLM schemas. | Web | As needed | House | Technical reference | Tools / Standards |
@@ -94,21 +90,21 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [DomeWatch](https://domewatch.us) | House Dem floor info. Best for: Floor schedule & updates. | Web | Daily | Civil Society | Leadership tool | Legislation / Floor |
 | [Law Library of Congress](https://www.loc.gov/collections/publications-of-the-law-library-of-congress/about-this-collection/) | Legal reports. Best for: Foreign/comparative law. | PDF/HTML | Rolling | LOC | Specialized foreign law topics | Research / Law |
 | [Bioguide](https://bioguide.congress.gov) | Member directory. Best for: Unique IDs & photos. | XML, JSON | As updated | LOC | Crosswalk with Senate LIS needed | Members / IDs |
-| [House Directory](https://directory.house.gov) | Staff directory. Best for: Staff contacts. | XML, JSON | Daily | House | Exportable contact info | Members / Staff |
-| [GPO Innovation Hub](https://usgpo.github.io/innovation/) | Standards hub. Best for: USLM/XML resources. | Web | Ongoing | GPO | Links to XML WG | Tools / Standards |
+| [House Telephone Directory](https://directory.house.gov) | House staff telephone directory. Best for: Staff contacts. | XML, JSON | Daily | House | Exportable contact info | Members / Staff |
+| [Congressional Data Task Force Innovation Hub](https://usgpo.github.io/innovation/) | Standards hub. Best for: USLM/XML resources. | Web | Ongoing | GPO | Links to XML WG | Tools / Standards |
 | [House Statement of Disbursements](https://www.house.gov/the-house-explained/open-government/statement-of-disbursements) | Office expenditures. Best for: House-level spending. | CSV, PDF | Quarterly | House | Recent years are spreadsheets | Admin / Finance |
 | [Senate SOPOEA](https://www.senate.gov/legislative/common/generic/report_secsen.htm) | Office expenditures. Best for: Senate-level spending. | PDF | Quarterly | Senate | Stays in PDF | Admin / Finance |
 | [CFR Bulk](https://www.govinfo.gov/bulkdata/CFR) | Code of Fed Regs. Best for: Regulatory text. | XML | Annual | GPO |  | Regulations / CFR |
 | [eCFR Bulk](https://www.govinfo.gov/bulkdata/ECFR) | eCFR. Best for: Daily regulatory updates. | XML | Daily | GPO |  | Regulations / eCFR |
 | [Federal Register Bulk](https://www.govinfo.gov/bulkdata/FR) | Federal Register. Best for: Rules, notices. | XML | Daily | GPO |  | Regulations / FR |
-| [Government Manual](https://www.govinfo.gov/bulkdata/GOVMAN) | Gov’t Manual. Best for: Agency profiles. | XML | As updated | GPO |  | Reference / Agencies |
+| [Government Manual](https://www.govinfo.gov/bulkdata/GOVMAN) | Government Manual. Best for: Agency profiles. | XML | As updated | GPO |  | Reference / Agencies |
 | [House Manual](https://www.govinfo.gov/bulkdata/HMAN) | House Manual. Best for: Rules & precedents. | XML | Biennial | GPO |  | Reference / House Rules |
 | [Privacy Act Issuances](https://www.govinfo.gov/bulkdata/PAI) | Privacy Act notices. Best for: System notices. | XML | As updated | GPO |  | Reference / Privacy Act |
 | [Public Papers of Presidents](https://www.govinfo.gov/bulkdata/PPP) | Presidential papers. Best for: Speeches & statements. | XML | As published | GPO |  | Reference / Presidency |
 
 ### Senate Nominations
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [Civilian pending in committee](https://www.senate.gov/legislative/LIS/nominations/NomCivilianPendingCommittee.xml) | Nominations feed. Best for: Civilian pending in committee. | XML | Daily | Senate |  | Nominations / Senate |
 | [Privileged nominations](https://www.senate.gov/legislative/LIS/nominations/NomPrivileged.xml) | Nominations feed. Best for: Privileged nominations. | XML | Daily | Senate |  | Nominations / Senate |
@@ -122,21 +118,21 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 
 ### Non-Public / Internal
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [Webster (Senate intranet)]((internal)) | Senate intranet. Best for: Staff operations. |  |  | Senate (Internal) |  | Internal / Staff |
 | [Housenet (House intranet)]((internal)) | House intranet. Best for: Staff operations. |  |  | House (Internal) |  | Internal / Staff |
 | [MemRec](https://memrec.house.gov) | Member/staff photos. Best for: Official portraits. |  | Daily | House (Internal) | Clerk-managed | Members / Staff |
-| [House Central Calendar](https://calendar.house.gov) | Floor + committee calendar. Best for: Scheduling. | JSON | Real-time | House (Internal) | Central calendar feed | Legislation / Calendar |
-| [LegiDex](https://legidex.house.gov) | Staffer registry. Best for: Internal staff data. |  | Daily | House (Internal) | CAO-managed | Members / Staff |
+| [HouseCal](https://calendar.house.gov) | House central calendar including floor and committees. Best for: Scheduling. | JSON | Real-time | House (Internal) | Central calendar feed | Legislation / Calendar |
+| [LegiDex](https://legidex.house.gov) | House official online staff directory. Best for: staff roles and issue responsibilities, building email lists. |  | Daily | House (Internal) | CAO-managed | Members / Staff |
 
 ## Official - Executive & Agencies
 
 ### Other
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
-| [OMB Budget &amp; Appendix](https://www.whitehouse.gov/omb/budget) | Admin budget proposal. Best for: Proposed bill-like text & toplines. | PDF, data | Annual | OMB | Appendix has detailed tables | Spending / Budget |
+| [OMB Budget & Appendix](https://www.whitehouse.gov/omb/budget) | Admin budget proposal. Best for: Proposed bill-like text & toplines. | PDF, data | Annual | OMB | Appendix has detailed tables | Spending / Budget |
 | [Congressional Justifications (CBJs)](https://www.usaspending.gov/agency) | Budget justifications. Best for: Program-level requests. | PDF, data | Annual | Agencies | FY24+ Transparency Act requires posting | Spending / Budget |
 | [USAspending.gov](https://www.usaspending.gov/) | Award implementation. Best for: Grants & contracts data. | API, data | Rolling | Treasury | Shows execution of enacted spending | Spending / Execution |
 | [Oversight.gov](https://oversight.gov) | IG reports hub. Best for: Audits & inspections. | PDF | Rolling | CIGIE | Coverage gaps; older reports missing | Oversight / IG Reports |
@@ -147,14 +143,14 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 
 ### Legislative
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [GovTrack.us](https://govtrack.us) | Bill tracker. Best for: Legislative activity. | Web | Rolling | Civic Tech | Analytics + visualizations | Legislation / Tracking |
-| [Senate Video Links (Lincoln Network)](https://www.senatecommitteehearings.com/transcripts) | Senate video links. Best for: Committee footage archive. | Links | Static | Civil Society | ~20 years of coverage | Media / Video |
+| [Senate Video Links (Lincoln Network)](https://www.senatecommitteehearings.com/transcripts) | Senate video links. Best for: Committee footage archive. | Links | Static | Civil Society | \~20 years of coverage | Media / Video |
 
 ### Other
 
-| Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [Brookings Vital Stats](https://www.brookings.edu/multi-chapter-report/vital-statistics-on-congress) | Staff stats. Best for: Long-term staffing trends. | Tables | Periodic | Think Tank | Commonly cited; caveats | Staff / Research |
 | [CongressionalData.org Guide](https://congressionaldata.org/a-biased-yet-reliable-guide-to-sources-of-information-and-data-about-congress/) | Meta guide. Best for: Orientation to data sources. | Web | Periodic | Civic Tech | Curated overview | Meta / Guide |
