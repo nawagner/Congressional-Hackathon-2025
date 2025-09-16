@@ -120,8 +120,8 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 
 | Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
-| [Webster (Senate intranet)]((internal)) | Senate intranet. Best for: Staff operations. |  |  | Senate (Internal) |  | Internal / Staff |
-| [Housenet (House intranet)]((internal)) | House intranet. Best for: Staff operations. |  |  | House (Internal) |  | Internal / Staff |
+| [Webster]((internal)) | Senate intranet. Best for: Staff operations. |  |  | Senate (Internal) |  | Internal / Staff |
+| [Housenet]((internal)) | House intranet. Best for: Staff operations. |  |  | House (Internal) |  | Internal / Staff |
 | [MemRec](https://memrec.house.gov) | Member/staff photos. Best for: Official portraits. |  | Daily | House (Internal) | Clerk-managed | Members / Staff |
 | [HouseCal](https://calendar.house.gov) | House central calendar including floor and committees. Best for: Scheduling. | JSON | Real-time | House (Internal) | Central calendar feed | Legislation / Calendar |
 | [LegiDex](https://legidex.house.gov) | House official online staff directory. Best for: staff roles and issue responsibilities, building email lists. |  | Daily | House (Internal) | CAO-managed | Members / Staff |
