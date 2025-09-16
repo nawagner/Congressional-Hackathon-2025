@@ -1,8 +1,8 @@
 # Legislative Branch Data Map, version 0.1
 
-_We want feedback on this list! Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/issues/new) to suggest additions or edits.
+_**We want feedback on this list! Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/issues/new) to suggest additions or edits.**_
 
-This data map is a product of the [Congressional Data Task Force](https://usgpo.github.io/innovation/) that was directed by H. Rept. 118-555 (Legislative Branch Appropriations Bill, FY2025) to create a “Legislative Branch Data Map and Management Plan.” This first rough list was compiled jointly by staff from different Legislative Branch agencies. We hope others can review and contribute to this effort by [creating issue](https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/issues/new)._
+This data map is a product of the [Congressional Data Task Force](https://usgpo.github.io/innovation/) that was directed by H. Rept. 118-555 (Legislative Branch Appropriations Bill, FY2025) to create a “Legislative Branch Data Map and Management Plan.” This first rough list was compiled jointly by staff from different Legislative Branch agencies. We hope others can review and contribute to this effort by [creating issue](https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/issues/new).
 
 ## Table of Contents
 
