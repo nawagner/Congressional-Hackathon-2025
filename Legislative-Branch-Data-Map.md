@@ -4,17 +4,23 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 
 ## Table of Contents
 
-- [Main Websites](#main-websites)
-- [Members](#members)
-- [Events](#events)
-- [Legislative](#legislative)
-- [Other](#other)
-- [Senate Nominations](#senate-nominations)
-- [Non-Public / Internal](#non-public--internal)
+- [Official - Legislative Branch](#official---legislative-branch)
+  - [Main Websites](#main-websites)
+  - [Members](#members)
+  - [Events](#events)
+  - [Legislative](#legislative)
+  - [Other](#other)
+  - [Senate Nominations](#senate-nominations)
+  - [Non-Public / Internal](#non-public--internal)
 - [Official - Executive & Agencies](#official---executive--agencies)
+  - [Other](#other-1)
 - [Unofficial / Civil Society](#unofficial--civil-society)
+  - [Legislative](#legislative-1)
+  - [Other](#other-2)
 
-## Main Websites
+## Official - Legislative Branch
+
+### Main Websites
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -29,7 +35,7 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://cbo.gov" target="_blank" rel="noopener noreferrer">CBO.gov</a> | CBO portal. Best for: Cost estimates & reports. | PDF, XLSX | As published | CBO |  | Legislation / Fiscal Analysis |
 | <a href="https://gao.gov" target="_blank" rel="noopener noreferrer">GAO.gov</a> | GAO portal. Best for: Audits & evaluations. | PDF, XLSX | As published | GAO |  | Oversight / GAO |
 
-## Members
+### Members
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -40,7 +46,7 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://www.senate.gov/general/contact_information/senators_cfm.xml" target="_blank" rel="noopener noreferrer">Senate contact info XML</a> | Senator contacts. Best for: Official info. | XML | As updated | Senate |  | Members / Contacts |
 | <a href="https://www.senate.gov/legislative/LIS_MEMBER/cvc_member_data.xml" target="_blank" rel="noopener noreferrer">Senate LIS Member Data</a> | LIS data feed. Best for: Senate members. | XML | Daily | Senate | IDs differ from Bioguide | Members / IDs |
 
-## Events
+### Events
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -50,7 +56,7 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://www.senate.gov/general/committee_schedules/hearings.xml" target="_blank" rel="noopener noreferrer">Senate Hearings XML</a> | Hearing schedule. Best for: Senate committees. | XML | Daily | Senate |  | Committees / Hearings |
 | <a href="https://www.senate.gov/legislative/LIS/floor_activity/" target="_blank" rel="noopener noreferrer">Senate LIS Floor Activity</a> | Floor activity. Best for: Senate floor actions. | XML | Real-time | Senate |  | Legislation / Floor |
 
-## Legislative
+### Legislative
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -70,7 +76,7 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://clerk.house.gov/legislative/legvotes.aspx" target="_blank" rel="noopener noreferrer">House Clerk – LegVotes</a> | Roll call votes. Best for: House floor votes. | XML | Real-time | House | IDs = Bioguide | Legislation / Votes |
 | <a href="https://docs.house.gov/floor" target="_blank" rel="noopener noreferrer">Docs.House.gov Floor</a> | Floor schedule/docs. Best for: Bills on floor. | XML | Real-time | House |  | Legislation / Floor |
 
-## Other
+### Other
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -98,7 +104,7 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://www.govinfo.gov/bulkdata/PAI" target="_blank" rel="noopener noreferrer">Privacy Act Issuances</a> | Privacy Act notices. Best for: System notices. | XML | As updated | GPO |  | Reference / Privacy Act |
 | <a href="https://www.govinfo.gov/bulkdata/PPP" target="_blank" rel="noopener noreferrer">Public Papers of Presidents</a> | Presidential papers. Best for: Speeches & statements. | XML | As published | GPO |  | Reference / Presidency |
 
-## Senate Nominations
+### Senate Nominations
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -112,7 +118,7 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://www.senate.gov/legislative/LIS/nominations/NomWithdrawn.xml" target="_blank" rel="noopener noreferrer">Withdrawn nominations</a> | Nominations feed. Best for: Withdrawn nominations. | XML | Daily | Senate |  | Nominations / Senate |
 | <a href="https://www.senate.gov/legislative/LIS/nominations/NomFailedOrReturned.xml" target="_blank" rel="noopener noreferrer">Failed/returned nominations</a> | Nominations feed. Best for: Failed/returned nominations. | XML | Daily | Senate |  | Nominations / Senate |
 
-## Non-Public / Internal
+### Non-Public / Internal
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -122,9 +128,9 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://calendar.house.gov" target="_blank" rel="noopener noreferrer">House Central Calendar</a> | Floor + committee calendar. Best for: Scheduling. | JSON | Real-time | House (Internal) | Central calendar feed | Legislation / Calendar |
 | <a href="https://legidex.house.gov" target="_blank" rel="noopener noreferrer">LegiDex</a> | Staffer registry. Best for: Internal staff data. |  | Daily | House (Internal) | CAO-managed | Members / Staff |
 
-# Official - Executive & Agencies
+## Official - Executive & Agencies
 
-## Other
+### Other
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
@@ -135,16 +141,16 @@ _Please [create an issue](https://github.com/LibraryOfCongress/Congressional-Hac
 | <a href="https://flatgithub.com/cisagov/dotgov-data" target="_blank" rel="noopener noreferrer">CISA DotGov data</a> | DotGov domains. Best for: Federal IT/security. | CSV | Rolling | CISA | Managed by DHS | Tech / Security |
 | <a href="https://innovations.gao.gov" target="_blank" rel="noopener noreferrer">GAO Innovation Lab</a> | GAO Innovations. Best for: GAO projects. | Web | As needed | GAO |  | Oversight / GAO |
 
-# Unofficial / Civil Society
+## Unofficial / Civil Society
 
-## Legislative
+### Legislative
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | <a href="https://govtrack.us" target="_blank" rel="noopener noreferrer">GovTrack.us</a> | Bill tracker. Best for: Legislative activity. | Web | Rolling | Civic Tech | Analytics + visualizations | Legislation / Tracking |
 | <a href="https://www.senatecommitteehearings.com/transcripts" target="_blank" rel="noopener noreferrer">Senate Video Links (Lincoln Network)</a> | Senate video links. Best for: Committee footage archive. | Links | Static | Civil Society | ~20 years of coverage | Media / Video |
 
-## Other
+### Other
 
 | Source / Tool | Description | Data / Format | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
