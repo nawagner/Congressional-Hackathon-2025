@@ -14,7 +14,9 @@ Happy hacking! 🏛️💻
 
 1. **Request contributor access**: Ask the Hackathon organizers (Craig or Kat) to add you to this repository as a contributor.
 
-13. **Set up authentication**: You'll need a GitHub Personal Access Token (PAT). Follow the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) and select the "Tokens (classic)" option.
+1. **Set up authentication**: You'll need a GitHub Personal Access Token (PAT). Follow the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) and select the "Tokens (classic)" option.
+
+1. Check out **[Legislative Branch Data Map](Legislative-Branch-Data-Map.md)**!
 
 ## Contributing
 
@@ -135,28 +137,3 @@ Everyone who participates in the Coding Breakout group must sign the Participati
 
 * Be Helpful – the goal of the Hackathon is to bring people together to see how we can all work together to build civic technologies that serve Congress and the public. You don’t have to be an expert on everything to participate; listening, sharing resources, and offering your perspective all count. Every contribution matters.
  
-### Resources 
-
-* This GitHub repository: https://github.com/LibraryOfCongress/Congressional-Hackathon-2025/
-
-* Open-source APIs
-
-    * Congress.gov API: https://www.congress.gov/
-
-    * US Code: https://uscode.house.gov/ 
-
-    * Code of Federal Regulations: https://www.ecfr.gov/developers/documentation/api/v1
-
-    * Regulations.gov: https://www.regulations.gov/ 
-
-    * BLS Data API: https://www.bls.gov/developers/ 
-
-    * Census.gov APIs: https://www.census.gov/data/developers/data-sets.html 
-
-    * Data.gov, home of the U.S. Government's open data: [https://catalog.data.gov/dataset](https://catalog.data.gov/dataset?q=-aapi+api+OR++res_format%3Aapidata)
-    
-* Daniel Schuman’s Guide to data sources about Congress: https://congressionaldata.org/a-biased-yet-reliable-guide-to-sources-of-information-and-data-about-congress/
-
-* Daniel Schuman's List of Legislative Tech Ideas: https://github.com/DanielSchuman/Policy/wiki/Leg-Tech
-
-* A collection of useful `.gitignore` templates: https://github.com/github/gitignore
