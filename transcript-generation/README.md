@@ -1,81 +1,124 @@
-## Transcription (OpenAI Whisper)
+# House Committee YouTube Video Poller
 
-This project can transcribe audio files to text using OpenAI Whisper via the OpenAI Python SDK.
+A Python tool to fetch the five most recent videos from U.S. House of Representatives Committee YouTube channels.
 
-### Setup
+## Features
 
-1. Ensure you have an OpenAI API key and set it in your environment:
+- 📺 Polls the 5 most recent videos from each House Committee YouTube channel
+- 📊 Displays results in a beautiful table format
+- 💾 Exports data to JSON and CSV formats for analysis
+- 🎨 Rich terminal output with progress tracking
+- 📈 Includes video statistics (views, likes, duration)
 
+## Installation
+
+1. Install dependencies using `uv`:
 ```bash
-export OPENAI_API_KEY="sk-..."
-```
-
-2. Install dependencies (using uv or pip):
-
-```bash
-# with uv
 uv sync
-
-# or with pip
-pip install -e .
 ```
 
-### Usage
+Or using pip:
+```bash
+pip install -r requirements.txt
+```
 
-Transcribe an audio file to a `.txt` next to the audio:
+2. Set up YouTube Data API key:
+
+### Getting a YouTube API Key
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the YouTube Data API v3:
+   - Go to "APIs & Services" > "Library"
+   - Search for "YouTube Data API v3"
+   - Click on it and press "Enable"
+4. Create credentials:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "API Key"
+   - Copy the generated API key
+
+### Setting the API Key
+
+Create a `.env` file in the project directory:
+```bash
+echo "YOUTUBE_API_KEY=your_api_key_here" > .env
+```
+
+## Usage
+
+Run the script to fetch recent videos from all committees:
 
 ```bash
-python transcribe.py -i path/to/audio.mp3
+python main.py
 ```
 
-Specify an explicit output path:
+The script will:
+1. Load committee channel data from `committee_transcripts.json`
+2. Connect to the YouTube API using your API key
+3. Fetch the 5 most recent videos from each channel
+4. Display results in a formatted table
+5. Save results to `recent_videos.json` and `recent_videos.csv`
 
+## Output Formats
+
+### Terminal Table
+Beautiful formatted tables showing:
+- Published date
+- Video title
+- View count  
+- Video URL
+
+### JSON Export (`recent_videos.json`)
+Structured JSON with full video details including:
+- Video ID and URL
+- Title and description
+- Published date
+- View and like counts
+- Video duration
+- Thumbnail URL
+
+### CSV Export (`recent_videos.csv`)
+Spreadsheet-friendly format for data analysis with columns:
+- Committee name
+- Video ID
+- Title
+- Published date
+- View count
+- Like count
+- URL
+
+## Data Source
+
+The committee channel list is sourced from `committee_transcripts.json`, which contains official U.S. House Committee YouTube channel information provided by the House Digital Service.
+
+## Requirements
+
+- Python 3.11+
+- YouTube Data API v3 key
+- Internet connection
+
+## API Quotas
+
+The YouTube Data API has daily quota limits. This script uses approximately:
+- 3 quota units per channel for fetching videos
+- 1 quota unit per video for statistics
+
+With 21 committees and 5 videos each, expect to use ~150 quota units per run.
+
+## Troubleshooting
+
+### "YouTube API key not found"
+Make sure you've created a `.env` file with your API key:
 ```bash
-python transcribe.py -i path/to/audio.m4a -o /tmp/result.txt
+YOUTUBE_API_KEY=AIza...your_key_here
 ```
 
-Optional flags:
+### "Could not fetch videos for channel"
+Some channels may be private or have restricted access. The script will skip these and continue with others.
 
-- `--model` (default: `whisper-1`)
-- `--prompt` (optional guidance for the model)
-- `--temperature` (default: `0.0`)
-- `--language` (e.g., `en`)
-- `--no-chunk` (disable automatic chunking)
-- `--chunk-seconds` (default: `600` seconds per chunk)
-- `--max-chunk-mb` (default: `20` MB per chunk)
+### Rate Limiting
+If you hit API quotas, wait until the next day (quotas reset at midnight Pacific Time) or use a different API key.
 
-The command prints the path to the written transcript file.
+## License
 
-### Limits and Chunking
-
-- Whisper API requests have a per-file size limit. This tool automatically chunks large inputs using `ffmpeg` by default.
-- Install ffmpeg if you plan to transcribe long recordings:
-
-```bash
-brew install ffmpeg
-```
-
-- You can tweak `--chunk-seconds` and `--max-chunk-mb` to fit within current API limits. Each chunk is transcribed independently and concatenated.
-
-## YouTube audio extraction
-
-Two simple helpers are available in `youtube_audio.py`:
-
-```python
-from youtube_audio import download_audio_to_file, download_audio_to_bytes
-
-url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-
-# 1) Save MP3 to a specific path (file or directory)
-path = download_audio_to_file(url, "/tmp/my-audio.mp3")
-print("Saved:", path)
-
-# 2) Get MP3 as bytes (e.g., to upload or process in-memory)
-audio_bytes = download_audio_to_bytes(url)
-print("Bytes:", len(audio_bytes))
-```
-
-Notes:
-- `yt-dlp` is used under the hood and requires `ffmpeg` to be available in your system PATH.
-- If you pass a directory to `download_audio_to_file`, an `audio.mp3` file will be created inside it.
-
+This project uses public domain data from the U.S. House of Representatives (CC0 1.0).
