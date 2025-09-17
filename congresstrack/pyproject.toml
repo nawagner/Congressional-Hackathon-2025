@@ -19,6 +19,7 @@ dependencies = [
     "ddgs>=9.6.0",
     "watchdog>=6.0.0",
     "plotly>=5.0.0",
+    "jupyterlab>=4.4.7",
 ]
 
 [dependency-groups]
