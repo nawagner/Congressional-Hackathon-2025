@@ -3,10 +3,9 @@ import json
 import os
 import pandas as pd
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 import requests
 from bs4 import BeautifulSoup
-import time
 from dataclasses import dataclass
 from dotenv import load_dotenv
 
@@ -85,6 +84,57 @@ class CampaignScraper:
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
             }
         )
+
+    def search_campaign_website(
+        self, sponsor_name: str, sponsor_state: str
+    ) -> Optional[str]:
+        """Search for campaign website using web search"""
+        try:
+            # Import duckduckgo search
+            try:
+                from ddgs import DDGS
+            except ImportError:
+                st.warning(
+                    "duckduckgo-search not installed. Please install it with: pip install duckduckgo-search"
+                )
+                return None
+
+            # Create search query
+            search_query = f"{sponsor_name} {sponsor_state} campaign website official"
+
+            # Perform web search
+            with DDGS() as ddgs:
+                search_results = list(ddgs.text(search_query, max_results=5))
+
+            # Extract URLs from search results
+            urls = []
+            for result in search_results:
+                if "href" in result:
+                    urls.append(result["href"])
+
+            # Try to find the most likely campaign website
+            for url in urls:
+                # Look for common campaign website patterns
+                if any(
+                    pattern in url.lower()
+                    for pattern in [
+                        "campaign",
+                        "elect",
+                        "vote",
+                        "senate.gov",
+                        "house.gov",
+                        sponsor_name.lower().replace(" ", ""),
+                        sponsor_name.lower().replace(" ", "-"),
+                    ]
+                ):
+                    return url
+
+            # If no obvious campaign site found, return the first result
+            return urls[0] if urls else None
+
+        except Exception as e:
+            st.warning(f"Failed to search for campaign website: {e}")
+            return None
 
     def scrape_website(self, url: str) -> Optional[str]:
         """Scrape content from a campaign website"""
@@ -194,8 +244,7 @@ class LLMAnalyzer:
                 response = client.chat.completions.create(
                     model="gpt-5-nano",
                     messages=[{"role": "user", "content": prompt}],
-                    max_tokens=500,
-                    temperature=0.3,
+                    # temperature=0.3,
                 )
 
                 result = response.choices[0].message.content
@@ -418,10 +467,26 @@ def main():
         "Analyze Campaign Objectives", disabled=not (has_openai or has_anthropic)
     ):
         with st.spinner("Analyzing campaign objectives..."):
+            # Get website URL - either from data or search for it
+            website_url = selected_law.sponsor_website
+
+            if not website_url:
+                st.info(
+                    "No website found in law data. Searching for campaign website..."
+                )
+                website_url = scraper.search_campaign_website(
+                    selected_law.sponsor_name, selected_law.sponsor_state
+                )
+
+                if website_url:
+                    st.success(f"Found campaign website: {website_url}")
+                else:
+                    st.warning("Could not find campaign website")
+
             # Scrape website if available
             website_content = ""
-            if selected_law.sponsor_website:
-                website_content = scraper.scrape_website(selected_law.sponsor_website)
+            if website_url:
+                website_content = scraper.scrape_website(website_url)
 
             # Use LLM to analyze objectives
             if website_content:
@@ -506,9 +571,7 @@ def main():
     st.header("Legislative Actions Timeline")
     actions_df = pd.DataFrame(selected_law.actions)
     if not actions_df.empty:
-        st.dataframe(
-            actions_df[["actionDate", "text", "type"]], use_container_width=True
-        )
+        st.dataframe(actions_df[["actionDate", "text", "type"]], width="stretch")
     else:
         st.write("No actions data available")
 

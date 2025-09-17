@@ -8,3 +8,4 @@ requests>=2.32.5
 tqdm>=4.67.1
 urllib3>=2.0.0
 lxml>=5.0.0
+duckduckgo-search>=6.0.0

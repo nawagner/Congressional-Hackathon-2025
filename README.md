@@ -5,6 +5,7 @@ This app compares passed laws against their sponsors' campaign objectives using 
 ## Features
 
 - **Law Data Loading**: Parses JSON files containing law information
+- **Campaign Website Discovery**: Automatically searches for sponsor websites when not provided
 - **Campaign Website Scraping**: Extracts content from sponsor websites
 - **LLM Analysis**: Uses OpenAI or Anthropic APIs to analyze campaign objectives
 - **Alignment Comparison**: Compares laws against extracted objectives
@@ -100,6 +101,7 @@ The analysis provides:
 ## Technical Details
 
 - **Web Scraping**: Uses BeautifulSoup with respectful delays
+- **Website Discovery**: Uses DuckDuckGo search to find campaign websites when not provided
 - **LLM Integration**: Supports both OpenAI GPT and Anthropic Claude
 - **Data Processing**: Handles large JSON files efficiently
 - **Error Handling**: Graceful fallbacks when websites are unavailable

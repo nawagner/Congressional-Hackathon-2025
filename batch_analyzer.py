@@ -4,11 +4,8 @@ Batch analyzer for comparing all laws against campaign objectives
 """
 
 import json
-import os
-from pathlib import Path
-from typing import List, Dict
 import pandas as pd
-from app import LawDataLoader, CampaignScraper, LLMAnalyzer, LawData, CampaignObjectives
+from app import LawDataLoader, CampaignScraper, LLMAnalyzer, CampaignObjectives
 from dotenv import load_dotenv
 
 
@@ -31,10 +28,24 @@ def analyze_all_laws():
     for i, law in enumerate(laws, 1):
         print(f"Processing {i}/{len(laws)}: {law.title}")
 
+        # Get website URL - either from data or search for it
+        website_url = law.sponsor_website
+
+        if not website_url:
+            print("  No website found in law data. Searching for campaign website...")
+            website_url = scraper.search_campaign_website(
+                law.sponsor_name, law.sponsor_state
+            )
+
+            if website_url:
+                print(f"  Found campaign website: {website_url}")
+            else:
+                print("  Could not find campaign website")
+
         # Scrape website if available
         website_content = ""
-        if law.sponsor_website:
-            website_content = scraper.scrape_website(law.sponsor_website)
+        if website_url:
+            website_content = scraper.scrape_website(website_url)
 
         # Analyze objectives
         if website_content:
@@ -58,6 +69,7 @@ def analyze_all_laws():
             "sponsor_name": law.sponsor_name,
             "sponsor_state": law.sponsor_state,
             "sponsor_website": law.sponsor_website,
+            "found_website": website_url,
             "congress": law.congress,
             "number": law.number,
             "origin_chamber": law.origin_chamber,
