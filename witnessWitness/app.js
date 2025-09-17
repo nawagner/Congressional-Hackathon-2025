@@ -1,13 +1,20 @@
+const COMBINED_DB_PATH = 'hearings_combined.db';
+const SQL_JS_CDN_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/';
+let sqlJsInstancePromise;
+
 const state = {
   hearings: [],
   witnessMap: new Map(),
   sortedWitnesses: [],
+  witnessElements: new Map(),
+  witnessMessage: null,
   filters: {
     witnessQuery: '',
     committee: 'all',
     tag: 'all',
     startDate: null,
     endDate: null,
+    dualChamberOnly: false,
   },
   selectedWitnessKey: null,
   filteredHearings: [],
@@ -25,6 +32,7 @@ const elements = {
   startDate: document.getElementById('startDate'),
   endDate: document.getElementById('endDate'),
   clearFilters: document.getElementById('clearFilters'),
+  dualChamberToggle: null,
   witnessList: document.getElementById('witnessList'),
   hearingsTableBody: document.querySelector('#hearingsTable tbody'),
   totalHearings: document.getElementById('totalHearings'),
@@ -39,26 +47,19 @@ document.addEventListener('DOMContentLoaded', initialise);
 
 async function initialise() {
   showTableMessage('Loading hearings…');
+  ensureDualChamberButton();
   attachEventListeners();
 
   try {
-    const text = await fetchCSV('Senate Committee Hearings.csv');
-    const rows = parseCSV(text);
+    const SQL = await loadSqlJsInstance();
+    const databaseBytes = await fetchDatabase(COMBINED_DB_PATH);
+    const db = new SQL.Database(databaseBytes);
 
-    if (!rows.length) {
-      showTableMessage('No data rows were found in the CSV.');
-      return;
-    }
-
-    const [headerRow, ...dataRows] = rows;
-    const columns = headerRow.map((col) => col.trim());
-
-    const hearings = dataRows
-      .map((row) => rowToHearing(row, columns))
-      .filter(Boolean);
+    const hearings = buildHearingsFromDatabase(db);
+    db.close();
 
     if (!hearings.length) {
-      showTableMessage('No hearings could be parsed from the CSV.');
+      showTableMessage('No hearings could be loaded from the database.');
       return;
     }
 
@@ -70,14 +71,16 @@ async function initialise() {
 
     state.witnessMap = buildWitnessMap(hearings);
     state.sortedWitnesses = Array.from(state.witnessMap.values()).sort(sortWitnesses);
+    state.witnessElements = new Map();
+    state.witnessMessage = null;
     elements.uniqueWitnesses.textContent = state.sortedWitnesses.length.toLocaleString();
 
     populateFilterOptions();
     renderWitnessList();
     applyFilters();
   } catch (error) {
-    console.error('Failed to load hearings CSV', error);
-    showTableMessage('Unable to load the CSV file. Ensure you are running a local server.');
+    console.error('Failed to load hearings database', error);
+    showTableMessage('Unable to load the combined hearings database. Ensure you are running a local server.');
   }
 }
 
@@ -114,6 +117,7 @@ function attachEventListeners() {
       tag: 'all',
       startDate: null,
       endDate: null,
+      dualChamberOnly: false,
     };
     state.selectedWitnessKey = null;
 
@@ -123,6 +127,7 @@ function attachEventListeners() {
     elements.startDate.value = '';
     elements.endDate.value = '';
 
+    updateDualChamberButton();
     renderWitnessList();
     applyFilters();
   });
@@ -134,164 +139,222 @@ function attachEventListeners() {
       updateSort(sortKey);
     });
   });
+
+  if (elements.dualChamberToggle) {
+    elements.dualChamberToggle.addEventListener('click', () => {
+      state.filters.dualChamberOnly = !state.filters.dualChamberOnly;
+      if (state.filters.dualChamberOnly && state.selectedWitnessKey) {
+        const selected = state.witnessMap.get(state.selectedWitnessKey);
+        if (!selected || selected.chambers.size < 2) {
+          state.selectedWitnessKey = null;
+        }
+      }
+      updateDualChamberButton();
+      renderWitnessList();
+      applyFilters();
+    });
+  }
 }
 
-async function fetchCSV(path) {
-  const response = await fetch(path, {
-    headers: { 'Cache-Control': 'no-cache' },
+function ensureDualChamberButton() {
+  if (elements.dualChamberToggle) return;
+  if (!elements.clearFilters) return;
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.id = 'dualChamberToggle';
+  button.className = 'button button--secondary';
+  elements.clearFilters.insertAdjacentElement('afterend', button);
+
+  elements.dualChamberToggle = button;
+  updateDualChamberButton();
+}
+
+function updateDualChamberButton() {
+  if (!elements.dualChamberToggle) return;
+  const active = state.filters.dualChamberOnly;
+  elements.dualChamberToggle.textContent = active
+    ? 'Show all witnesses'
+    : 'Show dual-chamber witnesses';
+  elements.dualChamberToggle.setAttribute('aria-pressed', active ? 'true' : 'false');
+}
+
+// Lazy-load sql.js from CDN and return the initialised module.
+function loadSqlJsInstance() {
+  if (sqlJsInstancePromise) {
+    return sqlJsInstancePromise;
+  }
+
+  sqlJsInstancePromise = new Promise((resolve, reject) => {
+    function initialise() {
+      if (typeof window.initSqlJs !== 'function') {
+        reject(new Error('sql.js init function not available.'));
+        return;
+      }
+      window
+        .initSqlJs({ locateFile: (file) => `${SQL_JS_CDN_BASE}${file}` })
+        .then(resolve)
+        .catch(reject);
+    }
+
+    if (typeof window.initSqlJs === 'function') {
+      initialise();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `${SQL_JS_CDN_BASE}sql-wasm.js`;
+    script.async = true;
+    script.onload = initialise;
+    script.onerror = () => reject(new Error('Failed to load sql.js library.'));
+    document.head.appendChild(script);
   });
 
+  return sqlJsInstancePromise;
+}
+
+async function fetchDatabase(path) {
+  const response = await fetch(path, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error(`HTTP ${response.status} while fetching ${path}`);
   }
-
-  return response.text();
+  const buffer = await response.arrayBuffer();
+  return new Uint8Array(buffer);
 }
 
-function parseCSV(rawText) {
-  if (!rawText) return [];
+// Pull hearings and witnesses into JS objects for the UI to consume.
+function buildHearingsFromDatabase(db) {
+  const hearingRows = selectAll(
+    db,
+    `
+      SELECT id, chamber, source_hearing_id, event_id, url, title, date, time, datetime,
+             location, committee, tags, scraped_at, witness_list_pdf
+      FROM hearings
+      ORDER BY date, id
+    `,
+  );
 
-  let text = rawText;
-  if (text.charCodeAt(0) === 0xfeff) {
-    text = text.slice(1);
-  }
+  const witnessRows = selectAll(
+    db,
+    `
+      SELECT hearing_id, name, title, truth_in_testimony_pdf
+      FROM witnesses
+      ORDER BY hearing_id, id
+    `,
+  );
 
-  text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const hearings = hearingRows.map((row) => ({
+    id: Number(row.id),
+    chamber: (row.chamber || '').trim(),
+    sourceId: row.source_hearing_id ? String(row.source_hearing_id).trim() : null,
+    eventId: row.event_id !== null && row.event_id !== undefined ? Number(row.event_id) : null,
+    pageUrl: (row.url || '').trim(),
+    videoUrl: '',
+    title: (row.title || '').trim(),
+    date: row.date || '',
+    dateObj: parseIsoDate(row.date || ''),
+    time: row.time || '',
+    datetime: row.datetime || '',
+    location: (row.location || '').trim(),
+    committee: (row.committee || '').trim(),
+    tags: parseTagColumn(row.tags),
+    scrapedAt: row.scraped_at || '',
+    witnessListPdf: row.witness_list_pdf || '',
+    witnesses: [],
+    witnessDetails: [],
+    witnessKeys: [],
+  }));
 
+  attachWitnessesToHearings(hearings, witnessRows);
+  return hearings;
+}
+
+function selectAll(db, query) {
+  const stmt = db.prepare(query);
   const rows = [];
-  let currentCell = '';
-  let currentRow = [];
-  let withinQuotes = false;
-
-  for (let index = 0; index < text.length; index += 1) {
-    const char = text[index];
-    const nextChar = text[index + 1];
-
-    if (char === '"') {
-      if (withinQuotes && nextChar === '"') {
-        currentCell += '"';
-        index += 1;
-      } else {
-        withinQuotes = !withinQuotes;
-      }
-      continue;
-    }
-
-    if (char === ',' && !withinQuotes) {
-      currentRow.push(currentCell);
-      currentCell = '';
-      continue;
-    }
-
-    if (char === '\n' && !withinQuotes) {
-      currentRow.push(currentCell);
-      rows.push(currentRow);
-      currentRow = [];
-      currentCell = '';
-      continue;
-    }
-
-    currentCell += char;
+  while (stmt.step()) {
+    rows.push(stmt.getAsObject());
   }
-
-  // Push the last cell if there's any residue.
-  if (currentCell.length > 0 || currentRow.length > 0) {
-    currentRow.push(currentCell);
-    rows.push(currentRow);
-  }
-
+  stmt.free();
   return rows;
 }
 
-function rowToHearing(row, columns) {
-  if (!row || row.every((cell) => cell.trim() === '')) {
-    return null;
-  }
-
-  const record = {};
-  columns.forEach((column, index) => {
-    record[column] = row[index] || '';
+function attachWitnessesToHearings(hearings, witnessRows) {
+  const hearingMap = new Map();
+  hearings.forEach((hearing) => {
+    hearingMap.set(hearing.id, hearing);
   });
 
-  const dateString = record.Date ? record.Date.trim() : '';
-  const parsedDate = parseDateString(dateString);
+  witnessRows.forEach((row) => {
+    const hearing = hearingMap.get(Number(row.hearing_id));
+    if (!hearing) return;
 
-  const witnesses = normalizeWitnesses(record.Witnesses || '');
-  const tags = Array.from(new Set(normalizeTags(record.Tags || '')));
+    const name = (row.name || '').trim();
+    if (!name) return;
 
-  return {
-    date: dateString,
-    dateObj: parsedDate,
-    title: (record.Title || '').trim(),
-    committee: (record.Committee || '').trim(),
-    pageUrl: (record.URL || '').trim(),
-    videoUrl: (record['Video Url'] || '').trim(),
-    tags,
-    witnesses,
-    witnessKeys: witnesses.map((name) => nameToKey(name)),
-  };
+    hearing.witnesses.push(name);
+    hearing.witnessDetails.push({
+      name,
+      title: (row.title || '').trim(),
+      truthInTestimonyPdf: row.truth_in_testimony_pdf || '',
+    });
+  });
+
+  hearings.forEach((hearing) => {
+    const seen = new Set();
+    const uniqueNames = [];
+    const uniqueDetails = [];
+
+    hearing.witnesses.forEach((name, index) => {
+      const key = nameToKey(name);
+      if (!key || seen.has(key)) {
+        return;
+      }
+      seen.add(key);
+      uniqueNames.push(name);
+      uniqueDetails.push(hearing.witnessDetails[index]);
+    });
+
+    hearing.witnesses = uniqueNames;
+    hearing.witnessDetails = uniqueDetails;
+    hearing.witnessKeys = uniqueNames.map((name) => nameToKey(name));
+  });
 }
 
-function parseDateString(value) {
-  if (!value) return null;
-  const parts = value.split('/');
-  if (parts.length < 3) return null;
-
-  const month = Number(parts[0]);
-  const day = Number(parts[1]);
-  let year = parts[2];
-
-  if (Number.isNaN(month) || Number.isNaN(day)) return null;
-
-  if (year.length === 2) {
-    const numeric = Number(year);
-    year = numeric >= 70 ? 1900 + numeric : 2000 + numeric;
-  } else {
-    year = Number(year);
-  }
-
-  if (!year || Number.isNaN(year)) return null;
-
-  return new Date(year, month - 1, day);
-}
-
-function normalizeWitnesses(raw) {
+function parseTagColumn(raw) {
   if (!raw) return [];
+  const text = String(raw).trim();
+  if (!text) return [];
 
-  return raw
-    .replace(/\u2022|\u25cf|\*/g, '\n')
-    .replace(/\r/g, '')
-    .split(/\n+/)
-    .flatMap((entry) => entry.split(/\s*;\s*/))
-    .map((entry) => entry.trim())
-    .filter(Boolean);
-}
-
-function normalizeTags(raw) {
-  if (!raw) return [];
-  const cleaned = raw.replace(/\r|\n/g, '').trim();
-  if (!cleaned) return [];
-
-  const candidate = cleaned.replace(/""/g, '"');
-
+  const candidate = text.replace(/""/g, '"');
   try {
     const parsed = JSON.parse(candidate);
     if (Array.isArray(parsed)) {
       return parsed.map((tag) => String(tag).trim()).filter(Boolean);
     }
   } catch (error) {
-    // Fall back to manual parsing when JSON.parse fails.
+    // Fall through to fallback parsing.
   }
 
-  const fallback = candidate
+  return candidate
     .replace(/^\[/, '')
     .replace(/\]$/, '')
-    .replace(/[\"]/g, '');
-
-  return fallback
     .split(/,\s*/)
-    .map((tag) => tag.replace(/^'+|'+$/g, '').trim())
+    .map((tag) => tag.replace(/^['\"]+|['\"]+$/g, '').trim())
     .filter(Boolean);
+}
+
+function parseIsoDate(value) {
+  if (!value) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if ([year, month, day].some((part) => Number.isNaN(part))) {
+    return null;
+  }
+  return new Date(year, month - 1, day);
 }
 
 function buildWitnessMap(hearings) {
@@ -313,6 +376,7 @@ function buildWitnessMap(hearings) {
         name,
         hearings: [],
         count: 0,
+        chambers: new Set(),
       };
 
       if (!entry.name || entry.name.length < name.length) {
@@ -321,9 +385,16 @@ function buildWitnessMap(hearings) {
 
       entry.hearings.push(hearing);
       entry.count += 1;
+      if (hearing.chamber) {
+        entry.chambers.add(hearing.chamber);
+      }
 
       map.set(key, entry);
     });
+  });
+
+  map.forEach((entry) => {
+    entry.isDualChamber = entry.chambers.size >= 2;
   });
 
   return map;
@@ -367,50 +438,109 @@ function populateFilterOptions() {
 
 function renderWitnessList() {
   const container = elements.witnessList;
-  container.innerHTML = '';
+  if (!container) return;
 
   if (!state.sortedWitnesses.length) {
     container.textContent = 'No witnesses found.';
+    state.witnessElements = new Map();
+    state.witnessMessage = null;
     return;
+  }
+
+  if (state.witnessElements.size === 0) {
+    container.innerHTML = '';
+    const message = document.createElement('p');
+    message.className = 'witness-list__message';
+    message.hidden = true;
+    container.append(message);
+    state.witnessMessage = message;
+
+    const fragment = document.createDocumentFragment();
+    state.sortedWitnesses.forEach((witness) => {
+      const button = createWitnessButton(witness);
+      state.witnessElements.set(witness.key, button);
+      fragment.append(button);
+    });
+    container.append(fragment);
   }
 
   const query = state.filters.witnessQuery.toLowerCase();
-  const matching = state.sortedWitnesses.filter((witness) =>
-    !query || witness.name.toLowerCase().includes(query),
-  );
+  const dualOnly = state.filters.dualChamberOnly;
+  let matches = 0;
+  let selectedVisible = false;
 
-  if (!matching.length) {
-    container.textContent = 'No witnesses match that search.';
-    return;
-  }
-
-  matching.forEach((witness) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'witness-item';
-    if (state.selectedWitnessKey === witness.key) {
-      button.classList.add('active');
+  state.sortedWitnesses.forEach((witness) => {
+    const button = state.witnessElements.get(witness.key);
+    if (!button) {
+      return;
     }
 
-    const nameSpan = document.createElement('span');
-    nameSpan.className = 'witness-item__name';
-    nameSpan.textContent = witness.name;
+    const match =
+      (!dualOnly || witness.isDualChamber) &&
+      (!query || witness.name.toLowerCase().includes(query));
 
-    const countSpan = document.createElement('span');
-    countSpan.className = 'witness-item__count';
-    countSpan.textContent = `${witness.count.toLocaleString()} hearings`;
-
-    button.append(nameSpan, countSpan);
-
-    button.addEventListener('click', () => {
-      state.selectedWitnessKey = state.selectedWitnessKey === witness.key ? null : witness.key;
-      renderWitnessList();
-      applyFilters();
-      scrollToTable();
-    });
-
-    container.append(button);
+    if (match) {
+      matches += 1;
+      button.hidden = false;
+      button.setAttribute('aria-hidden', 'false');
+      const isActive = state.selectedWitnessKey === witness.key;
+      button.classList.toggle('active', isActive);
+      if (isActive) {
+        selectedVisible = true;
+      }
+    } else {
+      button.hidden = true;
+      button.setAttribute('aria-hidden', 'true');
+      button.classList.remove('active');
+    }
   });
+
+  if (state.witnessMessage) {
+    if (matches === 0) {
+      const hasQuery = Boolean(state.filters.witnessQuery);
+      const messageText = hasQuery
+        ? 'No witnesses match that search.'
+        : state.filters.dualChamberOnly
+          ? 'No dual-chamber witnesses match the current filters.'
+          : 'No witnesses match the current filters.';
+      state.witnessMessage.textContent = messageText;
+      state.witnessMessage.hidden = false;
+    } else {
+      state.witnessMessage.hidden = true;
+    }
+  }
+
+  if (state.selectedWitnessKey && !selectedVisible) {
+    state.selectedWitnessKey = null;
+    applyFilters();
+    return;
+  }
+}
+
+function createWitnessButton(witness) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'witness-item';
+  button.dataset.witnessKey = witness.key;
+
+  const nameSpan = document.createElement('span');
+  nameSpan.className = 'witness-item__name';
+  nameSpan.textContent = witness.name;
+
+  const countSpan = document.createElement('span');
+  countSpan.className = 'witness-item__count';
+  countSpan.textContent = `${witness.count.toLocaleString()} hearings`;
+
+  button.append(nameSpan, countSpan);
+
+  button.addEventListener('click', () => {
+    state.selectedWitnessKey = state.selectedWitnessKey === witness.key ? null : witness.key;
+    renderWitnessList();
+    applyFilters();
+    scrollToTable();
+  });
+
+  return button;
 }
 
 function applyFilters() {
@@ -454,7 +584,7 @@ function renderHearingsTable(hearings) {
   if (!hearings.length) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 5;
+    cell.colSpan = 6;
     cell.className = 'empty-state';
     cell.textContent = 'No hearings match the current filters.';
     row.append(cell);
@@ -468,6 +598,10 @@ function renderHearingsTable(hearings) {
     const dateCell = document.createElement('td');
     dateCell.textContent = hearing.dateObj ? formatDate(hearing.dateObj) : hearing.date;
     row.append(dateCell);
+
+    const chamberCell = document.createElement('td');
+    chamberCell.textContent = formatChamber(hearing.chamber) || '—';
+    row.append(chamberCell);
 
     const titleCell = document.createElement('td');
     const titleLink = document.createElement('a');
@@ -590,11 +724,20 @@ function describeFilters() {
     parts.push(`through ${formatDate(endDate)}`);
   }
 
+  if (state.filters.dualChamberOnly) {
+    parts.push('dual-chamber witnesses only');
+  }
+
   if (!parts.length) {
     return '.';
   }
 
   return ` with ${parts.join(', ')}.`;
+}
+
+function formatChamber(chamber) {
+  if (!chamber) return '';
+  return chamber.charAt(0).toUpperCase() + chamber.slice(1);
 }
 
 function nameToKey(name) {
@@ -651,6 +794,8 @@ function compareByKey(key, a, b) {
       return compareDates(a.dateObj, b.dateObj);
     case 'title':
       return compareStrings(a.title, b.title);
+    case 'chamber':
+      return compareStrings(formatChamber(a.chamber), formatChamber(b.chamber));
     case 'committee':
       return compareStrings(a.committee, b.committee);
     case 'witnesses':
@@ -745,7 +890,7 @@ function showTableMessage(message) {
   tbody.innerHTML = '';
   const row = document.createElement('tr');
   const cell = document.createElement('td');
-  cell.colSpan = 5;
+  cell.colSpan = 6;
   cell.className = 'empty-state';
   cell.textContent = message;
   row.append(cell);
