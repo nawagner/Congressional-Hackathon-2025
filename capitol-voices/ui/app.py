@@ -9,7 +9,7 @@ st.title("📜 CapitolVoices")
 st.caption("machine-generated transcripts and summaries with timestamp verification.")
 
 # Add navigation tabs
-tab1, tab2, tab3 = st.tabs(["🏛️ Hearing Browser", "🎥 YouTube Processor", "🔍 Transcript Validator"])
+tab1, tab2, tab3, tab4 = st.tabs(["🏛️ Hearing Browser", "🎥 YouTube Processor", "🔍 Transcript Validator", "🏛️ Congress API"])
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -181,4 +181,47 @@ with tab3:
             - ✅ Content completeness
             - ✅ Summary accuracy
             - ✅ Question and answer flow
+            """)
+
+# Tab 4: Congress API Integration
+with tab4:
+    try:
+        import sys
+        import os
+        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        from congress_api_integration import congress_api_interface
+        congress_api_interface()
+    except ImportError as e:
+        st.error(f"Congress API integration not available: {e}")
+        st.info("Make sure requests library is installed: pip install requests")
+        
+        # Show a simple interface instead
+        st.header("🏛️ Congress.gov API Integration")
+        st.caption("Fetch real Congressional hearing data from the official API")
+        
+        st.info("""
+        **Congress.gov API Features:**
+        - Real Congressional hearing data
+        - Official committee information
+        - Accurate dates and titles
+        - Integration with CapitolVoices processing pipeline
+        - Search and lookup capabilities
+        
+        **To enable:** Make sure requests library is installed and restart the app.
+        """)
+        
+        # Show API information
+        with st.expander("📋 API Information"):
+            st.write("""
+            **API Key**: M48cj9inQcpQxtlQQM0tfobTP3YSr0fUG9niaC3G
+            
+            **Base URL**: https://api.congress.gov/v3
+            
+            **Rate Limits**:
+            - 5,000 requests per day
+            - 1 request per second
+            - Free tier available
+            
+            **Example Endpoint**: 
+            https://api.congress.gov/v3/hearing/116/house/41365?api_key=[YOUR_KEY]
             """)
