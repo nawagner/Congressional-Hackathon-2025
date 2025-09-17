@@ -45,14 +45,14 @@ def demo_youtube_processor_interface():
         col1, col2 = st.columns(2)
         
         with col1:
-            hearing_id = st.text_input("Hearing ID", value="demo-youtube-hearing-HhQ-tgm9vXQ")
-            title = st.text_input("Title", value="Congressional Hearing - YouTube Demo Video")
-            committee = st.text_input("Committee", value="Demo Committee for Hackathon")
+            hearing_id = st.text_input("Hearing ID", value="fauci-hearing-june-2024")
+            title = st.text_input("Title", value="A Hearing with Dr. Anthony Fauci")
+            committee = st.text_input("Committee", value="Select Subcommittee on the Coronavirus Pandemic")
         
         with col2:
-            date = st.date_input("Date", value=datetime(2025, 1, 15))
-            duration_minutes = st.number_input("Expected Duration (minutes)", min_value=1, max_value=480, value=120)
-            expected_speakers = st.number_input("Expected Speakers", min_value=1, max_value=50, value=8)
+            date = st.date_input("Date", value=datetime(2024, 6, 3))
+            duration_minutes = st.number_input("Expected Duration (minutes)", min_value=1, max_value=480, value=210)
+            expected_speakers = st.number_input("Expected Speakers", min_value=1, max_value=50, value=15)
         
         # Process button
         if st.button("🚀 Process YouTube Video (Demo)", type="primary"):
@@ -79,11 +79,11 @@ def demo_youtube_processor_interface():
                 st.subheader("Sample Transcript Segments")
                 
                 sample_segments = [
-                    {"time": "00:15:23", "speaker": "Rep. James Comer (Chair)", "text": "Good morning. I call this hearing of the House Committee on Oversight and Accountability to order."},
-                    {"time": "00:15:45", "speaker": "Rep. Jamie Raskin (Ranking Member)", "text": "Thank you, Mr. Chairman. I appreciate the opportunity to participate in this important discussion."},
-                    {"time": "00:16:12", "speaker": "Dr. Anthony Fauci (Witness)", "text": "Thank you, Chairman Comer and Ranking Member Raskin. I'm here to discuss scientific integrity and transparency."},
-                    {"time": "00:16:35", "speaker": "Rep. James Comer (Chair)", "text": "Dr. Fauci, I want to start with a question about the transparency of decision-making processes."},
-                    {"time": "00:17:02", "speaker": "Dr. Anthony Fauci (Witness)", "text": "Absolutely, Mr. Chairman. Our agency follows a rigorous peer-review process for all scientific recommendations."}
+                    {"time": "00:10:01", "speaker": "Dr. Brad Wenstrup (Chair)", "text": "The Select Subcommittee on the Coronavirus Pandemic will come to order. I want to welcome everyone this morning."},
+                    {"time": "00:10:15", "speaker": "Dr. Brad Wenstrup (Chair)", "text": "Good morning. And welcome, Dr. Fauci. First, I want to thank you for your decades of public service."},
+                    {"time": "00:10:45", "speaker": "Dr. Anthony Fauci (Witness)", "text": "Thank you, Mr. Chairman. I appreciate the opportunity to appear before this subcommittee voluntarily."},
+                    {"time": "00:11:20", "speaker": "Dr. Brad Wenstrup (Chair)", "text": "Dr. Fauci, we're here to investigate the COVID-19 pandemic and to explore lessons learned, positive or negative."},
+                    {"time": "00:12:05", "speaker": "Dr. Anthony Fauci (Witness)", "text": "I believe transparency and accountability are crucial for maintaining public trust in our health institutions."}
                 ]
                 
                 for segment in sample_segments:
@@ -95,15 +95,15 @@ def demo_youtube_processor_interface():
                 st.subheader("Generated Summary")
                 
                 st.write("**Executive Summary:**")
-                st.write("The House Committee on Oversight and Accountability held a hearing on federal agency accountability and transparency. Witnesses Dr. Anthony Fauci, Dr. Francis Collins, and Dr. Lawrence Tabak discussed scientific integrity, data sharing, and information classification processes.")
+                st.write("The Select Subcommittee on the Coronavirus Pandemic held a hearing with Dr. Anthony Fauci on June 3, 2024. The hearing focused on investigating the COVID-19 pandemic response, exploring lessons learned, and examining the role of public health officials during the crisis.")
                 
                 st.write("**Key Points (timestamp-verified):**")
                 summary_bullets = [
-                    "[00:15:23–00:15:45] Chairman Comer opened the hearing on federal agency accountability and transparency",
-                    "[00:16:12–00:16:35] Dr. Fauci emphasized scientific integrity and peer-review processes for federal health agencies",
-                    "[00:17:02–00:17:25] Dr. Fauci addressed transparency in decision-making processes",
-                    "[00:18:15–00:18:42] Ranking Member Raskin raised concerns about political influence on scientific communications",
-                    "[00:19:30–00:19:55] Dr. Collins discussed comprehensive oversight mechanisms for scientific integrity"
+                    "[00:10:01–00:10:15] Chairman Wenstrup opened the hearing and welcomed Dr. Fauci, acknowledging his decades of public service",
+                    "[00:10:45–00:11:20] Dr. Fauci expressed appreciation for the opportunity to appear voluntarily before the subcommittee",
+                    "[00:11:20–00:12:05] Chairman Wenstrup outlined the hearing's purpose: investigating COVID-19 response and exploring lessons learned",
+                    "[00:12:05–00:12:45] Dr. Fauci emphasized the importance of transparency and accountability in maintaining public trust",
+                    "[00:13:00–00:13:30] Discussion began on the challenges of public health communication during the pandemic"
                 ]
                 
                 for bullet in summary_bullets:
@@ -120,13 +120,13 @@ def demo_youtube_processor_interface():
                         VALUES(?, ?, ?, ?, ?)
                     """, (hearing_id, title, committee, str(date), youtube_url))
                     
-                    # Insert demo segments
+                    # Insert demo segments based on real hearing
                     demo_segments = [
-                        (hearing_id, 0.0, 15.5, "chair", "Good morning. I call this hearing of the House Committee on Oversight and Accountability to order."),
-                        (hearing_id, 15.5, 28.2, "ranking", "Thank you, Mr. Chairman. I appreciate the opportunity to participate in this important discussion."),
-                        (hearing_id, 28.2, 45.8, "witness_1", "Thank you, Chairman Comer and Ranking Member Raskin. I'm here to discuss scientific integrity and transparency."),
-                        (hearing_id, 45.8, 62.1, "chair", "Dr. Fauci, I want to start with a question about the transparency of decision-making processes."),
-                        (hearing_id, 62.1, 78.4, "witness_1", "Absolutely, Mr. Chairman. Our agency follows a rigorous peer-review process for all scientific recommendations.")
+                        (hearing_id, 601.0, 615.0, "chair", "The Select Subcommittee on the Coronavirus Pandemic will come to order. I want to welcome everyone this morning."),
+                        (hearing_id, 615.0, 630.0, "chair", "Good morning. And welcome, Dr. Fauci. First, I want to thank you for your decades of public service."),
+                        (hearing_id, 645.0, 660.0, "witness", "Thank you, Mr. Chairman. I appreciate the opportunity to appear before this subcommittee voluntarily."),
+                        (hearing_id, 680.0, 695.0, "chair", "Dr. Fauci, we're here to investigate the COVID-19 pandemic and to explore lessons learned, positive or negative."),
+                        (hearing_id, 725.0, 740.0, "witness", "I believe transparency and accountability are crucial for maintaining public trust in our health institutions.")
                     ]
                     
                     # Clear existing segments for this hearing first
@@ -141,22 +141,18 @@ def demo_youtube_processor_interface():
                     # Clear existing summary for this hearing first
                     cur.execute("DELETE FROM summaries WHERE hearing_id = ? AND type = ?", (hearing_id, "default"))
                     
-                    # Insert demo summary
+                    # Insert demo summary based on real hearing
                     demo_summary = {
-                        "executive": "The House Committee on Oversight and Accountability held a hearing on federal agency accountability and transparency. Witnesses discussed scientific integrity, data sharing, and information classification processes.",
+                        "executive": "The Select Subcommittee on the Coronavirus Pandemic held a hearing with Dr. Anthony Fauci on June 3, 2024. The hearing focused on investigating the COVID-19 pandemic response, exploring lessons learned, and examining the role of public health officials during the crisis.",
                         "bullets": summary_bullets,
                         "by_speaker": [
                             {
-                                "speaker": "Rep. James Comer (Chair)",
-                                "points": ["Opened hearing on federal agency accountability", "Questioned witnesses about decision-making processes"]
+                                "speaker": "Dr. Brad Wenstrup (Chair)",
+                                "points": ["Opened hearing and welcomed Dr. Fauci", "Acknowledged decades of public service", "Outlined hearing purpose: investigating COVID-19 response"]
                             },
                             {
-                                "speaker": "Rep. Jamie Raskin (Ranking Member)", 
-                                "points": ["Emphasized importance of government transparency", "Raised concerns about political influence"]
-                            },
-                            {
-                                "speaker": "Dr. Anthony Fauci (Witness)",
-                                "points": ["Discussed scientific integrity and peer-review processes", "Addressed transparency in decision-making"]
+                                "speaker": "Dr. Anthony Fauci (Witness)", 
+                                "points": ["Expressed appreciation for voluntary appearance", "Emphasized importance of transparency and accountability", "Discussed challenges of public health communication"]
                             }
                         ]
                     }
