@@ -1,0 +1,24 @@
+asr:
+  beam_size: 5
+  chunk_seconds: 600
+  engine: whisper
+  model: large-v3
+  vad: true
+diarization:
+  engine: pyannote
+  max_speakers: 12
+  min_speakers: 3
+hearing:
+  committee: House Committee on Oversight and Accountability
+  date: '2025-01-15'
+  id: house-oversight-demo-2025
+  title: House Oversight Committee - Federal Agency Accountability and Transparency
+  video_url: https://www.youtube.com/watch?v=DEMO_HEARING_URL
+naming:
+  roster_path: configs/rosters/house-oversight-demo.json
+storage:
+  artifacts_dir: artifacts
+  db_path: data/hearings.db
+summary:
+  max_tokens: 1200
+  mode: extractive
