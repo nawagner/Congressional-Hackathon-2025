@@ -5,9 +5,10 @@ from __future__ import annotations
 import argparse
 import json
 import sqlite3
+import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from urllib import request
 from urllib.error import HTTPError, URLError
 
@@ -27,6 +28,7 @@ USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 )
+EVENT_URL_TEMPLATE = "https://docs.house.gov/Committee/Calendar/ByEvent.aspx?EventID={event_id:d}"
 
 
 def fetch_html(url: str) -> str:
@@ -49,7 +51,7 @@ def parse_hearing(html: str) -> Dict[str, Any]:
     location = extract_location(panel)
     witnesses = extract_witnesses(panel)
 
-    data = {
+    return {
         "title": title,
         "date": date_info["date"],
         "time": date_info["time"],
@@ -57,7 +59,6 @@ def parse_hearing(html: str) -> Dict[str, Any]:
         "location": location,
         "witnesses": witnesses,
     }
-    return data
 
 
 def extract_title(panel: BeautifulSoup) -> str:
@@ -134,6 +135,7 @@ def ensure_schema(conn: sqlite3.Connection) -> None:
         CREATE TABLE IF NOT EXISTS hearings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             url TEXT UNIQUE,
+            event_id INTEGER,
             title TEXT,
             date TEXT,
             time TEXT,
@@ -152,17 +154,31 @@ def ensure_schema(conn: sqlite3.Connection) -> None:
         """
     )
 
+    _ensure_hearings_event_id_column(conn)
 
-def store_hearing(conn: sqlite3.Connection, url: str, data: Dict[str, Any]) -> None:
+
+def _ensure_hearings_event_id_column(conn: sqlite3.Connection) -> None:
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(hearings)")}
+    if "event_id" not in columns:
+        conn.execute("ALTER TABLE hearings ADD COLUMN event_id INTEGER")
+    conn.execute(
+        "CREATE UNIQUE INDEX IF NOT EXISTS idx_hearings_event_id ON hearings(event_id)"
+    )
+
+
+def store_hearing(
+    conn: sqlite3.Connection, url: str, event_id: Optional[int], data: Dict[str, Any]
+) -> None:
     ensure_schema(conn)
 
     scraped_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
     conn.execute(
         """
-        INSERT INTO hearings (url, title, date, time, datetime, location, scraped_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO hearings (url, event_id, title, date, time, datetime, location, scraped_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(url) DO UPDATE SET
+            event_id = COALESCE(excluded.event_id, hearings.event_id),
             title = excluded.title,
             date = excluded.date,
             time = excluded.time,
@@ -172,6 +188,7 @@ def store_hearing(conn: sqlite3.Connection, url: str, data: Dict[str, Any]) -> N
         """,
         (
             url,
+            event_id,
             data.get("title"),
             data.get("date"),
             data.get("time"),
@@ -198,25 +215,97 @@ def store_hearing(conn: sqlite3.Connection, url: str, data: Dict[str, Any]) -> N
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--url", default=DEFAULT_URL, help="Hearing page to scrape")
+    parser.add_argument("--url", help="Scrape a single hearing URL (default: latest known)")
     parser.add_argument(
         "--db",
         default=str(DEFAULT_DB_PATH),
         help="SQLite database file to write results (default: %(default)s)",
     )
+    parser.add_argument(
+        "--start-id",
+        type=int,
+        help="First EventID (inclusive) to scrape when crawling a range",
+    )
+    parser.add_argument(
+        "--end-id",
+        type=int,
+        help="Last EventID (inclusive) to scrape when crawling a range",
+    )
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=0.0,
+        help="Seconds to sleep between requests when crawling a range",
+    )
     args = parser.parse_args()
 
-    try:
-        data = run(args.url)
-    except (HTTPError, URLError, RuntimeError, ValueError) as exc:
-        parser.error(str(exc))
+    if args.start_id is not None or args.end_id is not None:
+        if args.start_id is None or args.end_id is None:
+            parser.error("--start-id and --end-id must be provided together")
+        if args.start_id > args.end_id:
+            parser.error("--start-id must be less than or equal to --end-id")
+        results = crawl_range(
+            start_id=args.start_id,
+            end_id=args.end_id,
+            db_path=args.db,
+            delay=args.delay,
+        )
+    else:
+        url = args.url or DEFAULT_URL
+        try:
+            data = run(url)
+        except (HTTPError, URLError, RuntimeError, ValueError) as exc:
+            parser.error(str(exc))
+        event_id = extract_event_id(url)
+        with sqlite3.connect(args.db) as conn:
+            store_hearing(conn, url, event_id, data)
+            conn.commit()
+        data_with_meta = {**data, "url": url, "event_id": event_id}
+        results = data_with_meta
 
-    with sqlite3.connect(args.db) as conn:
-        store_hearing(conn, args.url, data)
-        conn.commit()
-
-    json.dump(data, fp=sys.stdout, ensure_ascii=False, indent=2)
+    json.dump(results, fp=sys.stdout, ensure_ascii=False, indent=2)
     sys.stdout.write("\n")
+
+
+def crawl_range(
+    start_id: int, end_id: int, db_path: str, delay: float = 0.0
+) -> List[Dict[str, Any]]:
+    collected: List[Dict[str, Any]] = []
+    with sqlite3.connect(db_path) as conn:
+        ensure_schema(conn)
+        for event_id in range(start_id, end_id + 1):
+            url = EVENT_URL_TEMPLATE.format(event_id=event_id)
+            try:
+                data = run(url)
+            except HTTPError as exc:
+                if getattr(exc, "code", None) == 404:
+                    continue
+                _log_error(f"HTTP error for {url}: {exc}")
+                continue
+            except (URLError, RuntimeError, ValueError) as exc:
+                _log_error(f"Failed to scrape {url}: {exc}")
+                continue
+
+            store_hearing(conn, url, event_id, data)
+            conn.commit()
+
+            record = {**data, "url": url, "event_id": event_id}
+            collected.append(record)
+
+            if delay > 0:
+                time.sleep(delay)
+    return collected
+
+
+def extract_event_id(url: str) -> Optional[int]:
+    try:
+        return int(url.rsplit("=", 1)[-1])
+    except ValueError:
+        return None
+
+
+def _log_error(message: str) -> None:
+    print(message, file=sys.stderr)
 
 
 if __name__ == "__main__":
