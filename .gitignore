@@ -108,3 +108,4 @@ temp/
 
 .ipynb_checkpoints/
 .venv
+data

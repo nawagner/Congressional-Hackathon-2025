@@ -50,7 +50,7 @@ def analyze_all_laws():
         # Analyze objectives
         if website_content:
             objectives = analyzer.analyze_campaign_objectives(
-                website_content, law.sponsor_name
+                website_content, law.sponsor_name, website_url
             )
         else:
             objectives = CampaignObjectives(
@@ -58,6 +58,8 @@ def analyze_all_laws():
                 objectives=["No website content available"],
                 source="manual",
                 confidence_score=0.0,
+                source_url=website_url,
+                references=[],
             )
 
         # Compare law to objectives
@@ -75,6 +77,8 @@ def analyze_all_laws():
             "origin_chamber": law.origin_chamber,
             "objectives_source": objectives.source,
             "objectives_confidence": objectives.confidence_score,
+            "objectives_source_url": objectives.source_url,
+            "objectives_references": objectives.references,
             "alignment_score": comparison.get("alignment_score", 0),
             "supporting_objectives_count": len(
                 comparison.get("supporting_objectives", [])
@@ -86,6 +90,7 @@ def analyze_all_laws():
             "supporting_objectives": comparison.get("supporting_objectives", []),
             "conflicting_objectives": comparison.get("conflicting_objectives", []),
             "detailed_assessment": comparison.get("detailed_assessment", ""),
+            "law_citations": comparison.get("law_citations", []),
         }
 
         results.append(result)
