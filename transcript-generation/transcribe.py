@@ -135,13 +135,13 @@ def _split_audio_with_ffmpeg(
     return chunks
 
 
-def _shrink_chunks_if_needed(chunks: List[Path], max_bytes: int, temp_dir: Path) -> List[Path]:
+def _shrink_chunks_if_needed(chunks: List[Path], max_chunk_bytes: int, temp_dir: Path) -> List[Path]:
     """
     Ensure each chunk is under max_bytes by re-encoding to a lower bitrate if needed.
     """
     safe_chunks: List[Path] = []
     for idx, chunk in enumerate(chunks):
-        if chunk.stat().st_size <= max_bytes:
+        if chunk.stat().st_size <= max_chunk_bytes:
             safe_chunks.append(chunk)
             continue
 
