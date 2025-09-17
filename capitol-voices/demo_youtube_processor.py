@@ -137,6 +137,9 @@ def demo_youtube_processor_interface():
                             VALUES (?, ?, ?, ?, ?)
                         """, segment)
                     
+                    # Clear existing summary for this hearing first
+                    cur.execute("DELETE FROM summaries WHERE hearing_id = ? AND type = ?", (hearing_id, "default"))
+                    
                     # Insert demo summary
                     demo_summary = {
                         "executive": "The House Committee on Oversight and Accountability held a hearing on federal agency accountability and transparency. Witnesses discussed scientific integrity, data sharing, and information classification processes.",
@@ -158,7 +161,7 @@ def demo_youtube_processor_interface():
                     }
                     
                     cur.execute("""
-                        REPLACE INTO summaries (hearing_id, type, content_json)
+                        INSERT INTO summaries (hearing_id, type, content_json)
                         VALUES (?, ?, ?)
                     """, (hearing_id, "default", json.dumps(demo_summary)))
                     
