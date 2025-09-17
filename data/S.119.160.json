@@ -1,0 +1,264 @@
+{
+  "title": "Aerial Firefighting Enhancement Act of 2025",
+  "sponsor": {
+    "name": "Tim Sheehy",
+    "websiteUrl": "https://www.sheehy.senate.gov/",
+    "terms": [
+      {
+        "chamber": "Senate",
+        "congress": 119,
+        "memberType": "Senator",
+        "startYear": 2025,
+        "stateCode": "MT",
+        "stateName": "Montana"
+      }
+    ],
+    "state": "Montana",
+    "bioguideId": "S001232"
+  },
+  "actions": [
+    {
+      "actionCode": "10000",
+      "actionDate": "2025-01-21",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in Senate",
+      "type": "IntroReferral"
+    },
+    {
+      "actionDate": "2025-01-21",
+      "committees": [
+        {
+          "name": "Armed Services Committee",
+          "systemCode": "ssas00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssas00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Read twice and referred to the Committee on Armed Services.",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "14500",
+      "actionDate": "2025-04-08",
+      "committees": [
+        {
+          "name": "Armed Services Committee",
+          "systemCode": "ssas00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssas00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Senate Committee on Armed Services discharged by Unanimous Consent.",
+      "type": "Committee"
+    },
+    {
+      "actionDate": "2025-04-08",
+      "committees": [
+        {
+          "name": "Armed Services Committee",
+          "systemCode": "ssas00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssas00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Senate Committee on Armed Services discharged by Unanimous Consent.",
+      "type": "Discharge"
+    },
+    {
+      "actionDate": "2025-04-08",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Measure laid before Senate by unanimous consent. (consideration: CR S2480: 2)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "17000",
+      "actionDate": "2025-04-08",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in Senate: Passed Senate with an amendment by Unanimous Consent.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-04-08",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Passed Senate with an amendment by Unanimous Consent. (text: CR S2480)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-04-09",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Message on Senate action sent to the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H14000",
+      "actionDate": "2025-04-09",
+      "actionTime": "12:23:13",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Received in the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H15000",
+      "actionDate": "2025-04-09",
+      "actionTime": "12:27:38",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Held at the desk.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30300",
+      "actionDate": "2025-06-03",
+      "actionTime": "15:00:45",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Mr. Comer moved to suspend the rules and pass the bill.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-06-03",
+      "actionTime": "15:00:55",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered under suspension of the rules. (consideration: CR H2390)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-06-03",
+      "actionTime": "15:00:56",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "DEBATE - The House proceeded with forty minutes of debate on S. 160.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "8000",
+      "actionDate": "2025-06-03",
+      "actionTime": "15:04:55",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in House: On motion to suspend the rules and pass the bill Agreed to by voice vote. (text: CR H2390)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37300",
+      "actionDate": "2025-06-03",
+      "actionTime": "15:04:55",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "On motion to suspend the rules and pass the bill Agreed to by voice vote. (text: CR H2390)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H38310",
+      "actionDate": "2025-06-03",
+      "actionTime": "15:04:57",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Motion to reconsider laid on the table Agreed to without objection.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "28000",
+      "actionDate": "2025-06-10",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Presented to President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "E20000",
+      "actionDate": "2025-06-10",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Presented to President.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-06-12",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E30000",
+      "actionDate": "2025-06-12",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-06-12",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-18.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E40000",
+      "actionDate": "2025-06-12",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-18.",
+      "type": "President"
+    }
+  ],
+  "text": "[Congressional Bills 119th Congress]\n[From the U.S. Government Publishing Office]\n[S. 160 Enrolled Bill (ENR)]\n\n        S.160\n\n                     One Hundred Nineteenth Congress\n\n                                 of the\n\n                        United States of America\n\n\n                          AT THE FIRST SESSION\n\n           Begun and held at the City of Washington on Friday,\n         the third day of January, two thousand and twenty five\n\n\n                                 An Act\n\n\n \n   To amend the Wildfire Suppression Aircraft Transfer Act of 1996 to \nreauthorize the sale by the Department of Defense of aircraft and parts \n       for wildfire suppression purposes, and for other purposes.\n\n    Be it enacted by the Senate and House of Representatives of the \nUnited States of America in Congress assembled,\nSECTION 1. SHORT TITLE.\n    This Act may be cited as the ``Aerial Firefighting Enhancement Act \nof 2025''.\nSEC. 2. MODIFICATION AND REAUTHORIZATION OF AUTHORITY FOR SALE BY \nDEPARTMENT OF DEFENSE OF AIRCRAFT AND PARTS FOR WILDFIRE SUPPRESSION \nPURPOSES.\n    Section 2 of the Wildfire Suppression Aircraft Transfer Act of 1996 \n(Public Law 104-307; 10 U.S.C. 2576 note) is amended--\n        (1) in subsection (a)(1)--\n            (A) by striking ``a period'' and inserting ``the period''; \n        and\n            (B) by inserting ``or water'' after ``fire retardant'';\n        (2) in subsection (b), by striking ``sold under subsection \n    (a)'' and all that follows through the period at the end and \n    inserting ``sold under subsection (a) may be used only for the \n    provision of aircraft services for wildfire suppression \n    purposes.'';\n        (3) in subsection (c), by inserting ``or water'' after ``fire \n    retardant'';\n        (4) in subsection (d)(1), in the second sentence, by striking \n    ``subsection (a)(1)'' and inserting ``subsection (g)''; and\n        (5) by striking subsection (g) and inserting the following:\n    ``(g) Period for Exercise of Authority.--The period specified in \nthis subsection is the period beginning on the date of the enactment of \nthe Aerial Firefighting Enhancement Act of 2025 and ending on October \n1, 2035.''.\n\n                               Speaker of the House of Representatives.\n\n                            Vice President of the United States and    \n                                               President of the Senate.",
+  "originChamberCode": "S",
+  "congress": 119,
+  "number": "160"
+}

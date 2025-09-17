@@ -1,0 +1,334 @@
+{
+  "title": "Homebuyers Privacy Protection Act",
+  "sponsor": {
+    "name": "John W. Rose",
+    "websiteUrl": null,
+    "terms": [
+      {
+        "chamber": "House of Representatives",
+        "congress": 119,
+        "district": 6,
+        "memberType": "Representative",
+        "startYear": 2025,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "chamber": "House of Representatives",
+        "congress": 118,
+        "district": 6,
+        "endYear": 2025,
+        "memberType": "Representative",
+        "startYear": 2023,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "chamber": "House of Representatives",
+        "congress": 117,
+        "district": 6,
+        "endYear": 2023,
+        "memberType": "Representative",
+        "startYear": 2021,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "chamber": "House of Representatives",
+        "congress": 116,
+        "district": 6,
+        "endYear": 2021,
+        "memberType": "Representative",
+        "startYear": 2019,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      }
+    ],
+    "state": "Tennessee",
+    "bioguideId": "R000612"
+  },
+  "actions": [
+    {
+      "actionCode": "1000",
+      "actionDate": "2025-04-10",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in House",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "Intro-H",
+      "actionDate": "2025-04-10",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in House",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "H11100",
+      "actionDate": "2025-04-10",
+      "committees": [
+        {
+          "name": "Financial Services Committee",
+          "systemCode": "hsba00",
+          "url": "https://api.congress.gov/v3/committee/house/hsba00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Referred to the House Committee on Financial Services.",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "H15001",
+      "actionDate": "2025-06-10",
+      "committees": [
+        {
+          "name": "Financial Services Committee",
+          "systemCode": "hsba00",
+          "url": "https://api.congress.gov/v3/committee/house/hsba00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 1,
+        "name": "House committee actions"
+      },
+      "text": "Committee Consideration and Mark-up Session Held",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "H19000",
+      "actionDate": "2025-06-10",
+      "committees": [
+        {
+          "name": "Financial Services Committee",
+          "systemCode": "hsba00",
+          "url": "https://api.congress.gov/v3/committee/house/hsba00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 1,
+        "name": "House committee actions"
+      },
+      "text": "Ordered to be Reported (Amended) by the Yeas and Nays: 46 - 0.",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "5000",
+      "actionDate": "2025-06-20",
+      "committees": [
+        {
+          "name": "Financial Services Committee",
+          "systemCode": "hsba00",
+          "url": "https://api.congress.gov/v3/committee/house/hsba00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Reported (Amended) by the Committee on Financial Services. H. Rept. 119-166.",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "H12200",
+      "actionDate": "2025-06-20",
+      "committees": [
+        {
+          "name": "Financial Services Committee",
+          "systemCode": "hsba00",
+          "url": "https://api.congress.gov/v3/committee/house/hsba00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Reported (Amended) by the Committee on Financial Services. H. Rept. 119-166.",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "H12410",
+      "actionDate": "2025-06-20",
+      "calendarNumber": {
+        "calendar": "U00133"
+      },
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Placed on the Union Calendar, Calendar No. 133.",
+      "type": "Calendars"
+    },
+    {
+      "actionCode": "H30300",
+      "actionDate": "2025-06-23",
+      "actionTime": "17:42:58",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Mr. Rose moved to suspend the rules and pass the bill, as amended.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-06-23",
+      "actionTime": "17:43:15",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered under suspension of the rules. (consideration: CR H2876-2877)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-06-23",
+      "actionTime": "17:43:18",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "DEBATE - The House proceeded with forty minutes of debate on H.R. 2808.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "8000",
+      "actionDate": "2025-06-23",
+      "actionTime": "17:53:50",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in House: On motion to suspend the rules and pass the bill, as amended Agreed to by voice vote. (text: CR H2876)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37300",
+      "actionDate": "2025-06-23",
+      "actionTime": "17:53:50",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "On motion to suspend the rules and pass the bill, as amended Agreed to by voice vote. (text: CR H2876)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H38310",
+      "actionDate": "2025-06-23",
+      "actionTime": "17:53:53",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Motion to reconsider laid on the table Agreed to without objection.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-06-24",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Received in the Senate. Read twice. Placed on Senate Legislative Calendar under General Orders. Calendar No. 104.",
+      "type": "Calendars"
+    },
+    {
+      "actionCode": "17000",
+      "actionDate": "2025-08-02",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in Senate: Passed Senate without amendment by Unanimous Consent.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-08-02",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Passed Senate without amendment by Unanimous Consent. (consideration: CR S5522: 1)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-08-08",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Message on Senate action sent to the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "28000",
+      "actionDate": "2025-08-25",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Presented to President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "E20000",
+      "actionDate": "2025-08-25",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Presented to President.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-09-05",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E30000",
+      "actionDate": "2025-09-05",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-09-05",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-36.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E40000",
+      "actionDate": "2025-09-05",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-36.",
+      "type": "President"
+    }
+  ],
+  "text": "[Congressional Bills 119th Congress]\n[From the U.S. Government Publishing Office]\n[H.R. 2808 Enrolled Bill (ENR)]\n\n        H.R.2808\n\n                     One Hundred Nineteenth Congress\n\n                                 of the\n\n                        United States of America\n\n\n                          AT THE FIRST SESSION\n\n           Begun and held at the City of Washington on Friday,\n         the third day of January, two thousand and twenty-five\n\n\n                                 An Act\n\n\n \n  To amend the Fair Credit Reporting Act to prevent consumer reporting \n agencies from furnishing consumer reports under certain circumstances, \n                         and for other purposes.\n\n    Be it enacted by the Senate and House of Representatives of the \nUnited States of America in Congress assembled,\nSECTION 1. SHORT TITLE.\n    This Act may be cited as the ``Homebuyers Privacy Protection Act''.\nSEC. 2. TREATMENT OF PRESCREENING REPORT REQUESTS.\n    (a) In General.--Section 604(c) of the Fair Credit Reporting Act \n(15 U.S.C. 1681b(c)) is amended by adding at the end the following:\n        ``(4) Treatment of prescreening report requests.--\n            ``(A) Definitions.--In this paragraph:\n                ``(i) Credit union.--The term `credit union' means a \n            Federal credit union or a State credit union, as those \n            terms are defined, respectively, in section 101 of the \n            Federal Credit Union Act (12 U.S.C. 1752).\n                ``(ii) Insured depository institution.--The term \n            `insured depository institution' has the meaning given the \n            term in section 3 of the Federal Deposit Insurance Act (12 \n            U.S.C. 1813(c)).\n                ``(iii) Residential mortgage loan.--The term \n            `residential mortgage loan' has the meaning given the term \n            in section 1503 of the S.A.F.E. Mortgage Licensing Act of \n            2008 (12 U.S.C. 5102).\n                ``(iv) Servicer.--The term `servicer' has the meaning \n            given the term in section 6(i) of the Real Estate \n            Settlement Procedures Act of 1974 (12 U.S.C. 2605(i)).\n            ``(B) Limitation.--If a person requests a consumer report \n        from a consumer reporting agency in connection with a credit \n        transaction involving a residential mortgage loan, that agency \n        may not, based in whole or in part on that request, furnish a \n        consumer report to another person under this subsection \n        unless--\n                ``(i) the transaction consists of a firm offer of \n            credit or insurance; and\n                ``(ii) that other person--\n\n                    ``(I) has submitted documentation to that agency \n                certifying that such other person has, pursuant to \n                paragraph (1)(A), the authorization of the consumer to \n                whom the consumer report relates; or\n                    ``(II)(aa) has originated a current residential \n                mortgage loan of the consumer to whom the consumer \n                report relates;\n                    ``(bb) is the servicer of a current residential \n                mortgage loan of the consumer to whom the consumer \n                report relates; or\n                    ``(cc)(AA) is an insured depository institution or \n                credit union; and\n                    ``(BB) holds a current account for the consumer to \n                whom the consumer report relates.''.\n\nSEC. 3. EFFECTIVE DATE.\n    This Act, and the amendments made by this Act, shall take effect on \nthe date that is 180 days after the date of enactment of this Act.\nSEC. 4. GAO STUDY.\n    (a) In General.--The Comptroller General of the United States shall \ncarry out a study on the value of trigger leads received by text \nmessage that includes input from State regulatory agencies, mortgage \nlenders, depository institutions (as defined in section 3 of the \nFederal Deposit Insurance Act (12 U.S.C. 1813)), consumer reporting \nagencies (as defined in section 603 of the Fair Credit Reporting Act \n(15 U.S.C. 1681a)), and consumers.\n    (b) Report.--Not later than the end of the 12-month period \nbeginning on the date of enactment of this Act, the Comptroller General \nshall submit to Congress a report containing any findings and \ndeterminations made in the study required by subsection (a).\n\n                               Speaker of the House of Representatives.\n\n                            Vice President of the United States and    \n                                               President of the Senate.",
+  "originChamberCode": "H",
+  "congress": 119,
+  "number": "2808"
+}

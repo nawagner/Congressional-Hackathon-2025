@@ -1,0 +1,309 @@
+{
+  "title": "PRO Veterans Act of 2025",
+  "sponsor": {
+    "name": "Dan Sullivan",
+    "websiteUrl": "https://www.sullivan.senate.gov",
+    "terms": [
+      {
+        "chamber": "Senate",
+        "congress": 119,
+        "memberType": "Senator",
+        "startYear": 2025,
+        "stateCode": "AK",
+        "stateName": "Alaska"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 118,
+        "endYear": 2025,
+        "memberType": "Senator",
+        "startYear": 2023,
+        "stateCode": "AK",
+        "stateName": "Alaska"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 117,
+        "endYear": 2023,
+        "memberType": "Senator",
+        "startYear": 2021,
+        "stateCode": "AK",
+        "stateName": "Alaska"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 116,
+        "endYear": 2021,
+        "memberType": "Senator",
+        "startYear": 2019,
+        "stateCode": "AK",
+        "stateName": "Alaska"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 115,
+        "endYear": 2019,
+        "memberType": "Senator",
+        "startYear": 2017,
+        "stateCode": "AK",
+        "stateName": "Alaska"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 114,
+        "endYear": 2017,
+        "memberType": "Senator",
+        "startYear": 2015,
+        "stateCode": "AK",
+        "stateName": "Alaska"
+      }
+    ],
+    "state": "Alaska",
+    "bioguideId": "S001198"
+  },
+  "actions": [
+    {
+      "actionCode": "10000",
+      "actionDate": "2025-02-05",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in Senate",
+      "type": "IntroReferral"
+    },
+    {
+      "actionDate": "2025-02-05",
+      "committees": [
+        {
+          "name": "Veterans' Affairs Committee",
+          "systemCode": "ssva00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssva00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Read twice and referred to the Committee on Veterans' Affairs.",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "14500",
+      "actionDate": "2025-04-08",
+      "committees": [
+        {
+          "name": "Veterans' Affairs Committee",
+          "systemCode": "ssva00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssva00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Senate Committee on Veterans' Affairs discharged by Unanimous Consent.",
+      "type": "Committee"
+    },
+    {
+      "actionDate": "2025-04-08",
+      "committees": [
+        {
+          "name": "Veterans' Affairs Committee",
+          "systemCode": "ssva00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssva00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Senate Committee on Veterans' Affairs discharged by Unanimous Consent.",
+      "type": "Discharge"
+    },
+    {
+      "actionDate": "2025-04-08",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Measure laid before Senate by unanimous consent. (consideration: CR S2480: 1)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "17000",
+      "actionDate": "2025-04-08",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in Senate: Passed Senate with an amendment by Unanimous Consent.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-04-08",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Passed Senate with an amendment by Unanimous Consent. (text of amendment in the nature of a substitute: CR S2478-2479: 4)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-04-09",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Message on Senate action sent to the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H14000",
+      "actionDate": "2025-04-09",
+      "actionTime": "12:23:14",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Received in the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H15000",
+      "actionDate": "2025-04-09",
+      "actionTime": "12:27:43",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Held at the desk.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30300",
+      "actionDate": "2025-07-21",
+      "actionTime": "14:51:19",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Mr. Bost moved to suspend the rules and pass the bill.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-07-21",
+      "actionTime": "14:51:45",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered under suspension of the rules. (consideration: CR H3484-3487: 6)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-07-21",
+      "actionTime": "14:51:47",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "DEBATE - The House proceeded with forty minutes of debate on S. 423.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "8000",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:09:23",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in House: On motion to suspend the rules and pass the bill Agreed to by voice vote. (text: CR H3484-3485)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37300",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:09:23",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "On motion to suspend the rules and pass the bill Agreed to by voice vote. (text: CR H3484-3485)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H38310",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:09:26",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Motion to reconsider laid on the table Agreed to without objection.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "28000",
+      "actionDate": "2025-08-12",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Presented to President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "E20000",
+      "actionDate": "2025-08-12",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Presented to President.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E30000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-33.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E40000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-33.",
+      "type": "President"
+    }
+  ],
+  "text": "[Congressional Bills 119th Congress]\n[From the U.S. Government Publishing Office]\n[S. 423 Enrolled Bill (ENR)]\n\n        S.423\n\n                     One Hundred Nineteenth Congress\n\n                                 of the\n\n                        United States of America\n\n\n                          AT THE FIRST SESSION\n\n           Begun and held at the City of Washington on Friday,\n         the third day of January, two thousand and twenty five\n\n\n                                 An Act\n\n\n \n To protect regular order for budgeting for the Department of Veterans \n                    Affairs, and for other purposes.\n\n    Be it enacted by the Senate and House of Representatives of the \nUnited States of America in Congress assembled,\nSECTION 1. PROTECTING REGULAR ORDER FOR VETERANS.\n    (a) Short Title.--This section may be cited as the ``Protecting \nRegular Order for Veterans Act of 2025'' or the ``PRO Veterans Act of \n2025''.\n    (b) Quarterly Briefings on Department of Veterans Affairs Budgetary \nShortfalls.--\n        (1) Quarterly briefings.--\n            (A) Quarterly briefings required.--During the first quarter \n        beginning after the date of the enactment of this Act and in \n        each quarter thereafter until the date that is three years \n        after the date of the enactment of this Act, the Secretary of \n        Veterans Affairs shall provide to the appropriate committees of \n        Congress a quarterly briefing, in person, on the budget of the \n        Department of Veterans Affairs and any shortfall the Department \n        may be experiencing.\n            (B) Plans.--In any case in which the Secretary informs \n        Congress during a briefing under paragraph (1) that the \n        Department is experiencing a shortfall, the Secretary shall, \n        during such briefing, present the plans of the Secretary to \n        address or mitigate the shortfall.\n        (2) Definitions.--In this subsection:\n            (A) Appropriate committees of congress.--The term \n        ``appropriate committees of Congress'' means--\n                (i) the Committee on Veterans' Affairs and the \n            Committee on Appropriations of the Senate; and\n                (ii) the Committee on Veterans' Affairs and the \n            Committee on Appropriations of the House of \n            Representatives.\n            (B) Shortfall.--The term ``shortfall'', with respect to a \n        fiscal year, means that the amount of appropriations required \n        by the Department of Veterans Affairs for such fiscal year to \n        meet all of the statutory obligations of the Department during \n        that fiscal year exceeds the amount of appropriations requested \n        for the Department for that fiscal year in the budget of the \n        President submitted pursuant to section 1105(a) of title 31, \n        United States Code, for that fiscal year.\n    (c) Limitations on Provision of Incentives for Critical Skills to \nSenior Executive Service Employees of Department of Veterans Affairs.--\nSection 706(d) of title 38, United States Code, is amended by adding at \nthe end the following:\n    ``(7)(A) Subject to subparagraph (B)(ii), a critical skill \nincentive may not be provided under paragraph (1) to an employee of the \nDepartment employed in a Senior Executive Service position, or a \nposition in another comparable system for senior-level Government \nemployees, as defined by the Secretary, whose position is at the \nCentral Office of the Department, including the Veterans Health \nAdministration, the Veterans Benefits Administration, and the National \nCemetery Administration, regardless of the actual location where the \nemployee performs the functions of the position.\n    ``(B)(i) A critical skill incentive provided under paragraph (1) to \nan employee of the Department employed in a Senior Executive Service \nposition, or a position in another comparable system for senior-level \nGovernment employees, as defined by the Secretary, not described in \nsubparagraph (A) of this paragraph may only be provided--\n        ``(I) on an individual basis and may not be provided to a group \n    of such employees; and\n        ``(II) upon approval of the following officers or those serving \n    in an acting capacity:\n            ``(aa) The Under Secretary for Benefits, the Under \n        Secretary for Health, or the Under Secretary for Memorial \n        Affairs.\n            ``(bb) The Assistant Secretary for Human Resources and \n        Administration.\n            ``(cc) The Director of the Office of Management or the \n        Chief Financial Officer.\n            ``(dd) The Assistant Secretary for Accountability and \n        Whistleblower Protection.\n            ``(ee) The General Counsel.\n            ``(ff) Such other officers as the Secretary determines \n        appropriate.\n    ``(ii) In the case of an employee of the Department employed in a \nSenior Executive Service position, or a position in another comparable \nsystem for senior-level Government employees, as defined by the \nSecretary, whose position is primarily at the Central Office of the \nDepartment, but who performs some portion of the employee's job \nfunction at other facilities of the Department, as defined by the \nSecretary, not at Central Office--\n        ``(I) the employee shall not be considered described in \n    subparagraph (A) with respect to the portion of the employee's job \n    function that is based out of non-Central Office facilities of the \n    Department; and\n        ``(II) any critical skill incentive provided under paragraph \n    (1) to the employee for the portion of the employee's job function \n    that is based out of facilities of the Department other than the \n    Central Office shall be proportionate to the time spent at those \n    Department facilities.\n    ``(C)(i) Not later than one year after the date of the enactment of \nthe Protecting Regular Order for Veterans Act of 2025, and not less \nfrequently than once each year thereafter, the Secretary shall submit \nto the Committee on Veterans' Affairs of the Senate and the Committee \non Veterans' Affairs of the House of Representatives an annual report \non the employees of the Department employed in a Senior Executive \nService position, or a position in another comparable system for \nsenior-level Government employees, as defined by the Secretary, who \nwere provided a critical skill incentive under paragraph (1).\n    ``(ii) Reports submitted pursuant to clause (i) may be submitted by \nincorporating their contents into other congressionally mandated \nreports to the committees described in such clause.\n    ``(D) In this paragraph, the term `Senior Executive Service \nposition' has the meaning given such term in section 3132(a) of title \n5.''.\nSEC. 2. ESTABLISHMENT OF VETERANS EXPERIENCE OFFICE.\n    (a) Short Title.--This section may be cited as the ``Improving \nVeterans' Experience Act of 2025''.\n    (b) Establishment.--\n        (1) In general.--Chapter 3 of title 38, United States Code, is \n    amended by adding at the end the following new section:\n``Sec. 325. Veterans experience office\n    ``(a) Establishment.--There is established in the Department within \nthe Office of the Secretary an office to be known as the `Veterans \nExperience Office' (in this section referred to as the `Office').\n    ``(b) Head of Office.--(1) The head of the Office shall be the \nChief Veterans Experience Officer.\n    ``(2) The Chief Veterans Experience Officer shall--\n        ``(A) be appointed by the Secretary from among individuals the \n    Secretary considers qualified to perform the duties of the \n    position;\n        ``(B) report directly to the Secretary; and\n        ``(C) be responsible for carrying out the functions of the \n    Office set forth under subsection (c).\n    ``(c) Function.--The functions of the Office are as follows:\n        ``(1) Carrying out the key customer experience initiatives of \n    the Department relating to veterans' and other beneficiaries' \n    satisfaction with and usage of benefits and services furnished \n    under laws administered by the Secretary for which they are \n    eligible, including setting the strategy, framework, policy, and \n    other guidance for the Department relating to customer experience, \n    including ensuring the activities of the Office and those of other \n    organizations and offices within the Department are coordinated and \n    not duplicative.\n        ``(2) Requiring the heads of other organizations and offices \n    within the Department to report regularly on customer experience \n    metrics, action plans, and other customer experience improvement \n    efforts to the Chief Veterans Experience Officer.\n        ``(3) Collecting veteran-derived data--\n            ``(A) to determine veteran and beneficiary satisfaction \n        with and usage of the benefits and services furnished under \n        laws administered by the Secretary for which they are eligible; \n        and\n            ``(B) to be considered during policymaking.\n        ``(4) Providing strategic guidance and strategies to Department \n    entities for engaging with veterans and beneficiaries regarding \n    benefits and services furnished under laws administered by the \n    Secretary, including those not using such benefits and services.\n        ``(5) Assessing and advising the Secretary on the accuracy and \n    helpfulness of the websites and other customer-facing information \n    of the Department, be it available electronically or in any other \n    format.\n        ``(6) Assessing and advising the Secretary on the status and \n    opportunities for improvement of the customer service efforts of \n    the Department.\n    ``(d) Reports.--(1) Each year, the Chief Veterans Experience \nOfficer shall submit to the Secretary a summary of the data received by \nthe Chief Veterans Experience Officer under subsection (c)(2).\n    ``(2) Each year, not later than 180 days after the date on which \nthe Secretary receives the summary under paragraph (1), the Secretary \nshall submit to Congress an annual summary and analysis of the matters \nsummarized pursuant to such paragraph.\n    ``(3) Each annual summary submitted pursuant to paragraph (2) shall \ninclude the following:\n        ``(A) Data regarding customer service and experience feedback, \n    disaggregated by benefit or service furnished under laws \n    administered by the Secretary, and relevant demographic data of the \n    veterans and beneficiaries providing the feedback.\n        ``(B) Data regarding veteran and beneficiary satisfaction with \n    and usage of benefits or services, disaggregated by benefit or \n    service furnished under laws administered by the Secretary, and \n    relevant demographic data of the veterans and beneficiaries \n    providing the feedback, including--\n            ``(i) potential reasons for not using the benefits or \n        services, such as--\n                ``(I) eligibility;\n                ``(II) lack of knowledge or awareness of existence of \n            benefit or service;\n                ``(III) barriers of technology, information, or time; \n            and\n                ``(IV) other related reasons; and\n            ``(ii) an analysis of how such reasons may be addressed.\n    ``(e) Staff and Resources.--(1) The Secretary shall ensure that--\n        ``(A) the Office has such staff, resources, and access to \n    customer service and experience information as may be necessary to \n    carry out the functions of the Office; and\n        ``(B) any information provided to the Office does not include \n    personally identifiable information of an individual veteran, \n    survivor, dependent, or other beneficiary unless such individual \n    provides appropriate consent to allow such information to be shared \n    with the Office.\n    ``(2) Funds available for basic pay and other administrative \nexpenses of other Department organizations and offices may be available \nto reimburse the Office for all services provided at rates which will \nrecover actual costs for services provided to such organizations if the \nSecretary determines that contributing to such costs will not undermine \nthe ability of any such organization or office to provide services \nrequired by such office.\n    ``(3) Nothing in this subsection shall be construed to authorize an \nincrease in the number of full-time employees otherwise authorized for \nthe Department.\n    ``(f) Privacy.--Nothing in this section shall be construed to \nauthorize the Chief Veterans Experience Officer to disclose any record \nin contravention of section 552a of title 5 (commonly referred to as \nthe `Privacy Act of 1974').\n    ``(g) Sunset.--The requirements and authorities of this section \nshall terminate on September 30, 2028.''.\n        (2) Clerical amendment.--The table of sections at the beginning \n    of chapter 3 of such title is amended by adding at the end the \n    following new item:\n``325. Veterans Experience Office.''.\n\n    (c) Comptroller General of the United States Review of Veterans \nExperience Office and Customer Service Improvement Efforts.--Not later \nthan 540 days after the date of the enactment of this Act, the \nComptroller General of the United States shall--\n        (1) complete an analysis of the methodology, effectiveness, and \n    implementation of findings and feedback of veterans and \n    beneficiaries used by the Department of Veterans Affairs, including \n    the Veterans Experience Office, to improve veteran and beneficiary \n    customer experience and satisfaction, including through the use of \n    what are known as ``trust-scores'', Veteran Signals also known as \n    ``VSignals'', and related survey and data collection activities, \n    processes, and initiatives; and\n        (2) submit to the Committee on Veterans' Affairs of the Senate \n    and the Committee on Veterans' Affairs of the House of \n    Representatives a report setting forth the findings of the \n    Comptroller General with respect to the analysis completed pursuant \n    to paragraph (1).\n\n                               Speaker of the House of Representatives.\n\n                            Vice President of the United States and    \n                                               President of the Senate.",
+  "originChamberCode": "S",
+  "congress": 119,
+  "number": "423"
+}

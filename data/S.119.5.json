@@ -1,0 +1,471 @@
+{
+  "title": "Laken Riley Act",
+  "sponsor": {
+    "name": "Katie Boyd Britt",
+    "websiteUrl": "https://www.britt.senate.gov/",
+    "terms": [
+      {
+        "chamber": "Senate",
+        "congress": 119,
+        "memberType": "Senator",
+        "startYear": 2025,
+        "stateCode": "AL",
+        "stateName": "Alabama"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 118,
+        "endYear": 2025,
+        "memberType": "Senator",
+        "startYear": 2023,
+        "stateCode": "AL",
+        "stateName": "Alabama"
+      }
+    ],
+    "state": "Alabama",
+    "bioguideId": "B001319"
+  },
+  "actions": [
+    {
+      "actionCode": "10000",
+      "actionDate": "2025-01-06",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in Senate",
+      "type": "IntroReferral"
+    },
+    {
+      "actionDate": "2025-01-06",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Introduced in the Senate. Read the first time. Placed on Senate Legislative Calendar under Read the First Time.",
+      "type": "Calendars"
+    },
+    {
+      "actionDate": "2025-01-07",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Read the second time. Placed on Senate Legislative Calendar under General Orders. Calendar No. 1.",
+      "type": "Calendars"
+    },
+    {
+      "actionDate": "2025-01-08",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Motion to proceed to consideration of measure made in Senate. (CR S46)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-08",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Cloture motion on the motion to proceed to the measure presented in Senate. (CR S46)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-09",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Motion to proceed to measure considered in Senate. (CR S70)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-09",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-01-09T20:32:41Z",
+          "rollNumber": 1,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00001.xml"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Cloture on the motion to proceed to the measure invoked in Senate by Yea-Nay Vote. 84 - 9. Record Vote Number: 1. (CR S73)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-13",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Motion to proceed to measure considered in Senate. (CR S83)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-13",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-01-13T23:33:38Z",
+          "rollNumber": 2,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00002.xml"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Motion to proceed to consideration of measure agreed to in Senate by Yea-Nay Vote. 82 - 10. Record Vote Number: 2. (CR S87)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-13",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Measure laid before Senate by motion.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-14",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Considered by Senate. (consideration: CR S130)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-15",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Considered by Senate. (consideration: CR S161-182)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-15",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Cloture motion on the measure presented in Senate. (CR S182)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-16",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Considered by Senate. (consideration: CR S198-218)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-17",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Considered by Senate. (consideration: CR S237-241)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-17",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-01-17T15:47:29Z",
+          "rollNumber": 5,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00005.xml"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Cloture on the measure invoked in Senate by Yea-Nay Vote. 61 - 35. Record Vote Number: 5. (CR S240)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-20",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Considered by Senate. (consideration: CR S246-251)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "17000",
+      "actionDate": "2025-01-20",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-01-20T23:30:58Z",
+          "rollNumber": 7,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00007.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in Senate: Passed Senate with an amendment by Yea-Nay Vote. 64 - 35. Record Vote Number: 7.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-20",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-01-20T23:30:58Z",
+          "rollNumber": 7,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00007.xml"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Passed Senate with an amendment by Yea-Nay Vote. 64 - 35. Record Vote Number: 7. (text: CR S250-251)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-01-21",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Message on Senate action sent to the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H14000",
+      "actionDate": "2025-01-21",
+      "actionTime": "14:03:37",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Received in the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H15000",
+      "actionDate": "2025-01-21",
+      "actionTime": "14:54:53",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Held at the desk.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H1L210",
+      "actionDate": "2025-01-21",
+      "actionTime": "19:28:38",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Rules Committee Resolution H. Res. 53 Reported to House. Rule provides for consideration of H.R. 471 and S. 5. The resolution provides for consideration of H.R. 471 under a structured rule with one hour of general debate and one motion to recommit. Also, the resolution provides for consideration of S. 5 under a closed rule with one hour of general debate and one motion to commit.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H1L220",
+      "actionDate": "2025-01-22",
+      "actionTime": "14:07:22",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Rule H. Res. 53 passed House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-01-22",
+      "actionTime": "14:11:30",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered under the provisions of rule H. Res. 53. (consideration: CR H277-284)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-01-22",
+      "actionTime": "14:11:35",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Rule provides for consideration of H.R. 471 and S. 5. The resolution provides for consideration of H.R. 471 under a structured rule with one hour of general debate and one motion to recommit. Also, the resolution provides for consideration of S. 5 under a closed rule with one hour of general debate and one motion to commit.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-01-22",
+      "actionTime": "14:11:59",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "DEBATE - The House proceeded with one hour of debate on S. 5.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H35000",
+      "actionDate": "2025-01-22",
+      "actionTime": "15:14:13",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "The previous question was ordered pursuant to the rule.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-01-22",
+      "actionTime": "15:14:40",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "POSTPONED PROCEEDINGS - At the conclusion of the debate on S. 5, the Chair put the question on passage of the bill and by voice vote announced that the ayes had prevailed. Mr. Raskin demanded the yeas and nays and the Chair postponed further proceedings until a time to be announced.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-01-22",
+      "actionTime": "16:58:40",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered as unfinished business. (consideration: CR H285-286)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "8000",
+      "actionDate": "2025-01-22",
+      "actionTime": "17:04:55",
+      "recordedVotes": [
+        {
+          "chamber": "House",
+          "congress": 119,
+          "date": "2025-01-22T22:04:55Z",
+          "rollNumber": 23,
+          "sessionNumber": 1,
+          "url": "https://clerk.house.gov/evs/2025/roll023.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in House: On passage Passed by the Yeas and Nays: 263 - 156 (Roll no. 23). (text: CR H277-278)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37100",
+      "actionDate": "2025-01-22",
+      "actionTime": "17:04:55",
+      "recordedVotes": [
+        {
+          "chamber": "House",
+          "congress": 119,
+          "date": "2025-01-22T22:04:55Z",
+          "rollNumber": 23,
+          "sessionNumber": 1,
+          "url": "https://clerk.house.gov/evs/2025/roll023.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "On passage Passed by the Yeas and Nays: 263 - 156 (Roll no. 23). (text: CR H277-278)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H38310",
+      "actionDate": "2025-01-22",
+      "actionTime": "17:04:57",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Motion to reconsider laid on the table Agreed to without objection.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "28000",
+      "actionDate": "2025-01-23",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Presented to President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "E20000",
+      "actionDate": "2025-01-23",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Presented to President.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-01-29",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E30000",
+      "actionDate": "2025-01-29",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-01-29",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-1.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E40000",
+      "actionDate": "2025-01-29",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-1.",
+      "type": "President"
+    }
+  ],
+  "text": "[Congressional Bills 119th Congress]\n[From the U.S. Government Publishing Office]\n[S. 5 Enrolled Bill (ENR)]\n\n        S.5\n\n                     One Hundred Nineteenth Congress\n\n                                 of the\n\n                        United States of America\n\n\n                          AT THE FIRST SESSION\n\n           Begun and held at the City of Washington on Friday,\n         the third day of January, two thousand and twenty five\n\n\n                                 An Act\n\n\n \n   To require the Secretary of Homeland Security to take into custody \n aliens who have been charged in the United States with theft, and for \n                             other purposes.\n\n    Be it enacted by the Senate and House of Representatives of the \nUnited States of America in Congress assembled,\nSECTION 1. SHORT TITLE.\n    This Act may be cited as the ``Laken Riley Act''.\nSEC. 2. DETENTION OF CERTAIN ALIENS WHO COMMIT THEFT.\n    Section 236(c) of the Immigration and Nationality Act (8 U.S.C. \n1226(c)) is amended--\n        (1) in paragraph (1)--\n            (A) in subparagraph (C), by striking ``or'';\n            (B) in subparagraph (D), by striking the comma at the end \n        and inserting ``, or''; and\n            (C) by inserting after subparagraph (D) the following:\n            (E)(i) is inadmissible under paragraph (6)(A), (6)(C), or \n        (7) of section 212(a); and\n            ``(ii) is charged with, is arrested for, is convicted of, \n        admits having committed, or admits committing acts which \n        constitute the essential elements of any burglary, theft, \n        larceny, shoplifting, or assault of a law enforcement officer \n        offense, or any crime that results in death or serious bodily \n        injury to another person,'';\n        (2) by redesignating paragraph (2) as paragraph (4); and\n        (3) by inserting after paragraph (1) the following:\n        ``(2) Definition.--For purposes of paragraph (1)(E), the terms \n    `burglary', `theft', `larceny', `shoplifting', `assault of a law \n    enforcement officer', and `serious bodily injury' have the meanings \n    given such terms in the jurisdiction in which the acts occurred.''\n        ``(3) Detainer.--The Secretary of Homeland Security shall issue \n    a detainer for an alien described in paragraph (1)(E) and, if the \n    alien is not otherwise detained by Federal, State, or local \n    officials, shall effectively and expeditiously take custody of the \n    alien.''.\nSEC. 3. ENFORCEMENT BY ATTORNEY GENERAL OF A STATE.\n    (a) Inspection of Applicants for Admission.--Section 235(b) of the \nImmigration and Nationality Act (8 U.S.C. 1225(b)) is amended--\n        (1) by redesignating paragraph (3) as paragraph (4); and\n        (2) by inserting after paragraph (2) the following:\n        ``(3) Enforcement by attorney general of a state.--The attorney \n    general of a State, or other authorized State officer, alleging a \n    violation of the detention and removal requirements under paragraph \n    (1) or (2) that harms such State or its residents shall have \n    standing to bring an action against the Secretary of Homeland \n    Security on behalf of such State or the residents of such State in \n    an appropriate district court of the United States to obtain \n    appropriate injunctive relief. The court shall advance on the \n    docket and expedite the disposition of a civil action filed under \n    this paragraph to the greatest extent practicable. For purposes of \n    this paragraph, a State or its residents shall be considered to \n    have been harmed if the State or its residents experience harm, \n    including financial harm in excess of $100.''.\n    (b) Apprehension and Detention of Aliens.--Section 236 of the \nImmigration and Nationality Act (8 U.S.C. 1226), as amended by this \nAct, is further amended--\n        (1) in subsection (e)--\n            (A) by striking ``or release''; and\n            (B) by striking ``grant, revocation, or denial'' and insert \n        ``revocation or denial''; and\n        (2) by adding at the end the following:\n    ``(f) Enforcement by Attorney General of a State.--The attorney \ngeneral of a State, or other authorized State officer, alleging an \naction or decision by the Attorney General or Secretary of Homeland \nSecurity under this section to release any alien or grant bond or \nparole to any alien that harms such State or its residents shall have \nstanding to bring an action against the Attorney General or Secretary \nof Homeland Security on behalf of such State or the residents of such \nState in an appropriate district court of the United States to obtain \nappropriate injunctive relief. The court shall advance on the docket \nand expedite the disposition of a civil action filed under this \nsubsection to the greatest extent practicable. For purposes of this \nsubsection, a State or its residents shall be considered to have been \nharmed if the State or its residents experience harm, including \nfinancial harm in excess of $100.''.\n    (c) Penalties.--Section 243 of the Immigration and Nationality Act \n(8 U.S.C. 1253) is amended by adding at the end the following:\n    ``(e) Enforcement by Attorney General of a State.--The attorney \ngeneral of a State, or other authorized State officer, alleging a \nviolation of the requirement to discontinue granting visas to citizens, \nsubjects, nationals, and residents as described in subsection (d) that \nharms such State or its residents shall have standing to bring an \naction against the Secretary of State on behalf of such State or the \nresidents of such State in an appropriate district court of the United \nStates to obtain appropriate injunctive relief. The court shall advance \non the docket and expedite the disposition of a civil action filed \nunder this subsection to the greatest extent practicable. For purposes \nof this subsection, a State or its residents shall be considered to \nhave been harmed if the State or its residents experience harm, \nincluding financial harm in excess of $100.''.\n    (d) Certain Classes of Aliens.--Section 212(d)(5) of the \nImmigration and Nationality Act (8 U.S.C. 1182(d)(5)) is amended--\n        (1) by striking ``Attorney General'' each place such term \n    appears and inserting ``Secretary of Homeland Security''; and\n        (2) by adding at the end the following:\n    ``(C) The attorney general of a State, or other authorized State \nofficer, alleging a violation of the limitation under subparagraph (A) \nthat parole solely be granted on a case-by-case basis and solely for \nurgent humanitarian reasons or a significant public benefit, that harms \nsuch State or its residents shall have standing to bring an action \nagainst the Secretary of Homeland Security on behalf of such State or \nthe residents of such State in an appropriate district court of the \nUnited States to obtain appropriate injunctive relief. The court shall \nadvance on the docket and expedite the disposition of a civil action \nfiled under this subparagraph to the greatest extent practicable. For \npurposes of this subparagraph, a State or its residents shall be \nconsidered to have been harmed if the State or its residents experience \nharm, including financial harm in excess of $100.''.\n    (e) Detention.--Section 241(a)(2) of the Immigration and \nNationality Act (8 U.S.C. 1231(a)(2)) is amended--\n        (1) by striking ``During the removal period,'' and inserting \n    the following:\n            ``(A) In general.--During the removal period,''; and\n        (2) by adding at the end the following:\n            ``(B) Enforcement by attorney general of a state.--The \n        attorney general of a State, or other authorized State officer, \n        alleging a violation of the detention requirement under \n        subparagraph (A) that harms such State or its residents shall \n        have standing to bring an action against the Secretary of \n        Homeland Security on behalf of such State or the residents of \n        such State in an appropriate district court of the United \n        States to obtain appropriate injunctive relief. The court shall \n        advance on the docket and expedite the disposition of a civil \n        action filed under this subparagraph to the greatest extent \n        practicable. For purposes of this subparagraph, a State or its \n        residents shall be considered to have been harmed if the State \n        or its residents experience harm, including financial harm in \n        excess of $100.''.\n    (f) Limit on Injunctive Relief.--Section 242(f) of the Immigration \nand Nationality Act (8 U.S.C. 1252(f)) is amended by adding at the end \nfollowing:\n        ``(3) Certain actions.--Paragraph (1) shall not apply to an \n    action brought pursuant to section 235(b)(3), subsections (e) or \n    (f) of section 236, or section 241(a)(2)(B).''.\n\n                               Speaker of the House of Representatives.\n\n                            Vice President of the United States and    \n                                               President of the Senate.",
+  "originChamberCode": "S",
+  "congress": 119,
+  "number": "5"
+}

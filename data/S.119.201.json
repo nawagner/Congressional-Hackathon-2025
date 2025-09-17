@@ -1,0 +1,306 @@
+{
+  "title": "ACES Act of 2025",
+  "sponsor": {
+    "name": "Mark Kelly",
+    "websiteUrl": "https://www.kelly.senate.gov",
+    "terms": [
+      {
+        "chamber": "Senate",
+        "congress": 119,
+        "memberType": "Senator",
+        "startYear": 2025,
+        "stateCode": "AZ",
+        "stateName": "Arizona"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 118,
+        "endYear": 2025,
+        "memberType": "Senator",
+        "startYear": 2023,
+        "stateCode": "AZ",
+        "stateName": "Arizona"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 117,
+        "endYear": 2023,
+        "memberType": "Senator",
+        "startYear": 2021,
+        "stateCode": "AZ",
+        "stateName": "Arizona"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 116,
+        "endYear": 2021,
+        "memberType": "Senator",
+        "startYear": 2020,
+        "stateCode": "AZ",
+        "stateName": "Arizona"
+      }
+    ],
+    "state": "Arizona",
+    "bioguideId": "K000377"
+  },
+  "actions": [
+    {
+      "actionCode": "10000",
+      "actionDate": "2025-01-23",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in Senate",
+      "type": "IntroReferral"
+    },
+    {
+      "actionDate": "2025-01-23",
+      "committees": [
+        {
+          "name": "Veterans' Affairs Committee",
+          "systemCode": "ssva00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssva00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Read twice and referred to the Committee on Veterans' Affairs.",
+      "type": "IntroReferral"
+    },
+    {
+      "actionDate": "2025-03-11",
+      "committees": [
+        {
+          "name": "Veterans' Affairs Committee",
+          "systemCode": "ssva00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssva00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Committee on Veterans' Affairs. Hearings held.",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "14500",
+      "actionDate": "2025-06-03",
+      "committees": [
+        {
+          "name": "Veterans' Affairs Committee",
+          "systemCode": "ssva00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssva00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Senate Committee on Veterans' Affairs discharged by Unanimous Consent.",
+      "type": "Committee"
+    },
+    {
+      "actionDate": "2025-06-03",
+      "committees": [
+        {
+          "name": "Veterans' Affairs Committee",
+          "systemCode": "ssva00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssva00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Senate Committee on Veterans' Affairs discharged by Unanimous Consent.",
+      "type": "Discharge"
+    },
+    {
+      "actionDate": "2025-06-03",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Measure laid before Senate by unanimous consent. (consideration: CR S3209-3210)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "17000",
+      "actionDate": "2025-06-03",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in Senate: Passed Senate with an amendment by Unanimous Consent.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-06-03",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Passed Senate with an amendment by Unanimous Consent. (text of amendment in the nature of a substitute: CR S3209-3210)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-06-04",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Message on Senate action sent to the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H14000",
+      "actionDate": "2025-06-04",
+      "actionTime": "14:08:21",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Received in the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H15000",
+      "actionDate": "2025-06-04",
+      "actionTime": "14:14:38",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Held at the desk.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30300",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:09:26",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Mr. Bost moved to suspend the rules and pass the bill.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:09:50",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered under suspension of the rules. (consideration: CR H3487-3489: 1)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:09:52",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "DEBATE - The House proceeded with forty minutes of debate on S. 201.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "8000",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:26:40",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in House: On motion to suspend the rules and pass the bill Agreed to by voice vote. (text: CR H3487)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37300",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:26:40",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "On motion to suspend the rules and pass the bill Agreed to by voice vote. (text: CR H3487)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H38310",
+      "actionDate": "2025-07-21",
+      "actionTime": "15:26:43",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Motion to reconsider laid on the table Agreed to without objection.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "28000",
+      "actionDate": "2025-08-12",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Presented to President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "E20000",
+      "actionDate": "2025-08-12",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Presented to President.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E30000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-32.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E40000",
+      "actionDate": "2025-08-14",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-32.",
+      "type": "President"
+    }
+  ],
+  "text": "[Congressional Bills 119th Congress]\n[From the U.S. Government Publishing Office]\n[S. 201 Enrolled Bill (ENR)]\n\n        S.201\n\n                     One Hundred Nineteenth Congress\n\n                                 of the\n\n                        United States of America\n\n\n                          AT THE FIRST SESSION\n\n           Begun and held at the City of Washington on Friday,\n         the third day of January, two thousand and twenty five\n\n\n                                 An Act\n\n\n \n     To provide for a study by the National Academies of Sciences, \n  Engineering, and Medicine on the prevalence and mortality of cancer \namong individuals who served as active duty aircrew in the Armed Forces, \n                         and for other purposes.\n\n    Be it enacted by the Senate and House of Representatives of the \nUnited States of America in Congress assembled,\nSECTION 1. SHORT TITLE.\n    This Act may be cited as the ``ACES Act of 2025''.\nSEC. 2. NATIONAL ACADEMIES STUDY ON PREVALENCE AND MORTALITY OF CANCER \nAMONG INDIVIDUALS WHO SERVED AS ACTIVE DUTY AIRCREW IN THE ARMED \nFORCES.\n    (a) Agreement.--\n        (1) In general.--Not later than 30 days after the date of the \n    enactment of this Act, the Secretary of Veterans Affairs shall seek \n    to enter into an agreement with the National Academies of Sciences, \n    Engineering, and Medicine (in this section referred to as the \n    ``National Academies''), under which the National Academies shall \n    conduct a study on the prevalence and mortality of cancers among \n    covered individuals.\n        (2) Deadline.--\n            (A) Date.--The Secretary shall finalize the agreement under \n        paragraph (1) by not later than 60 days after the date on which \n        the Secretary enters negotiations with the National Academies \n        with respect to such agreement.\n            (B) Report; briefings.--If the Secretary fails to satisfy \n        the requirement under subparagraph (A), the Secretary shall--\n                (i) submit to the Committee on Veterans' Affairs of the \n            Senate and the Committee on Veterans' Affairs of the House \n            of Representatives a report that includes--\n\n                    (I) an explanation of the reasons the Secretary \n                failed to satisfy such requirement; and\n                    (II) an estimate of the date on which the Secretary \n                will finalize the agreement under paragraph (1); and\n\n                (ii) not less frequently than once every 60 days after \n            the date on which the Secretary failed to satisfy such \n            requirement, provide to the Committee on Veterans' Affairs \n            of the Senate and the Committee on Veterans' Affairs of the \n            House of Representatives a briefing on the progress of the \n            Secretary toward finalizing such agreement.\n    (b) Study.--The study required under subsection (a) shall--\n        (1) identify exposures associated with military occupations of \n    covered individuals, including relating to chemicals, compounds, \n    agents, and other phenomena;\n        (2) review the literature to determine associations between \n    exposures referred to in paragraph (1) and the incidence or \n    prevalence of overall cancer morbidity, overall cancer mortality, \n    and increased incidence or prevalence of--\n            (A) brain cancer;\n            (B) colon and rectal cancers;\n            (C) kidney cancer;\n            (D) lung cancer;\n            (E) melanoma skin cancer;\n            (F) non-Hodgkin lymphoma;\n            (G) pancreatic cancer;\n            (H) prostate cancer;\n            (I) testicular cancer;\n            (J) thyroid cancer;\n            (K) urinary bladder cancer; and\n            (L) other cancers as determined appropriate by the \n        Secretary of Veterans Affairs, in consultation with the \n        National Academies; and\n        (3) determine, to the extent possible, the prevalence of and \n    mortality from the cancers specified in paragraph (2) among covered \n    individuals by using available sources of data, which may include--\n            (A) health care and other administrative databases of the \n        Department of Veterans Affairs, the Department of Defense, and \n        the individual Services, respectively;\n            (B) the national death index maintained by the National \n        Center for Health Statistics of the Centers for Disease Control \n        and Prevention; and\n            (C) the study conducted under section 750 of the William M. \n        (Mac) Thornberry National Defense Authorization Act for Fiscal \n        Year 2021 (Public Law 116-283; 134 Stat. 3716).\n    (c) Report.--At the conclusion of the study required under \nsubsection (a), the National Academies shall submit to the Secretary, \nthe Committee on Veterans' Affairs of the Senate, and the Committee on \nVeterans' Affairs of the House of Representatives a report containing \nthe results of the study described in subsection (b).\n    (d) Covered Individual Defined.--In this section, the term \n``covered individual'' means an individual who served on active duty in \nthe Army, Navy, Air Force, or Marine Corps as an aircrew member of a \nfixed-wing aircraft, including as a pilot, navigator, weapons systems \noperator, aircraft system operator, or any other crew member who \nregularly flew in a fixed-wing aircraft.\n\n                               Speaker of the House of Representatives.\n\n                            Vice President of the United States and    \n                                               President of the Senate.",
+  "originChamberCode": "S",
+  "congress": 119,
+  "number": "201"
+}

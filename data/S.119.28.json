@@ -1,0 +1,413 @@
+{
+  "title": "A joint resolution disapproving the rule submitted by the Bureau of Consumer Financial Protection relating to \"Defining Larger Participants of a Market for General-Use Digital Consumer Payment Applications\".",
+  "sponsor": {
+    "name": "Pete Ricketts",
+    "websiteUrl": "https://www.ricketts.senate.gov",
+    "terms": [
+      {
+        "chamber": "Senate",
+        "congress": 119,
+        "memberType": "Senator",
+        "startYear": 2025,
+        "stateCode": "NE",
+        "stateName": "Nebraska"
+      },
+      {
+        "chamber": "Senate",
+        "congress": 118,
+        "endYear": 2025,
+        "memberType": "Senator",
+        "startYear": 2023,
+        "stateCode": "NE",
+        "stateName": "Nebraska"
+      }
+    ],
+    "state": "Nebraska",
+    "bioguideId": "R000618"
+  },
+  "actions": [
+    {
+      "actionCode": "10000",
+      "actionDate": "2025-02-27",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in Senate",
+      "type": "IntroReferral"
+    },
+    {
+      "actionDate": "2025-02-27",
+      "committees": [
+        {
+          "name": "Banking, Housing, and Urban Affairs Committee",
+          "systemCode": "ssbk00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssbk00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Read twice and referred to the Committee on Banking, Housing, and Urban Affairs.",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "14500",
+      "actionDate": "2025-03-04",
+      "committees": [
+        {
+          "name": "Banking, Housing, and Urban Affairs Committee",
+          "systemCode": "ssbk00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssbk00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Senate Committee on Banking, Housing, and Urban Affairs discharged, by petition, pursuant to 5 U.S.C. 802(c).",
+      "type": "Committee"
+    },
+    {
+      "actionDate": "2025-03-04",
+      "committees": [
+        {
+          "name": "Banking, Housing, and Urban Affairs Committee",
+          "systemCode": "ssbk00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssbk00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Senate Committee on Banking, Housing, and Urban Affairs discharged, by petition, pursuant to 5 U.S.C. 802(c).",
+      "type": "Discharge"
+    },
+    {
+      "actionDate": "2025-03-04",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Placed on Senate Legislative Calendar under General Orders. Calendar No. 20.",
+      "type": "Calendars"
+    },
+    {
+      "actionDate": "2025-03-04",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-03-04T23:38:58Z",
+          "rollNumber": 103,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00103.xml"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Motion to proceed to consideration of measure agreed to in Senate by Yea-Nay Vote. 50 - 47. Record Vote Number: 103. (CR S1489)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-03-04",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Measure laid before Senate by motion. (consideration: CR S1489)",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-03-05",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Considered by Senate. (consideration: CR S1503, S1510-1511, S1520-1521)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "17000",
+      "actionDate": "2025-03-05",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-03-05T22:33:15Z",
+          "rollNumber": 106,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00106.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in Senate: Passed Senate without amendment by Yea-Nay Vote. 51 - 47. Record Vote Number: 106.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-03-05",
+      "recordedVotes": [
+        {
+          "chamber": "Senate",
+          "congress": 119,
+          "date": "2025-03-05T22:33:15Z",
+          "rollNumber": 106,
+          "sessionNumber": 1,
+          "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00106.xml"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Passed Senate without amendment by Yea-Nay Vote. 51 - 47. Record Vote Number: 106.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-03-06",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Message on Senate action sent to the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H14000",
+      "actionDate": "2025-03-10",
+      "actionTime": "18:30:48",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Received in the House",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H15000",
+      "actionDate": "2025-03-10",
+      "actionTime": "18:41:31",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Held at the Desk",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H1L210",
+      "actionDate": "2025-04-01",
+      "actionTime": "10:03:16",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Rules Committee Resolution H. Res. 282 Reported to House. Rule provides for consideration of H.R. 22, H.R. 1526, S.J. Res. 18 and S.J. Res. 28. The resolution provides for consideration of H.R. 22, H.R. 1526, S.J. Res. 18, and S.J. Res. 28 under a closed rule. The resolution provides for one hour of debate on each measure and one motion to recommit on H.R. 22 and H.R. 1526, and one motion to commit on S.J. Res. 18 and S.J. Res. 28. The resolution also provides that H. Res. 23 and H. Res. 164 are laid on the table.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H1L220",
+      "actionDate": "2025-04-01",
+      "actionTime": "14:16:01",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Rule H. Res. 282 failed passage of House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H1L210",
+      "actionDate": "2025-04-07",
+      "actionTime": "19:20:40",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Rules Committee Resolution H. Res. 294 Reported to House. Rule provides for consideration of S.J. Res. 18, S.J. Res. 28, H.R. 1526 and H.R. 22. The resolution provides for consideration of H.R. 22, H.R. 1526, S.J. Res. 18, and S.J. Res. 28 under a closed rule. The resolution provides for one hour of debate on each measure and one motion to recommit on H.R. 22 and H.R. 1526, and one motion to commit on S.J. Res. 18 and S.J. Res. 28.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-04-09",
+      "actionTime": "12:24:19",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered under the provisions of rule H. Res. 294. (consideration: CR H1514-1519)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-04-09",
+      "actionTime": "12:24:24",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Rule provides for consideration of S.J. Res. 18, S.J. Res. 28, H.R. 1526 and H.R. 22. The resolution provides for consideration of H.R. 22, H.R. 1526, S.J. Res. 18, and S.J. Res. 28 under a closed rule. The resolution provides for one hour of debate on each measure and one motion to recommit on H.R. 22 and H.R. 1526, and one motion to commit on S.J. Res. 18 and S.J. Res. 28.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-04-09",
+      "actionTime": "12:24:44",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "DEBATE - The House proceeded with one hour of debate on S.J. Res. 28.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H35000",
+      "actionDate": "2025-04-09",
+      "actionTime": "13:06:25",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "The previous question was ordered pursuant to the rule.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-04-09",
+      "actionTime": "13:07:04",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "POSTPONED PROCEEDINGS - At the conclusion of debate on S.J. Res. 28, the Chair put the question on passage of the joint resolution and by voice vote, announced that the ayes had prevailed. Mr. Hill (AR) demanded the yeas and nays and the Chair postponed further proceedings until a time to be announced.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-04-09",
+      "actionTime": "16:13:47",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered as unfinished business. (consideration: CR H1532-1533)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "8000",
+      "actionDate": "2025-04-09",
+      "actionTime": "16:20:12",
+      "recordedVotes": [
+        {
+          "chamber": "House",
+          "congress": 119,
+          "date": "2025-04-09T20:20:12Z",
+          "rollNumber": 95,
+          "sessionNumber": 1,
+          "url": "https://clerk.house.gov/evs/2025/roll095.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in House: On passage Passed by the Yeas and Nays: 219 - 211 (Roll no. 95). (text: CR H1514: 2)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37100",
+      "actionDate": "2025-04-09",
+      "actionTime": "16:20:12",
+      "recordedVotes": [
+        {
+          "chamber": "House",
+          "congress": 119,
+          "date": "2025-04-09T20:20:12Z",
+          "rollNumber": 95,
+          "sessionNumber": 1,
+          "url": "https://clerk.house.gov/evs/2025/roll095.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "On passage Passed by the Yeas and Nays: 219 - 211 (Roll no. 95). (text: CR H1514: 2)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H38310",
+      "actionDate": "2025-04-09",
+      "actionTime": "16:20:15",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Motion to reconsider laid on the table Agreed to without objection.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "28000",
+      "actionDate": "2025-05-05",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Presented to President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "E20000",
+      "actionDate": "2025-05-05",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Presented to President.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-05-09",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E30000",
+      "actionDate": "2025-05-09",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-05-09",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-11.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E40000",
+      "actionDate": "2025-05-09",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-11.",
+      "type": "President"
+    }
+  ],
+  "text": "[Congressional Bills 119th Congress]\n[From the U.S. Government Publishing Office]\n[S.J. Res. 28 Enrolled Bill (ENR)]\n\n        S.J.Res.28\n\n                     One Hundred Nineteenth Congress\n\n                                 of the\n\n                        United States of America\n\n\n                          AT THE FIRST SESSION\n\n           Begun and held at the City of Washington on Friday,\n         the third day of January, two thousand and twenty five\n\n\n                            Joint Resolution\n\n\n \n  Disapproving the rule submitted by the Bureau of Consumer Financial \n Protection relating to ``Defining Larger Participants of a Market for \n          General-Use Digital Consumer Payment Applications''.\n\n    Resolved by the Senate and House of Representatives of the United \nStates of America in Congress assembled, That Congress disapproves the \nfinal rule submitted by the Bureau of Consumer Financial Protection \nrelating to ``Defining Larger Participants of a Market for General-Use \nDigital Consumer Payment Applications'' (89 Fed. Reg. 99582 (December \n10, 2024)), and such rule shall have no force or effect.\n\n                               Speaker of the House of Representatives.\n\n                            Vice President of the United States and    \n                                               President of the Senate.",
+  "originChamberCode": "S",
+  "congress": 119,
+  "number": "28"
+}

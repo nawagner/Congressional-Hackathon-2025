@@ -1,0 +1,422 @@
+{
+  "title": "Filing Relief for Natural Disasters Act",
+  "sponsor": {
+    "name": "David Kustoff",
+    "websiteUrl": null,
+    "terms": [
+      {
+        "chamber": "House of Representatives",
+        "congress": 119,
+        "district": 8,
+        "memberType": "Representative",
+        "startYear": 2025,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "chamber": "House of Representatives",
+        "congress": 118,
+        "district": 8,
+        "endYear": 2025,
+        "memberType": "Representative",
+        "startYear": 2023,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "chamber": "House of Representatives",
+        "congress": 117,
+        "district": 8,
+        "endYear": 2023,
+        "memberType": "Representative",
+        "startYear": 2021,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "chamber": "House of Representatives",
+        "congress": 116,
+        "district": 8,
+        "endYear": 2021,
+        "memberType": "Representative",
+        "startYear": 2019,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "chamber": "House of Representatives",
+        "congress": 115,
+        "district": 8,
+        "endYear": 2019,
+        "memberType": "Representative",
+        "startYear": 2017,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      }
+    ],
+    "state": "Tennessee",
+    "bioguideId": "K000392"
+  },
+  "actions": [
+    {
+      "actionCode": "1000",
+      "actionDate": "2025-01-16",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in House",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "Intro-H",
+      "actionDate": "2025-01-16",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Introduced in House",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "H11100",
+      "actionDate": "2025-01-16",
+      "committees": [
+        {
+          "name": "Ways and Means Committee",
+          "systemCode": "hswm00",
+          "url": "https://api.congress.gov/v3/committee/house/hswm00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Referred to the House Committee on Ways and Means.",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "H15001",
+      "actionDate": "2025-02-26",
+      "committees": [
+        {
+          "name": "Ways and Means Committee",
+          "systemCode": "hswm00",
+          "url": "https://api.congress.gov/v3/committee/house/hswm00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 1,
+        "name": "House committee actions"
+      },
+      "text": "Committee Consideration and Mark-up Session Held",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "H19000",
+      "actionDate": "2025-02-26",
+      "committees": [
+        {
+          "name": "Ways and Means Committee",
+          "systemCode": "hswm00",
+          "url": "https://api.congress.gov/v3/committee/house/hswm00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 1,
+        "name": "House committee actions"
+      },
+      "text": "Ordered to be Reported in the Nature of a Substitute (Amended) by the Yeas and Nays: 42 - 0.",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "5000",
+      "actionDate": "2025-03-27",
+      "committees": [
+        {
+          "name": "Ways and Means Committee",
+          "systemCode": "hswm00",
+          "url": "https://api.congress.gov/v3/committee/house/hswm00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Reported (Amended) by the Committee on Ways and Means. H. Rept. 119-44.",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "H12200",
+      "actionDate": "2025-03-27",
+      "committees": [
+        {
+          "name": "Ways and Means Committee",
+          "systemCode": "hswm00",
+          "url": "https://api.congress.gov/v3/committee/house/hswm00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Reported (Amended) by the Committee on Ways and Means. H. Rept. 119-44.",
+      "type": "Committee"
+    },
+    {
+      "actionCode": "H12410",
+      "actionDate": "2025-03-27",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Placed on the Union Calendar, Calendar No. 31.",
+      "type": "Calendars"
+    },
+    {
+      "actionCode": "H30300",
+      "actionDate": "2025-03-31",
+      "actionTime": "16:30:46",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Mr. Smith (MO) moved to suspend the rules and pass the bill, as amended.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-03-31",
+      "actionTime": "16:30:50",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered under suspension of the rules. (consideration: CR H1347-1348: 1)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H8D000",
+      "actionDate": "2025-03-31",
+      "actionTime": "16:30:52",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "DEBATE - The House proceeded with forty minutes of debate on H.R. 517.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37220",
+      "actionDate": "2025-03-31",
+      "actionTime": "16:44:30",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "At the conclusion of debate, the Yeas and Nays were demanded and ordered. Pursuant to the provisions of clause 8, rule XX, the Chair announced that further proceedings on the motion would be postponed.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H30000",
+      "actionDate": "2025-03-31",
+      "actionTime": "18:30:40",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Considered as unfinished business. (consideration: CR H1356: 5)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "8000",
+      "actionDate": "2025-03-31",
+      "actionTime": "18:56:03",
+      "recordedVotes": [
+        {
+          "chamber": "House",
+          "congress": 119,
+          "date": "2025-03-31T22:56:03Z",
+          "rollNumber": 84,
+          "sessionNumber": 1,
+          "url": "https://clerk.house.gov/evs/2025/roll084.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in House: On motion to suspend the rules and pass the bill, as amended Agreed to by the Yeas and Nays: (2/3 required): 388 - 0 (Roll no. 84). (text: CR H1347: 1)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H37300",
+      "actionDate": "2025-03-31",
+      "actionTime": "18:56:03",
+      "recordedVotes": [
+        {
+          "chamber": "House",
+          "congress": 119,
+          "date": "2025-03-31T22:56:03Z",
+          "rollNumber": 84,
+          "sessionNumber": 1,
+          "url": "https://clerk.house.gov/evs/2025/roll084.xml"
+        }
+      ],
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "On motion to suspend the rules and pass the bill, as amended Agreed to by the Yeas and Nays: (2/3 required): 388 - 0 (Roll no. 84). (text: CR H1347: 1)",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "H38310",
+      "actionDate": "2025-03-31",
+      "actionTime": "18:56:04",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Motion to reconsider laid on the table Agreed to without objection.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-04-01",
+      "committees": [
+        {
+          "name": "Finance Committee",
+          "systemCode": "ssfi00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssfi00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Received in the Senate and Read twice and referred to the Committee on Finance.",
+      "type": "IntroReferral"
+    },
+    {
+      "actionCode": "14500",
+      "actionDate": "2025-07-10",
+      "committees": [
+        {
+          "name": "Finance Committee",
+          "systemCode": "ssfi00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssfi00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Senate Committee on Finance discharged by Unanimous Consent.",
+      "type": "Committee"
+    },
+    {
+      "actionDate": "2025-07-10",
+      "committees": [
+        {
+          "name": "Finance Committee",
+          "systemCode": "ssfi00",
+          "url": "https://api.congress.gov/v3/committee/senate/ssfi00?format=json"
+        }
+      ],
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Senate Committee on Finance discharged by Unanimous Consent. (consideration: CR S4321: 4)",
+      "type": "Discharge"
+    },
+    {
+      "actionCode": "17000",
+      "actionDate": "2025-07-10",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Passed/agreed to in Senate: Passed Senate without amendment by Unanimous Consent.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-07-10",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Passed Senate without amendment by Unanimous Consent.",
+      "type": "Floor"
+    },
+    {
+      "actionDate": "2025-07-14",
+      "sourceSystem": {
+        "name": "Senate"
+      },
+      "text": "Message on Senate action sent to the House.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "28000",
+      "actionDate": "2025-07-17",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Presented to President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "E20000",
+      "actionDate": "2025-07-17",
+      "sourceSystem": {
+        "code": 2,
+        "name": "House floor actions"
+      },
+      "text": "Presented to President.",
+      "type": "Floor"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-07-24",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E30000",
+      "actionDate": "2025-07-24",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Signed by President.",
+      "type": "President"
+    },
+    {
+      "actionCode": "36000",
+      "actionDate": "2025-07-24",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-29.",
+      "type": "BecameLaw"
+    },
+    {
+      "actionCode": "E40000",
+      "actionDate": "2025-07-24",
+      "sourceSystem": {
+        "code": 9,
+        "name": "Library of Congress"
+      },
+      "text": "Became Public Law No: 119-29.",
+      "type": "President"
+    }
+  ],
+  "text": "[Congressional Bills 119th Congress]\n[From the U.S. Government Publishing Office]\n[H.R. 517 Enrolled Bill (ENR)]\n\n        H.R.517\n\n                     One Hundred Nineteenth Congress\n\n                                 of the\n\n                        United States of America\n\n\n                          AT THE FIRST SESSION\n\n           Begun and held at the City of Washington on Friday,\n         the third day of January, two thousand and twenty-five\n\n\n                                 An Act\n\n\n \n   To amend the Internal Revenue Code of 1986 to modify the rules for \n           postponing certain deadlines by reason of disaster.\n\n    Be it enacted by the Senate and House of Representatives of the \nUnited States of America in Congress assembled,\nSECTION 1. SHORT TITLE.\n    This Act may be cited as the ``Filing Relief for Natural Disasters \nAct''.\nSEC. 2. MODIFICATION OF RULES FOR POSTPONING CERTAIN DEADLINES BY \nREASON OF DISASTER.\n    (a) Authority To Postpone Federal Tax Deadlines by Reason of State-\nDeclared Disasters.--Section 7508A of the Internal Revenue Code of 1986 \nis amended by redesignating subsections (c), (d), and (e) as \nsubsections (d), (e), and (f), respectively, and by inserting after \nsubsection (b) the following new subsection:\n    ``(c) Special Rule for State-Declared Disasters.--\n        ``(1) In general.--The Secretary (after consultation with the \n    Administrator of the Federal Emergency Management Agency) may, upon \n    the written request of the Governor of a State (or the Mayor, in \n    the case of the District of Columbia), apply the rules of \n    subsections (a) and (b) to a qualified State declared disaster in \n    the same manner as a disaster, fire, or action otherwise described \n    in subsection (a).\n        ``(2) Qualified state declared disaster.--For purposes of this \n    section, the term `qualified State declared disaster' means, with \n    respect to any State, any natural catastrophe (including any \n    hurricane, tornado, storm, high water, winddriven water, tidal \n    wave, tsunami, earthquake, volcanic eruption, landslide, mudslide, \n    snowstorm, or drought), or, regardless of cause, any fire, flood, \n    or explosion, in any part of the State, which in the determination \n    of the Governor of such State (or the Mayor, in the case of the \n    District of Columbia) causes damage of sufficient severity and \n    magnitude to warrant the application of the rules of this section.\n        ``(3) State.--For purposes of this section, the term `State' \n    includes the District of Columbia, the Commonwealth of Puerto Rico, \n    the Virgin Islands, Guam, American Samoa, and the Commonwealth of \n    the Northern Mariana Islands.''.\n    (b) Mandatory Extensions Extended to 120 Days.--Section 7508A(e) of \nsuch Code, as redesignated by subsection (a), is amended--\n        (1) by striking ``60 days'' in paragraph (1)(B) thereof and \n    inserting ``120 days'',\n        (2) by striking ``60-day'' in paragraph (6) thereof and \n    inserting ``120-day'', and\n        (3) by striking ``60-day'' in the heading and inserting ``120-\n    day''.\n    (c) Effective Date.--The amendments made by this section shall \napply to declarations made after the date of the enactment of this Act.\n\n                               Speaker of the House of Representatives.\n\n                            Vice President of the United States and    \n                                               President of the Senate.",
+  "originChamberCode": "H",
+  "congress": 119,
+  "number": "517"
+}
