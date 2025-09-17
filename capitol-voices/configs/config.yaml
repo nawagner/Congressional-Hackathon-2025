@@ -1,0 +1,28 @@
+hearing:
+  id: "demo-001"
+  committee: "House Oversight"
+  title: "Demo Hearing"
+  date: "2025-09-10"
+  video_url: ""
+
+asr:
+  engine: "whisper"
+  model: "large-v3"
+  vad: true
+  beam_size: 5
+
+diarization:
+  engine: "pyannote"
+  min_speakers: 3
+  max_speakers: 12
+
+summary:
+  mode: "extractive"   # or 'llm'
+  max_tokens: 1200
+
+storage:
+  db_path: "data/hearings.db"
+  artifacts_dir: "artifacts"
+
+naming:
+  roster_path: "configs/roster.demo.json"
