@@ -6,6 +6,8 @@ const state = {
   hearings: [],
   witnessMap: new Map(),
   sortedWitnesses: [],
+  witnessElements: new Map(),
+  witnessMessage: null,
   filters: {
     witnessQuery: '',
     committee: 'all',
@@ -69,6 +71,8 @@ async function initialise() {
 
     state.witnessMap = buildWitnessMap(hearings);
     state.sortedWitnesses = Array.from(state.witnessMap.values()).sort(sortWitnesses);
+    state.witnessElements = new Map();
+    state.witnessMessage = null;
     elements.uniqueWitnesses.textContent = state.sortedWitnesses.length.toLocaleString();
 
     populateFilterOptions();
@@ -434,58 +438,109 @@ function populateFilterOptions() {
 
 function renderWitnessList() {
   const container = elements.witnessList;
-  container.innerHTML = '';
+  if (!container) return;
 
   if (!state.sortedWitnesses.length) {
     container.textContent = 'No witnesses found.';
+    state.witnessElements = new Map();
+    state.witnessMessage = null;
     return;
+  }
+
+  if (state.witnessElements.size === 0) {
+    container.innerHTML = '';
+    const message = document.createElement('p');
+    message.className = 'witness-list__message';
+    message.hidden = true;
+    container.append(message);
+    state.witnessMessage = message;
+
+    const fragment = document.createDocumentFragment();
+    state.sortedWitnesses.forEach((witness) => {
+      const button = createWitnessButton(witness);
+      state.witnessElements.set(witness.key, button);
+      fragment.append(button);
+    });
+    container.append(fragment);
   }
 
   const query = state.filters.witnessQuery.toLowerCase();
   const dualOnly = state.filters.dualChamberOnly;
-  const matching = state.sortedWitnesses.filter((witness) => {
-    if (dualOnly && !witness.isDualChamber) {
-      return false;
+  let matches = 0;
+  let selectedVisible = false;
+
+  state.sortedWitnesses.forEach((witness) => {
+    const button = state.witnessElements.get(witness.key);
+    if (!button) {
+      return;
     }
-    return !query || witness.name.toLowerCase().includes(query);
+
+    const match =
+      (!dualOnly || witness.isDualChamber) &&
+      (!query || witness.name.toLowerCase().includes(query));
+
+    if (match) {
+      matches += 1;
+      button.hidden = false;
+      button.setAttribute('aria-hidden', 'false');
+      const isActive = state.selectedWitnessKey === witness.key;
+      button.classList.toggle('active', isActive);
+      if (isActive) {
+        selectedVisible = true;
+      }
+    } else {
+      button.hidden = true;
+      button.setAttribute('aria-hidden', 'true');
+      button.classList.remove('active');
+    }
   });
 
-  if (state.selectedWitnessKey && !matching.some((w) => w.key === state.selectedWitnessKey)) {
-    state.selectedWitnessKey = null;
+  if (state.witnessMessage) {
+    if (matches === 0) {
+      const hasQuery = Boolean(state.filters.witnessQuery);
+      const messageText = hasQuery
+        ? 'No witnesses match that search.'
+        : state.filters.dualChamberOnly
+          ? 'No dual-chamber witnesses match the current filters.'
+          : 'No witnesses match the current filters.';
+      state.witnessMessage.textContent = messageText;
+      state.witnessMessage.hidden = false;
+    } else {
+      state.witnessMessage.hidden = true;
+    }
   }
 
-  if (!matching.length) {
-    container.textContent = 'No witnesses match that search.';
+  if (state.selectedWitnessKey && !selectedVisible) {
+    state.selectedWitnessKey = null;
+    applyFilters();
     return;
   }
+}
 
-  matching.forEach((witness) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'witness-item';
-    if (state.selectedWitnessKey === witness.key) {
-      button.classList.add('active');
-    }
+function createWitnessButton(witness) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'witness-item';
+  button.dataset.witnessKey = witness.key;
 
-    const nameSpan = document.createElement('span');
-    nameSpan.className = 'witness-item__name';
-    nameSpan.textContent = witness.name;
+  const nameSpan = document.createElement('span');
+  nameSpan.className = 'witness-item__name';
+  nameSpan.textContent = witness.name;
 
-    const countSpan = document.createElement('span');
-    countSpan.className = 'witness-item__count';
-    countSpan.textContent = `${witness.count.toLocaleString()} hearings`;
+  const countSpan = document.createElement('span');
+  countSpan.className = 'witness-item__count';
+  countSpan.textContent = `${witness.count.toLocaleString()} hearings`;
 
-    button.append(nameSpan, countSpan);
+  button.append(nameSpan, countSpan);
 
-    button.addEventListener('click', () => {
-      state.selectedWitnessKey = state.selectedWitnessKey === witness.key ? null : witness.key;
-      renderWitnessList();
-      applyFilters();
-      scrollToTable();
-    });
-
-    container.append(button);
+  button.addEventListener('click', () => {
+    state.selectedWitnessKey = state.selectedWitnessKey === witness.key ? null : witness.key;
+    renderWitnessList();
+    applyFilters();
+    scrollToTable();
   });
+
+  return button;
 }
 
 function applyFilters() {
