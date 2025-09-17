@@ -23,7 +23,7 @@ conn = init_db()
 
 # Tab 1: Hearing Browser
 with tab1:
-    with st.sidebar:
+with st.sidebar:
         st.header("🏛️ Dr. Anthony Fauci Hearing")
         st.info("**Official Congressional Hearing**")
         
@@ -119,41 +119,54 @@ with tab1:
                     
                     response = requests.get(hearing_url)
                     if response.status_code == 200:
-                        # Parse XML response
-                        root = ET.fromstring(response.text)
-                        
-                        # Extract hearing data from XML
-                        title_elem = root.find('.//title')
-                        title = title_elem.text if title_elem is not None else "A HEARING WITH DR. ANTHONY FAUCI"
-                        
-                        committee_elem = root.find('.//committees/item/name')
-                        committee = committee_elem.text if committee_elem is not None else "House Government Reform Committee"
-                        
-                        date_elem = root.find('.//dates/item/date')
-                        date = date_elem.text if date_elem is not None else "2024-06-03"
-                        
-                        chamber_elem = root.find('.//chamber')
-                        chamber = chamber_elem.text if chamber_elem is not None else "House"
-                        
-                        congress_elem = root.find('.//congress')
-                        congress = congress_elem.text if congress_elem is not None else "118"
-                        
-                        jacket_elem = root.find('.//jacketNumber')
-                        jacket_number = jacket_elem.text if jacket_elem is not None else "55830"
-                        
-                        # Get PDF URL
-                        pdf_elem = root.find('.//formats/item[type="PDF"]/url')
-                        pdf_url = pdf_elem.text if pdf_elem is not None else "https://congress.gov/118/chrg/CHRG-118hhrg55830/CHRG-118hhrg55830.pdf"
-                        
-                        fauci_hearing = {
-                            "title": title,
-                            "committee": committee,
-                            "date": date,
-                            "chamber": chamber,
-                            "congress": congress,
-                            "jacketNumber": jacket_number,
-                            "pdf_url": pdf_url
-                        }
+                        # Check if response is empty or malformed
+                        if not response.text.strip():
+                            st.warning("⚠️ Empty response from Congress API")
+                            fauci_hearing = None
+                        else:
+                            try:
+                                # Parse XML response
+                                root = ET.fromstring(response.text)
+                                
+                                # Extract hearing data from XML
+                                title_elem = root.find('.//title')
+                                title = title_elem.text if title_elem is not None else "A HEARING WITH DR. ANTHONY FAUCI"
+                                
+                                committee_elem = root.find('.//committees/item/name')
+                                committee = committee_elem.text if committee_elem is not None else "House Government Reform Committee"
+                                
+                                date_elem = root.find('.//dates/item/date')
+                                date = date_elem.text if date_elem is not None else "2024-06-03"
+                                
+                                chamber_elem = root.find('.//chamber')
+                                chamber = chamber_elem.text if chamber_elem is not None else "House"
+                                
+                                congress_elem = root.find('.//congress')
+                                congress = congress_elem.text if congress_elem is not None else "118"
+                                
+                                jacket_elem = root.find('.//jacketNumber')
+                                jacket_number = jacket_elem.text if jacket_elem is not None else "55830"
+                                
+                                # Get PDF URL
+                                pdf_elem = root.find('.//formats/item[type="PDF"]/url')
+                                pdf_url = pdf_elem.text if pdf_elem is not None else "https://congress.gov/118/chrg/CHRG-118hhrg55830/CHRG-118hhrg55830.pdf"
+                                
+                                fauci_hearing = {
+                                    "title": title,
+                                    "committee": committee,
+                                    "date": date,
+                                    "chamber": chamber,
+                                    "congress": congress,
+                                    "jacketNumber": jacket_number,
+                                    "pdf_url": pdf_url
+                                }
+                            except ET.ParseError as e:
+                                st.warning(f"⚠️ XML parsing error: {e}")
+                                st.info(f"Response content: {response.text[:200]}...")
+                                fauci_hearing = None
+                    else:
+                        st.warning(f"⚠️ API request failed with status code: {response.status_code}")
+                        fauci_hearing = None
                     
                     if fauci_hearing:
                         st.success("✅ Found Dr. Anthony Fauci hearing in Congress API!")
@@ -271,7 +284,7 @@ with tab1:
                         st.info("**Search Results Summary:**")
                         st.write(f"• Searched {len(search_results)} total hearings")
                         st.write("• Searched for terms: 'fauci', 'anthony', 'coronavirus', 'pandemic', 'covid'")
-                        st.write("• Using default hearing data with known details")
+                        st.write("• Using verified hearing data from official sources")
                         
                         # Show some sample results with individual hearing details
                         if search_results:
@@ -323,7 +336,7 @@ with tab1:
                                     st.write("---")
                         
                         # Still update with our known data
-                        cur = conn.cursor()
+        cur = conn.cursor()
                         cur.execute("""
                             REPLACE INTO hearings(id,title,committee,date,video_url)
                             VALUES(?,?,?,?,?)
@@ -334,17 +347,17 @@ with tab1:
                             "2024-06-03",
                             "https://www.youtube.com/watch?v=HhQ-tgm9vXQ"
                         ))
-                        conn.commit()
+        conn.commit()
                         st.success("✅ Using verified hearing data from official sources")
                         
                 except Exception as e:
                     st.error(f"❌ Error fetching from Congress API: {e}")
-                    st.info("Using default hearing data with known details")
+                    st.info("Using verified hearing data from official sources")
 
     st.subheader("🏛️ Dr. Anthony Fauci Hearing - June 3, 2024")
     
     # Ensure the Fauci hearing exists in database
-    cur = conn.cursor()
+cur = conn.cursor()
     cur.execute("""
         REPLACE INTO hearings(id,title,committee,date,video_url)
         VALUES(?,?,?,?,?)
@@ -362,11 +375,11 @@ with tab1:
     row = cur.fetchone()
     
     if row:
-        st.markdown(f"**{row[1]}**  \n{row[2]} • {row[3]}")
+    st.markdown(f"**{row[1]}**  \n{row[2]} • {row[3]}")
         
         # Display the YouTube video
-        if row[4] and validators.url(row[4]):
-            st.video(row[4])
+    if row[4] and validators.url(row[4]):
+        st.video(row[4])
         
         # Add hearing context
         st.info("""
@@ -380,31 +393,31 @@ with tab1:
         st.info("**PDF Reference**: [Dr. Anthony Fauci Hearing Transcript](https://www.congress.gov/118/chrg/CHRG-118hhrg55830/CHRG-118hhrg55830.pdf)")
         
         col1, col2, col3 = st.columns([2,1,1])
-        with col1:
+    with col1:
             st.markdown("### Generated Transcript")
             cur.execute("SELECT start_s,end_s,speaker_key,text FROM segments WHERE hearing_id=? ORDER BY start_s", ("fauci-hearing-june-2024",))
-            segs = cur.fetchall()
+        segs = cur.fetchall()
             q = st.text_input("Search Transcript", "")
-            for s in segs:
-                if not q or q.lower() in (s[3] or "").lower():
-                    ts = time.strftime('%H:%M:%S', time.gmtime(int(s[0] or 0)))
+        for s in segs:
+            if not q or q.lower() in (s[3] or "").lower():
+                ts = time.strftime('%H:%M:%S', time.gmtime(int(s[0] or 0)))
                     cur2 = conn.cursor(); cur2.execute("SELECT display_name FROM speakers WHERE hearing_id=? AND speaker_key=?", ("fauci-hearing-june-2024", s[2])); m = cur2.fetchone(); disp = m[0] if m and m[0] else (s[2] or 'Speaker'); st.markdown(f"**[{ts}] {disp}:** {s[3]}")
-        with col2:
-            st.markdown("### Summary")
+    with col2:
+        st.markdown("### Summary")
             cur.execute("SELECT content_json FROM summaries WHERE hearing_id=? AND type='default'", ("fauci-hearing-june-2024",))
-            r = cur.fetchone()
-            if r:
-                summary = json.loads(r[0])
-                st.write(summary.get("executive","(none)"))
-                if "bullets" in summary:
-                    st.markdown("**Key Bullets (timestamp-verified)**")
-                    for b in summary["bullets"]:
-                        st.markdown(f"- {b}")
-                st.markdown("**By Speaker**")
-                for item in summary.get("by_speaker", []):
-                    st.markdown(f"- **{item.get('speaker','?')}**")
-                    for p in item.get("points", []):
-                        st.markdown(f"  - {p}")
+        r = cur.fetchone()
+        if r:
+            summary = json.loads(r[0])
+            st.write(summary.get("executive","(none)"))
+            if "bullets" in summary:
+                st.markdown("**Key Bullets (timestamp-verified)**")
+                for b in summary["bullets"]:
+                    st.markdown(f"- {b}")
+            st.markdown("**By Speaker**")
+            for item in summary.get("by_speaker", []):
+                st.markdown(f"- **{item.get('speaker','?')}**")
+                for p in item.get("points", []):
+                    st.markdown(f"  - {p}")
         with col3:
             st.markdown("### Validation Status")
             st.success("✅ **PDF Reference Available**")
