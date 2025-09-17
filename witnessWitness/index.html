@@ -72,6 +72,12 @@
                   </button>
                 </th>
                 <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="chamber">
+                    Chamber
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
                   <button type="button" class="sort-button" data-sort-key="title">
                     Title
                     <span class="sort-indicator" aria-hidden="true"></span>
@@ -103,9 +109,7 @@
       </section>
     </section>
   </main>
-  <footer class="page-footer">
-    <p>Tip: open this folder with a simple web server (<code>python -m http.server</code>) so the CSV can be fetched locally.</p>
-  </footer>
+  <footer class="page-footer"></footer>
   <script src="app.js"></script>
 </body>
 </html>
