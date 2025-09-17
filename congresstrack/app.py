@@ -453,16 +453,16 @@ def show_sponsor_visualization_page():
         with col1:
             st.subheader("📈 Top Performers Chart")
             bar_chart = analyzer.create_bar_chart(filtered_df, top_n)
-            st.plotly_chart(bar_chart, use_container_width=True)
+            st.plotly_chart(bar_chart, width="stretch")
 
         with col2:
             st.subheader("🏛️ Chamber Distribution")
             chamber_chart = analyzer.create_chamber_comparison(filtered_df)
-            st.plotly_chart(chamber_chart, use_container_width=True)
+            st.plotly_chart(chamber_chart, width="stretch")
 
         st.subheader("🗺️ State Leaders")
         state_chart = analyzer.create_state_analysis(filtered_df)
-        st.plotly_chart(state_chart, use_container_width=True)
+        st.plotly_chart(state_chart, width="stretch")
 
     # Achievement badges
     st.markdown("## 🏅 Achievement Badges")
@@ -815,7 +815,7 @@ def show_analysis_summary_page():
         showlegend=False,
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def main():
