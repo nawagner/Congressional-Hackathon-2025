@@ -185,5 +185,4 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [UnitedStates Project](https://github.com/unitedstates) | Data/tools hub. Best for: IDs, scrapers, metadata. | GitHub | Ongoing | Civic Tech | Maintained by volunteers | Tools / IDs |
 | [Statements of Disbursements: 1970-2008](https://guides.bpl.org/Congress/Disbursements) | Document repository. Best for: historic House statements of disbursements. | Boston Public Library | Ongoing |   | Maintained by BPL | Tools / IDs |
 | [Statements of Disbursements Parser](https://github.com/propublica/disbursements) | Tool for transforming Statement of Disbursements into data. Best for: transforming House statements of disbursements. | Github | Ongoing |   | Built by ProPublica | Tools / IDs |
-
 | [DC Inbox](https://www.dcinbox.com/) | Member enewsletters. Best for: Member email messages. | Web | Rolling | ProPublica | Useful for messaging analysis | Comms / Messaging |
