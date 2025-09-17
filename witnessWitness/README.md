@@ -52,5 +52,10 @@ The repository includes `scrape_hearing.py` for pulling data from a House hearin
 2. Run the scraper: `python3 scrape_hearing.py`
    - Use `--url` to target a different event, e.g. `python3 scrape_hearing.py --url https://docs.house.gov/...`
    - Use `--db` to store results in another SQLite file, e.g. `python3 scrape_hearing.py --db my_hearings.db`
+   - Crawl a range of event IDs: `python3 scrape_hearing.py --start-id 118400 --end-id 118410 --delay 0.2`
+      - Add `--checkpoint-dir checkpoints/house` to write `progress.json` (last EventID) and batch JSON dumps every 200 successes (tune with `--batch-size`).
+      - Increase concurrency with `--workers 4` (each worker issues requests in parallel while DB writes remain serialized).
 
 Each run writes JSON to stdout and upserts the data into `hearings.db` (tables `hearings` and `witnesses`).
+Range crawls emit an array of hearing objects and skip EventIDs that return 404.
+Witness entries capture any available Truth in Testimony PDF links (`truth_in_testimony_pdf`).
