@@ -128,6 +128,9 @@ def demo_youtube_processor_interface():
                         (hearing_id, 62.1, 78.4, "witness_1", "Absolutely, Mr. Chairman. Our agency follows a rigorous peer-review process for all scientific recommendations.")
                     ]
                     
+                    # Clear existing segments for this hearing first
+                    cur.execute("DELETE FROM segments WHERE hearing_id = ?", (hearing_id,))
+                    
                     for segment in demo_segments:
                         cur.execute("""
                             INSERT INTO segments (hearing_id, start_s, end_s, speaker_key, text)
@@ -155,7 +158,7 @@ def demo_youtube_processor_interface():
                     }
                     
                     cur.execute("""
-                        INSERT INTO summaries (hearing_id, type, content_json)
+                        REPLACE INTO summaries (hearing_id, type, content_json)
                         VALUES (?, ?, ?)
                     """, (hearing_id, "default", json.dumps(demo_summary)))
                     
