@@ -23,7 +23,7 @@ conn = init_db()
 
 # Tab 1: Hearing Browser
 with tab1:
-with st.sidebar:
+    with st.sidebar:
         st.header("🏛️ Dr. Anthony Fauci Hearing")
         st.info("**Official Congressional Hearing**")
         
@@ -323,7 +323,7 @@ with st.sidebar:
                                     st.write("---")
                         
                         # Still update with our known data
-        cur = conn.cursor()
+                        cur = conn.cursor()
                         cur.execute("""
                             REPLACE INTO hearings(id,title,committee,date,video_url)
                             VALUES(?,?,?,?,?)
@@ -334,7 +334,7 @@ with st.sidebar:
                             "2024-06-03",
                             "https://www.youtube.com/watch?v=HhQ-tgm9vXQ"
                         ))
-        conn.commit()
+                        conn.commit()
                         st.success("✅ Using verified hearing data from official sources")
                         
                 except Exception as e:
@@ -344,7 +344,7 @@ with st.sidebar:
     st.subheader("🏛️ Dr. Anthony Fauci Hearing - June 3, 2024")
     
     # Ensure the Fauci hearing exists in database
-cur = conn.cursor()
+    cur = conn.cursor()
     cur.execute("""
         REPLACE INTO hearings(id,title,committee,date,video_url)
         VALUES(?,?,?,?,?)
@@ -362,11 +362,11 @@ cur = conn.cursor()
     row = cur.fetchone()
     
     if row:
-    st.markdown(f"**{row[1]}**  \n{row[2]} • {row[3]}")
+        st.markdown(f"**{row[1]}**  \n{row[2]} • {row[3]}")
         
         # Display the YouTube video
-    if row[4] and validators.url(row[4]):
-        st.video(row[4])
+        if row[4] and validators.url(row[4]):
+            st.video(row[4])
         
         # Add hearing context
         st.info("""
@@ -380,31 +380,31 @@ cur = conn.cursor()
         st.info("**PDF Reference**: [Dr. Anthony Fauci Hearing Transcript](https://www.congress.gov/118/chrg/CHRG-118hhrg55830/CHRG-118hhrg55830.pdf)")
         
         col1, col2, col3 = st.columns([2,1,1])
-    with col1:
+        with col1:
             st.markdown("### Generated Transcript")
             cur.execute("SELECT start_s,end_s,speaker_key,text FROM segments WHERE hearing_id=? ORDER BY start_s", ("fauci-hearing-june-2024",))
-        segs = cur.fetchall()
+            segs = cur.fetchall()
             q = st.text_input("Search Transcript", "")
-        for s in segs:
-            if not q or q.lower() in (s[3] or "").lower():
-                ts = time.strftime('%H:%M:%S', time.gmtime(int(s[0] or 0)))
+            for s in segs:
+                if not q or q.lower() in (s[3] or "").lower():
+                    ts = time.strftime('%H:%M:%S', time.gmtime(int(s[0] or 0)))
                     cur2 = conn.cursor(); cur2.execute("SELECT display_name FROM speakers WHERE hearing_id=? AND speaker_key=?", ("fauci-hearing-june-2024", s[2])); m = cur2.fetchone(); disp = m[0] if m and m[0] else (s[2] or 'Speaker'); st.markdown(f"**[{ts}] {disp}:** {s[3]}")
-    with col2:
-        st.markdown("### Summary")
+        with col2:
+            st.markdown("### Summary")
             cur.execute("SELECT content_json FROM summaries WHERE hearing_id=? AND type='default'", ("fauci-hearing-june-2024",))
-        r = cur.fetchone()
-        if r:
-            summary = json.loads(r[0])
-            st.write(summary.get("executive","(none)"))
-            if "bullets" in summary:
-                st.markdown("**Key Bullets (timestamp-verified)**")
-                for b in summary["bullets"]:
-                    st.markdown(f"- {b}")
-            st.markdown("**By Speaker**")
-            for item in summary.get("by_speaker", []):
-                st.markdown(f"- **{item.get('speaker','?')}**")
-                for p in item.get("points", []):
-                    st.markdown(f"  - {p}")
+            r = cur.fetchone()
+            if r:
+                summary = json.loads(r[0])
+                st.write(summary.get("executive","(none)"))
+                if "bullets" in summary:
+                    st.markdown("**Key Bullets (timestamp-verified)**")
+                    for b in summary["bullets"]:
+                        st.markdown(f"- {b}")
+                st.markdown("**By Speaker**")
+                for item in summary.get("by_speaker", []):
+                    st.markdown(f"- **{item.get('speaker','?')}**")
+                    for p in item.get("points", []):
+                        st.markdown(f"  - {p}")
         with col3:
             st.markdown("### Validation Status")
             st.success("✅ **PDF Reference Available**")
