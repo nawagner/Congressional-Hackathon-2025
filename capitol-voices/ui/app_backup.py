@@ -17,14 +17,13 @@ def init_db():
     cur.execute("CREATE TABLE IF NOT EXISTS hearings(id TEXT PRIMARY KEY, title TEXT, committee TEXT, date TEXT, video_url TEXT)")
     cur.execute("CREATE TABLE IF NOT EXISTS summaries(hearing_id TEXT, type TEXT, content_json TEXT, PRIMARY KEY (hearing_id, type))")
     cur.execute("CREATE TABLE IF NOT EXISTS segments(id INTEGER PRIMARY KEY AUTOINCREMENT, hearing_id TEXT, start_s REAL, end_s REAL, speaker_key TEXT, text TEXT)")
-    conn.commit()
-    return conn
+    conn.commit(); return conn
 
 conn = init_db()
 
 # Tab 1: Hearing Browser
 with tab1:
-    with st.sidebar:
+with st.sidebar:
         st.header("🏛️ Dr. Anthony Fauci Hearing")
         st.info("**Official Congressional Hearing**")
         
@@ -79,16 +78,20 @@ with tab1:
                         if response.status_code == 200:
                             data = response.json()
                             hearings = data.get("hearings", [])
-                            st.success(f"✅ Found {len(hearings)} recent House hearings!")
+                            st.success(f"✅ Found {len(hearings)} recent House hearings")
+                            
                             for i, hearing in enumerate(hearings[:5]):
-                                st.write(f"{i+1}. {hearing.get('title', 'Unknown')}")
+                                title = hearing.get('title', 'Unknown')
+                                date = hearing.get('date', 'Unknown')
+                                st.write(f"{i+1}. {title} - {date}")
                         else:
                             st.error(f"❌ Error: {response.status_code}")
                     except Exception as e:
                         st.error(f"❌ Error: {e}")
         
-        # Button to refresh hearing data
-        if st.button("🔄 Refresh Hearing Data", type="secondary"):
+        # Button to refresh/update hearing data
+        if st.button("🔄 Refresh Hearing Data", type="primary"):
+            # Update the hearing in database with current data
             cur = conn.cursor()
             cur.execute("""
                 REPLACE INTO hearings(id,title,committee,date,video_url)
@@ -279,12 +282,61 @@ with tab1:
                     else:
                         st.warning("⚠️ Dr. Anthony Fauci hearing not found in Congress API search")
                         st.info("**Search Results Summary:**")
-                        st.write("• Searched total hearings")
+                        st.write(f"• Searched {len(search_results)} total hearings")
                         st.write("• Searched for terms: 'fauci', 'anthony', 'coronavirus', 'pandemic', 'covid'")
                         st.write("• Using verified hearing data from official sources")
                         
+                        # Show some sample results with individual hearing details
+                        if search_results:
+                            st.write("**Sample Recent Hearings Found:**")
+                            for i, hearing in enumerate(search_results[:3]):  # Reduced to 3 to avoid too many API calls
+                                hearing_url = hearing.get("url")
+                                if hearing_url:
+                                    try:
+                                        # Fetch individual hearing details
+                                        detail_response = requests.get(hearing_url)
+                                        if detail_response.status_code == 200:
+                                            detail_data = detail_response.json()
+                                            hearing_detail = detail_data.get("hearing", {})
+                                            
+                                            # Extract data with multiple field name attempts
+                                            title = (hearing_detail.get('title') or 
+                                                   hearing_detail.get('hearingTitle') or 
+                                                   hearing_detail.get('name') or 
+                                                   hearing_detail.get('hearingName') or 
+                                                   'Unknown Title')
+                                            
+                                            date = (hearing_detail.get('date') or 
+                                                  hearing_detail.get('hearingDate') or 
+                                                  hearing_detail.get('publishedDate') or 
+                                                  hearing_detail.get('createdDate') or 
+                                                  'Unknown Date')
+                                            
+                                            committee = (hearing_detail.get('committee', {}).get('name') or 
+                                                       hearing_detail.get('committeeName') or 
+                                                       hearing_detail.get('committee', {}).get('title') or 
+                                                       'Unknown Committee')
+                                            
+                                            st.write(f"{i+1}. **{title}**")
+                                            st.write(f"   Date: {date}")
+                                            st.write(f"   Committee: {committee}")
+                                            st.write(f"   URL: {hearing_url}")
+                                            st.write("---")
+                                        else:
+                                            st.write(f"{i+1}. **API Error**: Could not fetch hearing details")
+                                            st.write(f"   URL: {hearing_url}")
+                                            st.write("---")
+                                    except Exception as e:
+                                        st.write(f"{i+1}. **Error**: {str(e)}")
+                                        st.write(f"   URL: {hearing_url}")
+                                        st.write("---")
+                                else:
+                                    st.write(f"{i+1}. **No URL available**")
+                                    st.write(f"   Raw data keys: {list(hearing.keys())}")
+                                    st.write("---")
+                        
                         # Still update with our known data
-                        cur = conn.cursor()
+        cur = conn.cursor()
                         cur.execute("""
                             REPLACE INTO hearings(id,title,committee,date,video_url)
                             VALUES(?,?,?,?,?)
@@ -295,7 +347,7 @@ with tab1:
                             "2024-06-03",
                             "https://www.youtube.com/watch?v=HhQ-tgm9vXQ"
                         ))
-                        conn.commit()
+        conn.commit()
                         st.success("✅ Using verified hearing data from official sources")
                         
                 except Exception as e:
@@ -305,7 +357,7 @@ with tab1:
     st.subheader("🏛️ Dr. Anthony Fauci Hearing - June 3, 2024")
     
     # Ensure the Fauci hearing exists in database
-    cur = conn.cursor()
+cur = conn.cursor()
     cur.execute("""
         REPLACE INTO hearings(id,title,committee,date,video_url)
         VALUES(?,?,?,?,?)
@@ -323,56 +375,49 @@ with tab1:
     row = cur.fetchone()
     
     if row:
-        st.markdown(f"**{row[1]}**  \n{row[2]} • {row[3]}")
+    st.markdown(f"**{row[1]}**  \n{row[2]} • {row[3]}")
         
         # Display the YouTube video
-        if row[4] and validators.url(row[4]):
-            st.video(row[4])
+    if row[4] and validators.url(row[4]):
+        st.video(row[4])
         
         # Add hearing context
         st.info("""
         **Hearing Context**: This hearing was held by the Select Subcommittee on the Coronavirus Pandemic 
         to investigate the COVID-19 pandemic response and explore lessons learned. Dr. Anthony Fauci, 
         former Director of the National Institute of Allergy and Infectious Diseases, appeared voluntarily 
-        to provide testimony about the federal government's response to the pandemic.
+        to discuss his role in the federal response to the pandemic.
         """)
-        
         # Add transcript validation section
         st.markdown("### 📋 Transcript Validation")
         st.info("**PDF Reference**: [Dr. Anthony Fauci Hearing Transcript](https://www.congress.gov/118/chrg/CHRG-118hhrg55830/CHRG-118hhrg55830.pdf)")
         
         col1, col2, col3 = st.columns([2,1,1])
-        with col1:
+    with col1:
             st.markdown("### Generated Transcript")
             cur.execute("SELECT start_s,end_s,speaker_key,text FROM segments WHERE hearing_id=? ORDER BY start_s", ("fauci-hearing-june-2024",))
-            segs = cur.fetchall()
+        segs = cur.fetchall()
             q = st.text_input("Search Transcript", "")
-            for s in segs:
-                if not q or q.lower() in (s[3] or "").lower():
-                    ts = time.strftime('%H:%M:%S', time.gmtime(int(s[0] or 0)))
-                    cur2 = conn.cursor()
-                    cur2.execute("SELECT display_name FROM speakers WHERE hearing_id=? AND speaker_key=?", ("fauci-hearing-june-2024", s[2]))
-                    m = cur2.fetchone()
-                    disp = m[0] if m and m[0] else (s[2] or 'Speaker')
-                    st.markdown(f"**[{ts}] {disp}:** {s[3]}")
-        
-        with col2:
-            st.markdown("### Summary")
+        for s in segs:
+            if not q or q.lower() in (s[3] or "").lower():
+                ts = time.strftime('%H:%M:%S', time.gmtime(int(s[0] or 0)))
+                    cur2 = conn.cursor(); cur2.execute("SELECT display_name FROM speakers WHERE hearing_id=? AND speaker_key=?", ("fauci-hearing-june-2024", s[2])); m = cur2.fetchone(); disp = m[0] if m and m[0] else (s[2] or 'Speaker'); st.markdown(f"**[{ts}] {disp}:** {s[3]}")
+    with col2:
+        st.markdown("### Summary")
             cur.execute("SELECT content_json FROM summaries WHERE hearing_id=? AND type='default'", ("fauci-hearing-june-2024",))
-            r = cur.fetchone()
-            if r:
-                summary = json.loads(r[0])
-                st.write(summary.get("executive","(none)"))
-                if "bullets" in summary:
-                    st.markdown("**Key Bullets (timestamp-verified)**")
-                    for b in summary["bullets"]:
-                        st.markdown(f"- {b}")
-                st.markdown("**By Speaker**")
-                for item in summary.get("by_speaker", []):
-                    st.markdown(f"- **{item.get('speaker','?')}**")
-                    for p in item.get("points", []):
-                        st.markdown(f"  - {p}")
-        
+        r = cur.fetchone()
+        if r:
+            summary = json.loads(r[0])
+            st.write(summary.get("executive","(none)"))
+            if "bullets" in summary:
+                st.markdown("**Key Bullets (timestamp-verified)**")
+                for b in summary["bullets"]:
+                    st.markdown(f"- {b}")
+            st.markdown("**By Speaker**")
+            for item in summary.get("by_speaker", []):
+                st.markdown(f"- **{item.get('speaker','?')}**")
+                for p in item.get("points", []):
+                    st.markdown(f"  - {p}")
         with col3:
             st.markdown("### Validation Status")
             st.success("✅ **PDF Reference Available**")
