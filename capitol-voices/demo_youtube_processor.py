@@ -22,6 +22,7 @@ def demo_youtube_processor_interface():
     # YouTube URL input
     youtube_url = st.text_input(
         "YouTube URL",
+        value="https://www.youtube.com/watch?v=HhQ-tgm9vXQ",
         placeholder="https://www.youtube.com/watch?v=...",
         help="Enter any YouTube URL - this demo will simulate processing"
     )
@@ -44,9 +45,9 @@ def demo_youtube_processor_interface():
         col1, col2 = st.columns(2)
         
         with col1:
-            hearing_id = st.text_input("Hearing ID", value="demo-youtube-hearing-2025")
-            title = st.text_input("Title", value="House Oversight Committee - Federal Agency Accountability")
-            committee = st.text_input("Committee", value="House Committee on Oversight and Accountability")
+            hearing_id = st.text_input("Hearing ID", value="demo-youtube-hearing-HhQ-tgm9vXQ")
+            title = st.text_input("Title", value="Congressional Hearing - YouTube Demo Video")
+            committee = st.text_input("Committee", value="Demo Committee for Hackathon")
         
         with col2:
             date = st.date_input("Date", value=datetime(2025, 1, 15))
