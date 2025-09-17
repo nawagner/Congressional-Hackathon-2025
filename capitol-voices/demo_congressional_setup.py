@@ -25,15 +25,16 @@ except ImportError:
     PIPELINE_AVAILABLE = False
     print("⚠️  Pipeline not available. Install dependencies with: pip install -r requirements.txt")
 
-# Sample Congressional hearing for demo
+# Sample Congressional hearing for demo (based on real committee structure)
 DEMO_HEARING = {
     "hearing_id": "house-oversight-demo-2025",
-    "title": "House Oversight Committee - Federal Agency Accountability",
+    "title": "House Oversight Committee - Federal Agency Accountability and Transparency",
     "committee": "House Committee on Oversight and Accountability", 
     "date": "2025-01-15",
-    "youtube_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",  # Replace with actual hearing URL
+    "youtube_url": "https://www.youtube.com/watch?v=DEMO_HEARING_URL",  # Demo URL
     "duration_minutes": 120,
-    "expected_speakers": 8
+    "expected_speakers": 8,
+    "description": "Demo hearing showcasing CapitolVoices capabilities with realistic Congressional structure"
 }
 
 # Committee roster for demo
