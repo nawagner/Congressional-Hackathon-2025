@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Optional
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 HOUSE_DB = BASE_DIR / "hearings.db"
 SENATE_DB = BASE_DIR / "senate_hearings.sqlite"
 TARGET_DB = BASE_DIR / "hearings_combined.db"

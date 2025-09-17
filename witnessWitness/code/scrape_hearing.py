@@ -24,7 +24,7 @@ except ImportError as exc:  # pragma: no cover - dependency check
 
 
 DEFAULT_URL = "https://docs.house.gov/Committee/Calendar/ByEvent.aspx?EventID=118596"
-DEFAULT_DB_PATH = Path(__file__).resolve().with_name("hearings.db")
+DEFAULT_DB_PATH = Path(__file__).resolve().parent.parent / "hearings.db"
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"

@@ -45,14 +45,14 @@ WHERE LOWER(h.title) LIKE LOWER('%climate%');
 
 ## Scrape hearing details
 
-The repository includes `scrape_hearing.py` for pulling data from a House hearing page.
+The repository includes `code/scrape_hearing.py` for pulling data from a House hearing page.
 
 1. Install dependencies (with uv): `uv pip install -r requirements.txt`
    - Or with pip: `python3 -m pip install --user -r requirements.txt`
-2. Run the scraper: `python3 scrape_hearing.py`
-   - Use `--url` to target a different event, e.g. `python3 scrape_hearing.py --url https://docs.house.gov/...`
-   - Use `--db` to store results in another SQLite file, e.g. `python3 scrape_hearing.py --db my_hearings.db`
-   - Crawl a range of event IDs: `python3 scrape_hearing.py --start-id 118400 --end-id 118410 --delay 0.2`
+2. Run the scraper: `python3 code/scrape_hearing.py`
+   - Use `--url` to target a different event, e.g. `python3 code/scrape_hearing.py --url https://docs.house.gov/...`
+   - Use `--db` to store results in another SQLite file, e.g. `python3 code/scrape_hearing.py --db my_hearings.db`
+   - Crawl a range of event IDs: `python3 code/scrape_hearing.py --start-id 118400 --end-id 118410 --delay 0.2`
       - Add `--checkpoint-dir checkpoints/house` to write `progress.json` (last EventID) and batch JSON dumps every 200 successes (tune with `--batch-size`).
       - Increase concurrency with `--workers 4` (each worker issues requests in parallel while DB writes remain serialized).
 
