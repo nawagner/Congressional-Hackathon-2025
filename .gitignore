@@ -105,3 +105,4 @@ Cargo.lock
 tmp/
 temp/
 .cache/
+.vercel
