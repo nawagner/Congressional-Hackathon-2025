@@ -14,5 +14,10 @@ class AppSettings(BaseSettings):
     roster_path: str = "configs/roster.demo.json"
     llm_mode: str = "extractive"  # or "llm"
     llm_model_name: str = "local-llm"
+    
+    # PostgreSQL configuration
+    storage_engine: str = "sqlite"  # "sqlite" or "postgresql"
+    postgresql_connection_string: str = "postgresql://capitol_voices:password@localhost:5432/capitol_voices"
+    postgresql_schema: str = "capitol_voices"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
