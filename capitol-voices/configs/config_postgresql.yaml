@@ -1,0 +1,49 @@
+hearing:
+  id: "demo-001"
+  committee: "House Oversight"
+  title: "Demo Hearing"
+  date: "2025-09-10"
+  video_url: ""
+
+asr:
+  engine: "whisper"
+  model: "large-v3"
+  vad: true
+  beam_size: 5
+  chunk_seconds: 600  # 10-minute chunks for long hearings
+
+diarization:
+  engine: "pyannote"
+  min_speakers: 3
+  max_speakers: 12
+
+summary:
+  mode: "extractive"   # or 'llm'
+  max_tokens: 1200
+
+storage:
+  engine: "postgresql"
+  connection_string: "postgresql://capitol_voices:password@localhost:5432/capitol_voices"
+  schema: "capitol_voices"
+  # Alternative connection formats:
+  # connection_string: "postgresql://user:pass@host:port/dbname"
+  # connection_string: "postgresql://localhost/capitol_voices"  # uses default user
+  # connection_string: "postgresql://capitol_voices@localhost/capitol_voices"  # no password
+
+naming:
+  roster_path: "configs/roster.demo.json"
+
+# PostgreSQL-specific optimizations
+postgresql:
+  # Connection pool settings
+  max_connections: 20
+  connection_timeout: 30
+  
+  # Performance tuning
+  enable_full_text_search: true
+  enable_jsonb_indexing: true
+  
+  # Backup and maintenance
+  enable_automatic_vacuum: true
+  log_slow_queries: true
+  slow_query_threshold: 1000  # milliseconds

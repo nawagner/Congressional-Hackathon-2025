@@ -1,0 +1,32 @@
+{
+  "hearing_id": "house-oversight-demo-2025",
+  "committee": "House Committee on Oversight and Accountability",
+  "chair": {
+    "name": "Rep. James Comer",
+    "aliases": [
+      "Chairman Comer",
+      "Chair Comer",
+      "Mr. Chairman"
+    ]
+  },
+  "ranking": {
+    "name": "Rep. Jamie Raskin",
+    "aliases": [
+      "Ranking Member Raskin",
+      "Mr. Raskin"
+    ]
+  },
+  "members": [
+    "Rep. Andy Biggs",
+    "Rep. Lauren Boebert",
+    "Rep. Byron Donalds",
+    "Rep. Anna Paulina Luna",
+    "Rep. Nancy Mace",
+    "Rep. Marjorie Taylor Greene"
+  ],
+  "witnesses": [
+    "Dr. Anthony Fauci",
+    "Dr. Francis Collins",
+    "Dr. Lawrence Tabak"
+  ]
+}

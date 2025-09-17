@@ -1,0 +1,24 @@
+{
+  "hearing_id": "demo-001",
+  "chair": {
+    "name": "Chair Jane Doe",
+    "aliases": [
+      "Chairwoman Doe",
+      "Madam Chair"
+    ]
+  },
+  "ranking": {
+    "name": "Ranking Member John Smith",
+    "aliases": [
+      "Ranking Member Smith"
+    ]
+  },
+  "members": [
+    "Rep. Alice",
+    "Rep. Bob"
+  ],
+  "witnesses": [
+    "Dr. Expert",
+    "Ms. Advocate"
+  ]
+}
