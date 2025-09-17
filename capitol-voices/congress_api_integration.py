@@ -40,11 +40,20 @@ class CongressAPI:
             if 'xml' in content_type or response.text.strip().startswith('<'):
                 # Parse XML response
                 try:
-                    root = ET.fromstring(response.text)
+                    # Clean the response text before parsing
+                    cleaned_text = response.text.strip()
+                    if not cleaned_text:
+                        st.warning("⚠️ Empty XML response from Congress API")
+                        return None
+                    
+                    root = ET.fromstring(cleaned_text)
                     return self._parse_xml_hearing(root)
                 except ET.ParseError as e:
-                    st.error(f"XML Parse Error: {e}")
-                    st.error(f"Response content: {response.text[:500]}...")
+                    st.warning(f"⚠️ XML parsing failed: {e}")
+                    st.info("This is likely due to API rate limiting or temporary issues. Using fallback data.")
+                    return None
+                except Exception as e:
+                    st.warning(f"⚠️ Unexpected XML parsing error: {e}")
                     return None
             else:
                 # Parse JSON response
