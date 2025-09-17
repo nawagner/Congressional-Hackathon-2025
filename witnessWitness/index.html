@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Witness Witness Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-header">
+    <h1>Witness Witness Explorer</h1>
+    <p>Filter Senate committee hearings and spotlight the witnesses who appear.</p>
+  </header>
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Filters</h2>
+        <div class="form-group">
+          <label for="witnessSearch">Search witnesses</label>
+          <input id="witnessSearch" type="search" placeholder="Type a name…">
+        </div>
+        <div class="form-group">
+          <label for="committeeFilter">Committee</label>
+          <select id="committeeFilter"></select>
+        </div>
+        <div class="form-group">
+          <label for="tagFilter">Tag</label>
+          <select id="tagFilter"></select>
+        </div>
+        <div class="form-group form-group--dates">
+          <label>Date range</label>
+          <div class="date-inputs">
+            <input id="startDate" type="date">
+            <input id="endDate" type="date">
+          </div>
+        </div>
+        <button id="clearFilters" class="button button--secondary" type="button">Clear filters</button>
+      </section>
+      <section class="panel">
+        <h2>Witnesses</h2>
+        <div id="witnessList" class="witness-list" aria-live="polite"></div>
+      </section>
+    </aside>
+    <section class="content">
+      <section class="summary" aria-live="polite">
+        <div class="stat-card">
+          <div class="stat-label">Hearings loaded</div>
+          <div id="totalHearings" class="stat-value">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Unique witnesses</div>
+          <div id="uniqueWitnesses" class="stat-value">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Selected witness hearings</div>
+          <div id="selectedWitnessCount" class="stat-value">0</div>
+        </div>
+      </section>
+      <section class="details">
+        <header class="details__header">
+          <h2 id="detailsTitle">All hearings</h2>
+          <p id="detailsSubtitle">Choose a witness to drill into their hearing history.</p>
+        </header>
+        <div class="table-wrapper">
+          <table id="hearingsTable">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="date">
+                    Date
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="title">
+                    Title
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="committee">
+                    Committee
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="witnesses">
+                    Witnesses
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="tags">
+                    Tags
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+  <footer class="page-footer">
+    <p>Tip: open this folder with a simple web server (<code>python -m http.server</code>) so the CSV can be fetched locally.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
