@@ -32,12 +32,15 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [House Live Video](https://live.house.gov) | Streaming video. Best for: House floor & events. | Streaming | Real-time | House |  | Media / Video |
 | [Clerk.House.gov](https://clerk.house.gov) | House Clerk. Best for: Members, Member photos, votes, floor, disclosures. | Web/XML | Daily | House | Primary House data feeds | General / Portal |
 | [LOC.gov](https://loc.gov) | Library of Congress. Best for: Research & collections. | Web | Daily | LOC | Includes CRS & Law Library | General / Portal |
-| [GPO.gov](https://gpo.gov) | GPO portal. Best for: Publications & services. | PDF, XML | Daily | GPO | Entry to govinfo.gov | General / Portal |
 | [CRS.gov](https://crs.gov) | CRS portal. Best for: Policy analysis. | PDF | As published | LOC (CRS) | No public access | Research / Policy |
-| [Law Library Legal Reports](https://www.loc.gov/research-centers/law-library-of-congress/legal-reports/) | Law Library of Congress Legal Reports. Best for: Foreign law policy analysis. | PDF | As published | LOC (Law Library) | Public access | Research / Policy |
+| [Law Library of Congress](https://www.loc.gov/research-centers/law-library-of-congress/about-this-research-center/) | Law Library of Congress. Best for: Policy analysis. | Many kinds | As published | LOC (Law) | Public access | Research / Policy |
+| [Copyright Office](https://www.copyright.gov/) | U.S. Copyright Office Best for: Copyright policy. | Many kinds | As published | LOC (Copyright) | Public access | Policy |
+| [GPO.gov](https://gpo.gov) | GPO portal. Best for: Publications & services. | PDF, XML | Daily | GPO | Entry to govinfo.gov | General / Portal |
 | [GovInfo.gov](https://govinfo.gov) | Primary docs. Best for: Bills, laws, reports. | XML, TXT, USLM | Daily | GPO | Bulk & API access available | Legislation / Docs |
 | [CBO.gov](https://cbo.gov) | CBO portal. Best for: Cost estimates & reports. | PDF, XLSX | As published | CBO |  | Legislation / Fiscal Analysis |
 | [GAO.gov](https://gao.gov) | GAO portal. Best for: Audits & evaluations. | PDF, XLSX | As published | GAO |  | Oversight / GAO |
+| [U.S. Capitol Police](https://www.uscp.gov/) | U.S. Capitol Police. Best for: Crime statistics and IG Reports. | PDF, text | As published | USCP |  | Legislative Branch Security |
+| [Office of Congressional Workplace Rights](https://www.ocwr.gov/) | OCWR. Best for: Workplace safety data. | PDF, text | As published | OCWR |  | Legislative Branch Operations |
 
 ### Members
 
@@ -46,15 +49,19 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [Member Info](https://member-info.house.gov/members.xml) | House members. Best for: Member roster. | XML | Daily | House | Based on Clerk and CAO data; updated after memberData.xml is updated | Members / IDs |
 | [Clerk MemberData XML](https://clerk.house.gov/xml/lists/MemberData.xml) | House members. Best for: Member list. | XML | Daily | House | Published by House Clerk | Members / IDs |
 | [Clerk Financial Disclosure Reports](https://disclosures-clerk.house.gov/FinancialDisclosure) | House members. Best for: Member financial disclosure reports. | PDF | Daily | House | Published by House Clerk | Members / Ethics |
-| [Clerk Foriegn Travel Reports](https://disclosures-clerk.house.gov/ForeignTravel) | House members. Best for: Foreign travel reports. | PDF and Text | Daily | House | Published by House Clerk | Members / Travel |
-| [Clerk Gift Travel Filings](https://disclosures-clerk.house.gov/GiftTravelFilings) | House members. Best for: Gift travel filings. | ZIP | Annual | House | Published by House Clerk | Members / Travel |
-| [Clerk Unsolicited Mass Communications](https://masscommsdisclosure.house.gov/) | House members. Best for: Mass communications. | PDF  | Daily | House | Published by House Clerk | Members / Communications |
-| [Post-Employment Notifications](https://disclosures-clerk.house.gov/PostEmploymentNotification) | House members. Best for: Post Employment Communications. | ZIP  |  | House | Published by House Clerk | Members / Ethics |
-| [Lobbying Disclosure](https://lobbyingdisclosure.house.gov/) | Lobbyists. Best for: Lobbying filings and campaign contributions. | XML  |  | House | Published by House Clerk | Members / Ethics |
+| [House Clerk Foreign Travel Reports](https://disclosures-clerk.house.gov/ForeignTravel) | House members. Best for: Foreign travel reports. | PDF and Text | Daily | House | Published by House Clerk | Members / Travel |
+| [House Clerk Gift Travel Filings](https://disclosures-clerk.house.gov/GiftTravelFilings) | House members. Best for: Gift travel filings. | ZIP | Annual | House | Published by House Clerk | Members / Travel |
+| [House Clerk Unsolicited Mass Communications](https://masscommsdisclosure.house.gov/) | House members. Best for: Mass communications. | PDF  | Daily | House | Published by House Clerk | Members / Communications |
+| [House Post-Employment Notifications](https://disclosures-clerk.house.gov/PostEmploymentNotification) | House members. Best for: Post Employment Communications. | ZIP  |  | House | Published by House Clerk | Members / Ethics |
+| [House Lobbying Disclosure](https://lobbyingdisclosure.house.gov/) | Lobbyists. Best for: Lobbying filings and campaign contributions. | XML  |  | House | Published by House Clerk | Members / Ethics |
 | [Bioguide](https://bioguide.congress.gov) | Member directory. Best for: Unique IDs & photos. | XML, JSON | As updated | LOC | Maintained by LOC & historians | Members / IDs |
 | [Senate committee memberships](https://www.senate.gov/general/committee_membership/committee_memberships_SSAP.xml) | Committee rosters. Best for: Membership by committee. | Web/XML | As updated | Senate |  | Committees / Membership |
 | [Senate contact info XML](https://www.senate.gov/general/contact_information/senators_cfm.xml) | Senator contacts. Best for: Official info. | XML | As updated | Senate |  | Members / Contacts |
 | [Senate LIS Member Data](https://www.senate.gov/legislative/LIS_MEMBER/cvc_member_data.xml) | LIS data feed. Best for: Senate members. | XML | Daily | Senate | IDs differ from Bioguide | Members / IDs |
+| [Senate Financial Disclosure Database](https://efdsearch.senate.gov/search/home/) | Senate electronic Financial Disclosures. Best for: reviewing financial disclosures from 2012-present for members and candidates. | PDF | Daily | Senate |  | Members / candidates |
+| [Senate Private Sponsor Travel Database](https://www.senate.gov/legislative/lobbyingdisc.htm#lobbyingdisc=lda) | Senate travel gift rule disclosures. Best for: reviewing outside payments for travel. | PDF and download in bulk | Daily | Senate |  | Members / candidates |
+| [Senate Lobbying Disclosure](https://lda.senate.gov/system/public/) | Senate lobbying disclosure act reports: registrations, quarterly activity, and contribution reports. Best for: lobbying disclosures. | Database and API  | Daily | Senate | Ethics | Lobbyists |
+| [Senate Post Employment Lobbying Disclosure](https://www.senate.gov/pagelayout/legislative/g_three_sections_with_teasers/lobbyingdisc.htm) | Senate post employment lobbying restrictions. Best for: identifying former staff lobbying black-out period. | HTMML  | Annual | Senate | Ethics | Former staff |
 
 ### Events
 
@@ -83,11 +90,16 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [US Code (OLRC)](https://uscode.house.gov) | US Code. Best for: Statutory text. | XML, XHTML | As updated | Office of Law Revision Counsel (OLRC) | Maintained by House OLRC | Legislation / Law |
 | [Docs.House.gov Floor](https://docs.house.gov/floor) | Floor schedule/docs. Best for: Bills on floor. | XML | Real-time | House |  | Legislation / Floor |
 
-### Other
+### Other Legislative
 
 | Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [CRS Reports](https://crsreports.congress.gov) | CRS portal. Best for: Policy reports. | PDF | Weekly | LOC (CRS) | Limited set | Research / Policy |
+| [Law Library Legal Reports](https://www.loc.gov/research-centers/law-library-of-congress/legal-reports/) | Law Library of Congress Legal Reports. Best for: Foreign law policy analysis. | PDF | As published | LOC (Law Library) | Public access | Research / Policy |
+| [GAO restricted reports](https://www.gao.gov/reports-testimonies/restricted) | List of non-public GAO reports. Best for: Audits & evaluations. | TXT | As published | GAO |  | Oversight / GAO |
+| [GAO appropriations decisions](https://www.gao.gov/legal/appropriations-law/search) | GAO's Office of General Counsel issues decisions and opinions on appropriations law | PDF | As published | GAO |  | Appropriations / GAO |
+| [GAO bid protest decisions and docket](https://www.gao.gov/legal/bid-protests/search) | GAO forum for resolving bid protests | PDF | As published | GAO |  | Procurement / GAO |
+| [GAO legal opinions](https://www.gao.gov/legal/other-legal-work/decisions-and-faqs) | Various legal GAO opinions, including on application of CRA and impoundment.  | PDF | As published | GAO |  | Various / GAO |
 | [House History](https://history.house.gov) | Historical resources. Best for: House history. | Web | As needed | House |  | History |
 | [XML.House.gov](https://xml.house.gov) | Data standards. Best for: XML/USLM schemas. | Web | As needed | House | Technical reference | Tools / Standards |
 | [OCE House](https://oce.house.gov) | Office of Congressional Ethics. Best for: Ethics oversight. | Web | As needed | House |  | Ethics |
@@ -100,7 +112,13 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [House Telephone Directory](https://directory.house.gov) | House staff telephone directory. Best for: Staff contacts. | XML, JSON | Daily | House | Exportable contact info | Members / Staff |
 | [Congressional Data Task Force Innovation Hub](https://usgpo.github.io/innovation/) | Standards hub. Best for: USLM/XML resources. | Web | Ongoing | GPO | Links to XML WG | Tools / Standards |
 | [House Statement of Disbursements](https://www.house.gov/the-house-explained/open-government/statement-of-disbursements) | Office expenditures. Best for: House-level spending. | CSV, PDF | Quarterly | House | Recent years are spreadsheets | Admin / Finance |
-| [Senate SOPOEA](https://www.senate.gov/legislative/common/generic/report_secsen.htm) | Office expenditures. Best for: Senate-level spending. | PDF | Quarterly | Senate | Stays in PDF | Admin / Finance |
+| [Senate Statement of Official and Personnel Expense Accounts SOPOEA](https://www.senate.gov/legislative/common/generic/report_secsen.htm) | Office expenditures. Best for: Senate-level spending. | PDF | Quarterly | Senate | Stays in PDF | Admin / Finance |
+| [House Committee Reports by Congress](https://cha.house.gov/committee-reports) | Monthly reports on expenditures by committee. Best for: House committee spending. | PDF | Monthly | House | Stays in PDF | Admin / Finance |
+
+### Other Non-Legislative
+
+| Source / Tool | Description | Data | Update | Origin | Notes | Tags |
+|----|----|----|----|----|----|----|
 | [CFR Bulk](https://www.govinfo.gov/bulkdata/CFR) | Code of Fed Regs. Best for: Regulatory text. | XML | Annual | GPO |  | Regulations / CFR |
 | [eCFR Bulk](https://www.govinfo.gov/bulkdata/ECFR) | eCFR. Best for: Daily regulatory updates. | XML | Daily | GPO |  | Regulations / eCFR |
 | [Federal Register Bulk](https://www.govinfo.gov/bulkdata/FR) | Federal Register. Best for: Rules, notices. | XML | Daily | GPO |  | Regulations / FR |
@@ -122,6 +140,7 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [Military pending on calendar](https://www.senate.gov/legislative/LIS/nominations/NomNonCivilianPendingCalendar.xml) | Nominations feed. Best for: Military pending on calendar. | XML | Daily | Senate |  | Nominations / Senate |
 | [Withdrawn nominations](https://www.senate.gov/legislative/LIS/nominations/NomWithdrawn.xml) | Nominations feed. Best for: Withdrawn nominations. | XML | Daily | Senate |  | Nominations / Senate |
 | [Failed/returned nominations](https://www.senate.gov/legislative/LIS/nominations/NomFailedOrReturned.xml) | Nominations feed. Best for: Failed/returned nominations. | XML | Daily | Senate |  | Nominations / Senate |
+
 
 ### Non-Public / Internal
 
@@ -145,6 +164,7 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | [Oversight.gov](https://oversight.gov) | IG reports hub. Best for: Audits & inspections. | PDF | Rolling | CIGIE | Coverage gaps; older reports missing | Oversight / IG Reports |
 | [CISA DotGov data](https://flatgithub.com/cisagov/dotgov-data) | DotGov domains. Best for: Federal IT/security. | CSV | Rolling | CISA | Managed by DHS | Tech / Security |
 | [GAO Innovation Lab](https://innovations.gao.gov) | GAO Innovations. Best for: GAO projects. | Web | As needed | GAO |  | Oversight / GAO |
+| [Periodicially Listing Updates to Management (PLUM) Reporting](https://www.opm.gov/about-us/open-government/plum-reporting/) | List of senior positions in the executive branch. Best for: tracking filled and empty executive branch positions. | TXT, CSV | Annually | OPM |  | Nominations |
 
 ## Unofficial / Civil Society
 
@@ -153,7 +173,7 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 | Source / Tool | Description | Data | Update | Origin | Notes | Tags |
 |----|----|----|----|----|----|----|
 | [GovTrack.us](https://govtrack.us) | Bill tracker. Best for: Legislative activity. | Web | Rolling | Civic Tech | Analytics + visualizations | Legislation / Tracking |
-| [Senate Video Links (Lincoln Network)](https://www.senatecommitteehearings.com/transcripts) | Senate video links. Best for: Committee footage archive. | Links | Static | Civil Society | \~20 years of coverage | Media / Video |
+| [Senate Video Links (The Foundation for Amrerican Innovation)](https://www.senatecommitteehearings.com/transcripts) | Senate video links. Best for: Committee footage archive. | Links | Static | Civil Society | \~20 years of coverage | Media / Video |
 
 ### Other
 
@@ -161,8 +181,9 @@ This data map is a product of the [Congressional Data Task Force](https://usgpo.
 |----|----|----|----|----|----|----|
 | [Brookings Vital Stats](https://www.brookings.edu/multi-chapter-report/vital-statistics-on-congress) | Staff stats. Best for: Long-term staffing trends. | Tables | Periodic | Think Tank | Commonly cited; caveats | Staff / Research |
 | [CongressionalData.org Guide](https://congressionaldata.org/a-biased-yet-reliable-guide-to-sources-of-information-and-data-about-congress/) | Meta guide. Best for: Orientation to data sources. | Web | Periodic | Civic Tech | Curated overview | Meta / Guide |
-| [OpenSecrets](https://opensecrets.org) | Money in politics. Best for: Campaign & lobbying data. | Web, CSV | Rolling | Civil Society | Outside experts say best starting point for finance data | Money / Ethics |
 | [EveryCRSReport.com](https://www.everycrsreport.com) | CRS mirror + data. Best for: Better search & archive. | PDF + data | Rolling | Civic Tech | More coverage; data extracts | Research / Policy |
 | [UnitedStates Project](https://github.com/unitedstates) | Data/tools hub. Best for: IDs, scrapers, metadata. | GitHub | Ongoing | Civic Tech | Maintained by volunteers | Tools / IDs |
-| [ProPublica Congress API](https://projects.propublica.org/api-docs/congress-api/) | Member/bill API. Best for: Programmatic info. | JSON | Daily | ProPublica | Includes Represent & DC Inbox | Legislation / API |
+| [Statements of Disbursements: 1970-2008](https://guides.bpl.org/Congress/Disbursements) | Document repository. Best for: historic House statements of disbursements. | Boston Public Library | Ongoing |   | Maintained by BPL | Tools / IDs |
+| [Statements of Disbursements Parser](https://github.com/propublica/disbursements) | Tool for transforming Statement of Disbursements into data. Best for: transforming House statements of disbursements. | Github | Ongoing |   | Built by ProPublica | Tools / IDs |
+
 | [DC Inbox](https://www.dcinbox.com/) | Member enewsletters. Best for: Member email messages. | Web | Rolling | ProPublica | Useful for messaging analysis | Comms / Messaging |
