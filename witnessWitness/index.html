@@ -65,11 +65,36 @@
           <table id="hearingsTable">
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Title</th>
-                <th>Committee</th>
-                <th>Witnesses</th>
-                <th>Tags</th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="date">
+                    Date
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="title">
+                    Title
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="committee">
+                    Committee
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="witnesses">
+                    Witnesses
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort-key="tags">
+                    Tags
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody></tbody>

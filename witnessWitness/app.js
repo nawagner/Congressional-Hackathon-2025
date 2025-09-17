@@ -12,6 +12,10 @@ const state = {
   selectedWitnessKey: null,
   filteredHearings: [],
   dateRange: { min: null, max: null },
+  sort: {
+    key: 'date',
+    direction: 'desc',
+  },
 };
 
 const elements = {
@@ -28,6 +32,7 @@ const elements = {
   selectedWitnessCount: document.getElementById('selectedWitnessCount'),
   detailsTitle: document.getElementById('detailsTitle'),
   detailsSubtitle: document.getElementById('detailsSubtitle'),
+  sortButtons: Array.from(document.querySelectorAll('.sort-button')),
 };
 
 document.addEventListener('DOMContentLoaded', initialise);
@@ -120,6 +125,14 @@ function attachEventListeners() {
 
     renderWitnessList();
     applyFilters();
+  });
+
+  elements.sortButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const { sortKey } = button.dataset;
+      if (!sortKey) return;
+      updateSort(sortKey);
+    });
   });
 }
 
@@ -427,9 +440,11 @@ function applyFilters() {
     filtered = filtered.filter((hearing) => hearing.witnessKeys.includes(selectedWitnessKey));
   }
 
-  state.filteredHearings = filtered;
-  renderHearingsTable(filtered);
-  updateSummary(filtered);
+  const sortedHearings = sortHearings(filtered);
+  state.filteredHearings = sortedHearings;
+  renderHearingsTable(sortedHearings);
+  updateSummary(sortedHearings);
+  refreshSortIndicators();
 }
 
 function renderHearingsTable(hearings) {
@@ -591,6 +606,96 @@ function formatDate(date) {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
+  });
+}
+
+function updateSort(key) {
+  if (!key) return;
+
+  if (state.sort.key === key) {
+    state.sort.direction = state.sort.direction === 'asc' ? 'desc' : 'asc';
+  } else {
+    state.sort.key = key;
+    state.sort.direction = key === 'date' ? 'desc' : 'asc';
+  }
+
+  applyFilters();
+}
+
+function sortHearings(hearings) {
+  const sorted = hearings.slice();
+  const comparator = buildComparator(state.sort);
+  sorted.sort(comparator);
+  return sorted;
+}
+
+function buildComparator(sort) {
+  const { key, direction } = sort;
+  const multiplier = direction === 'asc' ? 1 : -1;
+
+  return (a, b) => {
+    const primary = compareByKey(key, a, b);
+    if (primary !== 0) {
+      return primary * multiplier;
+    }
+
+    // Break ties with date descending so recent hearings appear first.
+    const fallback = compareByKey('date', a, b);
+    return fallback * -1;
+  };
+}
+
+function compareByKey(key, a, b) {
+  switch (key) {
+    case 'date':
+      return compareDates(a.dateObj, b.dateObj);
+    case 'title':
+      return compareStrings(a.title, b.title);
+    case 'committee':
+      return compareStrings(a.committee, b.committee);
+    case 'witnesses':
+      return compareStrings(a.witnesses.join(' | '), b.witnesses.join(' | '));
+    case 'tags':
+      return compareStrings(a.tags.join(' | '), b.tags.join(' | '));
+    default:
+      return 0;
+  }
+}
+
+function compareDates(dateA, dateB) {
+  const hasA = dateA instanceof Date && !Number.isNaN(dateA.getTime());
+  const hasB = dateB instanceof Date && !Number.isNaN(dateB.getTime());
+
+  if (!hasA && !hasB) return 0;
+  if (!hasA) return -1;
+  if (!hasB) return 1;
+
+  if (dateA.getTime() === dateB.getTime()) return 0;
+  return dateA.getTime() < dateB.getTime() ? -1 : 1;
+}
+
+function compareStrings(a, b) {
+  const left = (a || '').toString().toLowerCase();
+  const right = (b || '').toString().toLowerCase();
+  return left.localeCompare(right, undefined, { sensitivity: 'base' });
+}
+
+function refreshSortIndicators() {
+  const { key, direction } = state.sort;
+  if (!elements.sortButtons.length) return;
+
+  elements.sortButtons.forEach((button) => {
+    const buttonKey = button.dataset.sortKey;
+    const header = button.closest('th');
+    if (!buttonKey || !header) return;
+
+    if (buttonKey === key) {
+      button.dataset.sortDirection = direction;
+      header.setAttribute('aria-sort', direction === 'asc' ? 'ascending' : 'descending');
+    } else {
+      delete button.dataset.sortDirection;
+      header.setAttribute('aria-sort', 'none');
+    }
   });
 }
 
