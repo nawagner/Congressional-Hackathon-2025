@@ -10,6 +10,7 @@ import sqlite3
 import json
 from datetime import datetime
 import time
+import xml.etree.ElementTree as ET
 
 class CongressAPI:
     def __init__(self, api_key):
@@ -27,9 +28,88 @@ class CongressAPI:
         try:
             response = requests.get(url, headers=self.headers)
             response.raise_for_status()
-            return response.json()
+            
+            # Check if response is empty
+            if not response.text.strip():
+                st.warning("Empty response from Congress.gov API")
+                return None
+            
+            # Check if response is XML or JSON
+            content_type = response.headers.get('content-type', '').lower()
+            
+            if 'xml' in content_type or response.text.strip().startswith('<'):
+                # Parse XML response
+                try:
+                    root = ET.fromstring(response.text)
+                    return self._parse_xml_hearing(root)
+                except ET.ParseError as e:
+                    st.error(f"XML Parse Error: {e}")
+                    st.error(f"Response content: {response.text[:500]}...")
+                    return None
+            else:
+                # Parse JSON response
+                try:
+                    return response.json()
+                except json.JSONDecodeError as e:
+                    st.error(f"JSON Parse Error: {e}")
+                    st.error(f"Response content: {response.text[:500]}...")
+                    return None
+                
         except requests.exceptions.RequestException as e:
             st.error(f"API Error: {e}")
+            return None
+        except Exception as e:
+            st.error(f"Unexpected error: {e}")
+            return None
+    
+    def _parse_xml_hearing(self, root):
+        """Parse XML response from Congress.gov API"""
+        try:
+            hearing_data = {"hearing": {}}
+            
+            # Find the hearing element
+            hearing_elem = root.find('.//hearing')
+            if hearing_elem is not None:
+                hearing = hearing_data["hearing"]
+                
+                # Extract basic hearing information
+                hearing["hearingId"] = hearing_elem.get("hearingId", "")
+                hearing["congress"] = hearing_elem.get("congress", "")
+                hearing["chamber"] = hearing_elem.get("chamber", "")
+                hearing["date"] = hearing_elem.get("date", "")
+                
+                # Extract title
+                title_elem = hearing_elem.find("title")
+                if title_elem is not None:
+                    hearing["title"] = title_elem.text or ""
+                
+                # Extract committee information
+                committee_elem = hearing_elem.find("committee")
+                if committee_elem is not None:
+                    hearing["committee"] = {
+                        "name": committee_elem.get("name", ""),
+                        "systemCode": committee_elem.get("systemCode", "")
+                    }
+                
+                # Extract description
+                desc_elem = hearing_elem.find("description")
+                if desc_elem is not None:
+                    hearing["description"] = desc_elem.text or ""
+                
+                # Extract location
+                location_elem = hearing_elem.find("location")
+                if location_elem is not None:
+                    hearing["location"] = location_elem.text or ""
+                
+                # Extract PDF URL if available
+                pdf_elem = hearing_elem.find("pdfUrl")
+                if pdf_elem is not None:
+                    hearing["pdfUrl"] = pdf_elem.text or ""
+            
+            return hearing_data
+            
+        except Exception as e:
+            st.error(f"Error parsing XML: {e}")
             return None
     
     def search_hearings(self, congress=None, chamber=None, committee=None, limit=10):
@@ -47,9 +127,65 @@ class CongressAPI:
         try:
             response = requests.get(url, headers=self.headers, params=params)
             response.raise_for_status()
-            return response.json()
+            
+            # Check if response is XML or JSON
+            content_type = response.headers.get('content-type', '').lower()
+            
+            if 'xml' in content_type or response.text.strip().startswith('<'):
+                # Parse XML response
+                try:
+                    root = ET.fromstring(response.text)
+                    return self._parse_xml_hearings_list(root)
+                except ET.ParseError as e:
+                    st.error(f"XML Parse Error: {e}")
+                    return None
+            else:
+                # Parse JSON response
+                return response.json()
+                
         except requests.exceptions.RequestException as e:
             st.error(f"API Error: {e}")
+            return None
+        except Exception as e:
+            st.error(f"Unexpected error: {e}")
+            return None
+    
+    def _parse_xml_hearings_list(self, root):
+        """Parse XML response for hearings list from Congress.gov API"""
+        try:
+            hearings_data = {"hearings": []}
+            
+            # Find all hearing elements
+            hearing_elements = root.findall('.//hearing')
+            
+            for hearing_elem in hearing_elements:
+                hearing = {}
+                
+                # Extract basic hearing information
+                hearing["hearingId"] = hearing_elem.get("hearingId", "")
+                hearing["congress"] = hearing_elem.get("congress", "")
+                hearing["chamber"] = hearing_elem.get("chamber", "")
+                hearing["date"] = hearing_elem.get("date", "")
+                
+                # Extract title
+                title_elem = hearing_elem.find("title")
+                if title_elem is not None:
+                    hearing["title"] = title_elem.text or ""
+                
+                # Extract committee information
+                committee_elem = hearing_elem.find("committee")
+                if committee_elem is not None:
+                    hearing["committee"] = {
+                        "name": committee_elem.get("name", ""),
+                        "systemCode": committee_elem.get("systemCode", "")
+                    }
+                
+                hearings_data["hearings"].append(hearing)
+            
+            return hearings_data
+            
+        except Exception as e:
+            st.error(f"Error parsing XML hearings list: {e}")
             return None
     
     def get_committee_hearings(self, congress, committee_id, limit=10):
