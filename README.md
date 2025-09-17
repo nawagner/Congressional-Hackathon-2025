@@ -12,11 +12,9 @@ Happy hacking! 🏛️💻
 
 1. **Sign the required forms**: All participants must sign the **[Participation Agreement and IP Disclaimer](https://forms.cloud.microsoft/g/S1ZZEiN25V)** before contributing any code.
 
-1. **Request contributor access**: Ask the Hackathon organizers (Craig or Kat) to add you to this repository as a contributor.
+1. **Fork this repository**: Fork this repository into your own GitHub account to work on coding. When you're ready to merge changes back into this repository, create a pull request. Instructions for forking a repository and creating pull requests can be found here: [Fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 
-1. **Set up authentication**: You'll need a GitHub Personal Access Token (PAT). Follow the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) and select the "Tokens (classic)" option.
-
-1. Check out **[Legislative Branch Data Map](Legislative-Branch-Data-Map.md)**!
+1. Check out **[Legislative Branch Data Map](Legislative-Branch-Data-Map.md)** for a list of resources to get you started!
 
 ## Contributing
 
