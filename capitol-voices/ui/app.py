@@ -75,12 +75,13 @@ with tab1:
 
 # Tab 2: YouTube Processor
 with tab2:
+    # Use demo mode for hackathon demonstration
     try:
         import sys
         import os
         sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        from youtube_processor_simple import youtube_processor_interface
-        youtube_processor_interface()
+        from demo_youtube_processor import demo_youtube_processor_interface
+        demo_youtube_processor_interface()
     except ImportError as e:
         st.error(f"YouTube processor not available: {e}")
         st.info("Make sure youtube-transcript-api is installed: pip install youtube-transcript-api")
