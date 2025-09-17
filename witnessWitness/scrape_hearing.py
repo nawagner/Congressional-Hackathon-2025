@@ -51,6 +51,7 @@ def parse_hearing(html: str) -> Dict[str, Any]:
     date_info = extract_date_time(panel)
     location = extract_location(panel)
     witnesses = extract_witnesses(panel)
+    committee = extract_committee(panel)
 
     return {
         "title": title,
@@ -59,6 +60,7 @@ def parse_hearing(html: str) -> Dict[str, Any]:
         "datetime": date_info["datetime"],
         "location": location,
         "witnesses": witnesses,
+        "committee": committee,
     }
 
 
@@ -131,6 +133,31 @@ def extract_witnesses(panel: BeautifulSoup) -> List[Dict[str, str]]:
     return witnesses
 
 
+def extract_committee(panel: BeautifulSoup) -> Optional[str]:
+    header = panel.find("h1")
+    if header is None:
+        return None
+
+    committee_texts: List[str] = []
+    for block in header.find_all("blockquote"):
+        text = " ".join(block.stripped_strings)
+        normalized = " ".join(text.split())
+        if normalized:
+            committee_texts.append(normalized)
+
+    if committee_texts:
+        return "; ".join(dict.fromkeys(committee_texts))
+
+    fallback = panel.find("p", class_="committeeName")
+    if fallback:
+        text = " ".join(fallback.stripped_strings)
+        normalized = " ".join(text.split())
+        if normalized:
+            return normalized
+
+    return None
+
+
 def extract_truth_in_testimony(block: BeautifulSoup) -> Optional[str]:
     for li in block.find_all("li"):
         text = li.get_text(" ", strip=True).lower()
@@ -159,6 +186,7 @@ def ensure_schema(conn: sqlite3.Connection) -> None:
             time TEXT,
             datetime TEXT,
             location TEXT,
+            committee TEXT,
             scraped_at TEXT
         );
 
@@ -181,6 +209,8 @@ def _ensure_hearings_columns(conn: sqlite3.Connection) -> None:
     columns = {row[1] for row in conn.execute("PRAGMA table_info(hearings)")}
     if "event_id" not in columns:
         conn.execute("ALTER TABLE hearings ADD COLUMN event_id INTEGER")
+    if "committee" not in columns:
+        conn.execute("ALTER TABLE hearings ADD COLUMN committee TEXT")
     conn.execute(
         "CREATE UNIQUE INDEX IF NOT EXISTS idx_hearings_event_id ON hearings(event_id)"
     )
@@ -201,8 +231,8 @@ def store_hearing(
 
     conn.execute(
         """
-        INSERT INTO hearings (url, event_id, title, date, time, datetime, location, scraped_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO hearings (url, event_id, title, date, time, datetime, location, committee, scraped_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(url) DO UPDATE SET
             event_id = COALESCE(excluded.event_id, hearings.event_id),
             title = excluded.title,
@@ -210,6 +240,7 @@ def store_hearing(
             time = excluded.time,
             datetime = excluded.datetime,
             location = excluded.location,
+            committee = excluded.committee,
             scraped_at = excluded.scraped_at
         """,
         (
@@ -220,6 +251,7 @@ def store_hearing(
             data.get("time"),
             data.get("datetime"),
             data.get("location"),
+            data.get("committee"),
             scraped_at,
         ),
     )

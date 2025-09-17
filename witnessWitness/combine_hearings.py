@@ -78,7 +78,7 @@ def merge_house_data(house_conn: sqlite3.Connection, target_conn: sqlite3.Connec
 
     hearings = cur.execute(
         """
-        SELECT id, url, event_id, title, date, time, datetime, location, scraped_at, witness_list_pdf
+        SELECT id, url, event_id, title, date, time, datetime, location, committee, scraped_at, witness_list_pdf
         FROM hearings
         ORDER BY id
         """
@@ -104,7 +104,7 @@ def merge_house_data(house_conn: sqlite3.Connection, target_conn: sqlite3.Connec
                 row["time"],
                 row["datetime"],
                 row["location"],
-                None,
+                row["committee"],
                 None,
                 row["scraped_at"],
                 row["witness_list_pdf"],
