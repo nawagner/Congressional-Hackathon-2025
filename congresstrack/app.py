@@ -46,6 +46,7 @@ class LawData:
     congress: int
     number: str
     origin_chamber: str
+    party: str
     # Analysis results (pre-computed)
     campaign_objectives: Optional[CampaignObjectives] = None
     alignment_score: Optional[float] = None
@@ -111,6 +112,7 @@ class LawDataLoader:
                     analysis=data.get("analysis", ""),
                     detailed_assessment=data.get("detailed_assessment", ""),
                     law_citations=data.get("law_citations", []),
+                    party=data.get("sponsor", {}).get("party", ""),
                 )
                 laws.append(law)
 
@@ -147,6 +149,7 @@ class SponsorAnalyzer:
                     "origin_chamber": law.origin_chamber,
                     "law_count": sponsor_counts[law.sponsor_name],
                     "congress": law.congress,
+                    "party": law.party,
                 }
             )
 
@@ -189,7 +192,7 @@ class SponsorAnalyzer:
             values="law_count",
             names="origin_chamber",
             title="Laws Sponsored by Chamber",
-            color_discrete_map={"H": "#1f77b4", "S": "#ff7f0e"},
+            color_discrete_map={"H": "#0057b7", "S": "#d7263d"},
         )
 
         return fig
@@ -265,11 +268,11 @@ def show_sponsor_visualization_page():
     .sponsor-name {
         font-size: 1.3rem;
         font-weight: bold;
-        color: #2c3e50;
+        color: black;
         margin-bottom: 0.3rem;
     }
     .sponsor-details {
-        color: #7f8c8d;
+        color: black;
         font-size: 0.9rem;
     }
     .law-count {
@@ -332,12 +335,14 @@ def show_sponsor_visualization_page():
 
     # Configuration options
     st.sidebar.header("🏆 Leaderboard Options")
-    top_n = st.sidebar.slider("Number of leaders to show", 5, 50, 15)
-    chamber_filter = st.sidebar.selectbox("Filter by Chamber", ["All", "H", "S"])
-    show_charts = st.sidebar.checkbox("Show additional charts", False)
+    top_n = 50
+    chamber_filter = st.sidebar.selectbox(
+        "Filter by Chamber", ["All", "House", "Senate"]
+    )
 
     # Filter data
     if chamber_filter != "All":
+        chamber_filter = "H" if chamber_filter == "House" else "S"
         filtered_df = sponsor_df[sponsor_df["origin_chamber"] == chamber_filter].copy()
     else:
         filtered_df = sponsor_df.copy()
@@ -407,6 +412,7 @@ def show_sponsor_visualization_page():
         state = row["sponsor_state"]
         chamber = row["origin_chamber"]
         law_count = row["law_count"]
+        party = row["party"]
 
         # Determine medal and styling
         if rank == 1:
@@ -426,15 +432,16 @@ def show_sponsor_visualization_page():
         chamber_icon = "🏛️" if chamber == "H" else "🏛️"
         chamber_name = "House" if chamber == "H" else "Senate"
 
+        party_highlight = "lightcoral" if party == "Republican" else "lightblue"
         st.markdown(
             f"""
-        <div class="rank-card {rank_class}">
+        <div class="rank-card {rank_class}" style="background-color: {party_highlight};">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; align-items: center;">
                     <div class="rank-number">{medal}</div>
                     <div>
                         <div class="sponsor-name">{name}</div>
-                        <div class="sponsor-details">{chamber_icon} {chamber_name} • {state}</div>
+                        <div class="sponsor-details">{chamber_icon} {chamber_name} • {state} • {party}</div>
                     </div>
                 </div>
                 <div class="law-count">{law_count}</div>
@@ -445,24 +452,23 @@ def show_sponsor_visualization_page():
         )
 
     # Additional charts (optional)
-    if show_charts:
-        st.markdown("## 📊 Additional Analytics")
+    st.markdown("## 📊 Additional Analytics")
 
-        col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-        with col1:
-            st.subheader("📈 Top Performers Chart")
-            bar_chart = analyzer.create_bar_chart(filtered_df, top_n)
-            st.plotly_chart(bar_chart, width="stretch")
+    with col1:
+        st.subheader("📈 Top Performers Chart")
+        bar_chart = analyzer.create_bar_chart(filtered_df, top_n)
+        st.plotly_chart(bar_chart, width="stretch")
 
-        with col2:
-            st.subheader("🏛️ Chamber Distribution")
-            chamber_chart = analyzer.create_chamber_comparison(filtered_df)
-            st.plotly_chart(chamber_chart, width="stretch")
+    with col2:
+        st.subheader("🏛️ Chamber Distribution")
+        chamber_chart = analyzer.create_chamber_comparison(filtered_df)
+        st.plotly_chart(chamber_chart, width="stretch")
 
-        st.subheader("🗺️ State Leaders")
-        state_chart = analyzer.create_state_analysis(filtered_df)
-        st.plotly_chart(state_chart, width="stretch")
+    st.subheader("🗺️ State Leaders")
+    state_chart = analyzer.create_state_analysis(filtered_df)
+    st.plotly_chart(state_chart, width="stretch")
 
     # Achievement badges
     st.markdown("## 🏅 Achievement Badges")
@@ -575,7 +581,7 @@ def show_law_analysis_page():
 
     if analyzed_laws:
         law_options = {
-            f"{law.origin_chamber}.{law.congress}.{law.number} ({law.sponsor_name}) - Score: {law.alignment_score}": law
+            f"{law.origin_chamber}.{law.congress}.{law.number} ({law.sponsor_name} - {law.party[0]}) - Score: {law.alignment_score}": law
             for law in analyzed_laws
         }
         selected_law_name = st.selectbox("Choose a law:", list(law_options.keys()))
