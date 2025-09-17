@@ -108,3 +108,6 @@ temp/
 
 # Databases
 *.db
+!witnessWitness/hearings.db
+# Scraper checkpoints
+checkpoints/
