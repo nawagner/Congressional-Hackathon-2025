@@ -112,6 +112,33 @@ const LOCATION_TOKENS = new Set([
   'wyoming',
 ]);
 
+const NON_NAME_TOKENS = new Set([
+  'available',
+  'briefing',
+  'click',
+  'closing',
+  'committee',
+  'document',
+  'full',
+  'hearing',
+  'here',
+  'link',
+  'materials',
+  'opening',
+  'press',
+  'release',
+  'report',
+  'statement',
+  'submission',
+  'submitted',
+  'summary',
+  'testimony',
+  'transcript',
+  'video',
+  'webcast',
+  'written',
+]);
+
 let sqlJsInstancePromise;
 let excludedLegislatorKeysPromise;
 
@@ -587,6 +614,9 @@ function hasFirstAndLastName(name) {
   const normalised = normaliseNameKey(name);
   if (!normalised) return false;
   const parts = normalised.split(' ').filter(Boolean);
+  if (containsNonNameTokens(parts)) {
+    return false;
+  }
   if (parts.length < 2) {
     return false;
   }
@@ -638,6 +668,10 @@ function stripTrailingLocationTokens(tokens) {
   }
 
   return tokens;
+}
+
+function containsNonNameTokens(tokens) {
+  return tokens.some((token) => NON_NAME_TOKENS.has(token));
 }
 
 function sortWitnesses(a, b) {
