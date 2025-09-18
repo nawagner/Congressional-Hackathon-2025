@@ -515,7 +515,6 @@ function attachWitnessesToHearings(hearings, witnessRows) {
     hearing.witnesses = uniqueNames;
     hearing.witnessDetails = uniqueDetails;
     hearing.witnessKeys = uniqueNames.map((name) => witnessKeyForName(name));
-    hearing.witnessNamesLower = uniqueNames.map((name) => name.toLowerCase());
   });
 }
 
@@ -594,6 +593,7 @@ function buildWitnessMap(hearings, options = {}) {
 
   map.forEach((entry) => {
     entry.isDualChamber = entry.chambers.size >= 2;
+    entry.nameLower = entry.name.toLowerCase();
   });
 
   const filtered = new Map();
@@ -864,7 +864,17 @@ function applyFilters() {
   const { hearings, filters, selectedWitnessKey } = state;
   const witnessQuery = filters.witnessQuery ? filters.witnessQuery.toLowerCase() : '';
 
-  let filtered = hearings.filter((hearing) => {
+  let baseHearings;
+  if (selectedWitnessKey) {
+    const entry = state.witnessMap.get(selectedWitnessKey);
+    baseHearings = entry ? entry.hearings : [];
+  } else if (witnessQuery) {
+    baseHearings = collectHearingsForWitnessQuery(witnessQuery);
+  } else {
+    baseHearings = hearings;
+  }
+
+  let filtered = baseHearings.filter((hearing) => {
     if (filters.committee !== 'all' && hearing.committee !== filters.committee) {
       return false;
     }
@@ -879,14 +889,6 @@ function applyFilters() {
 
     if (filters.endDate && hearing.dateObj && hearing.dateObj > filters.endDate) {
       return false;
-    }
-
-    if (witnessQuery) {
-      const names = hearing.witnessNamesLower || hearing.witnesses.map((name) => name.toLowerCase());
-      const matchesQuery = names.some((name) => name.includes(witnessQuery));
-      if (!matchesQuery) {
-        return false;
-      }
     }
 
     return true;
@@ -1080,6 +1082,26 @@ function witnessKeyForName(name) {
     return normalised;
   }
   return nameToKey(name);
+}
+
+function collectHearingsForWitnessQuery(query) {
+  const matches = [];
+  const seenIds = new Set();
+  state.sortedWitnesses.forEach((witness) => {
+    if (!witness.nameLower) {
+      witness.nameLower = witness.name.toLowerCase();
+    }
+    if (!witness.nameLower.includes(query)) {
+      return;
+    }
+    witness.hearings.forEach((hearing) => {
+      if (!seenIds.has(hearing.id)) {
+        seenIds.add(hearing.id);
+        matches.push(hearing);
+      }
+    });
+  });
+  return matches;
 }
 
 function formatDate(date) {
