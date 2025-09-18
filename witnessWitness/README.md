@@ -40,8 +40,8 @@ The web app is a simple static page (`index.html`) that queries the combined SQL
 
 The witness roster intentionally omits a few categories so results focus on expert testimony:
 
-- Anyone tied to more than 55 hearings (usually clerical testifiers or template records).
-- Entries without a usable first and last name after normalizing titles (`Hon.`, `Dr.`, etc.), suffixes, or all-caps formatting.
+- Anyone tied to more than 55 hearings (usually presiding Senators or Representatives mislabeled as witnesses).
+- Entries without a usable first and last name after normalizing titles (`Hon.`, `Dr.`, `USA`, `USAF`, `USN`, etc.), suffixes, or trailing location qualifiers such as “of New York”.
 - Current members of the House or Senate, plus all living former U.S. Senators. These names are stored in `excluded_legislator_keys.json` and matched using normalised keys, including hyphen/apostrophe variants.
 
 To refresh the exclusions, rebuild `excluded_legislator_keys.json` from the latest rosters before serving the UI.

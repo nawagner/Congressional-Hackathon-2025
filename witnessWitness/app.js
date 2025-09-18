@@ -33,6 +33,85 @@ const NAME_TITLE_TOKENS = new Set([
 
 const NAME_SUFFIX_TOKENS = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v']);
 
+const LOCATION_KEYWORDS = new Set(['of', 'for', 'from']);
+
+const LOCATION_TOKENS = new Set([
+  'of',
+  'the',
+  'state',
+  'commonwealth',
+  'territory',
+  'district',
+  'columbia',
+  'washington',
+  'dc',
+  'united',
+  'states',
+  'america',
+  'at',
+  'large',
+  'puerto',
+  'rico',
+  'virgin',
+  'islands',
+  'northern',
+  'mariana',
+  'guam',
+  'samoa',
+  'american',
+  'alabama',
+  'alaska',
+  'arizona',
+  'arkansas',
+  'california',
+  'colorado',
+  'connecticut',
+  'delaware',
+  'florida',
+  'georgia',
+  'hawaii',
+  'idaho',
+  'illinois',
+  'indiana',
+  'iowa',
+  'kansas',
+  'kentucky',
+  'louisiana',
+  'maine',
+  'maryland',
+  'massachusetts',
+  'michigan',
+  'minnesota',
+  'mississippi',
+  'missouri',
+  'montana',
+  'nebraska',
+  'nevada',
+  'new',
+  'hampshire',
+  'jersey',
+  'mexico',
+  'york',
+  'north',
+  'carolina',
+  'dakota',
+  'south',
+  'ohio',
+  'oklahoma',
+  'oregon',
+  'pennsylvania',
+  'rhode',
+  'island',
+  'tennessee',
+  'texas',
+  'utah',
+  'vermont',
+  'virginia',
+  'west',
+  'wisconsin',
+  'wyoming',
+]);
+
 let sqlJsInstancePromise;
 let excludedLegislatorKeysPromise;
 
@@ -526,14 +605,39 @@ function normaliseNameKey(rawName) {
   text = text.replace(/\b[RID]-[A-Z]{2}\b/g, ' ');
   const normalized = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const cleaned = normalized.replace(/[^A-Za-z\s'-]/g, ' ');
-  const parts = cleaned
+  let parts = cleaned
     .toLowerCase()
     .split(/\s+/)
     .filter(Boolean)
     .filter((token) => token.length > 1)
     .filter((token) => !NAME_TITLE_TOKENS.has(token) && !NAME_SUFFIX_TOKENS.has(token));
+  parts = stripTrailingLocationTokens(parts);
 
   return parts.join(' ');
+}
+
+function stripTrailingLocationTokens(tokens) {
+  if (!tokens.length) {
+    return tokens;
+  }
+
+  for (let index = 0; index < tokens.length; index += 1) {
+    const token = tokens[index];
+    if (!LOCATION_KEYWORDS.has(token)) {
+      continue;
+    }
+
+    const tail = tokens.slice(index + 1);
+    if (!tail.length) {
+      continue;
+    }
+
+    if (tail.every((part) => LOCATION_TOKENS.has(part))) {
+      return tokens.slice(0, index);
+    }
+  }
+
+  return tokens;
 }
 
 function sortWitnesses(a, b) {
