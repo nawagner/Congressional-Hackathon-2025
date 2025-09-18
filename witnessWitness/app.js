@@ -14,6 +14,11 @@ const NAME_TITLE_TOKENS = new Set([
   'chair',
   'chairman',
   'chairwoman',
+  'secretary',
+  'acting',
+  'former',
+  'deputy',
+  'assistant',
   'ranking',
   'member',
   'hon',
@@ -500,7 +505,7 @@ function attachWitnessesToHearings(hearings, witnessRows) {
     const uniqueDetails = [];
 
     hearing.witnesses.forEach((name, index) => {
-      const key = nameToKey(name);
+      const key = witnessKeyForName(name);
       if (!key || seen.has(key)) {
         return;
       }
@@ -511,7 +516,7 @@ function attachWitnessesToHearings(hearings, witnessRows) {
 
     hearing.witnesses = uniqueNames;
     hearing.witnessDetails = uniqueDetails;
-    hearing.witnessKeys = uniqueNames.map((name) => nameToKey(name));
+    hearing.witnessKeys = uniqueNames.map((name) => witnessKeyForName(name));
   });
 }
 
@@ -1053,6 +1058,14 @@ function formatChamber(chamber) {
 
 function nameToKey(name) {
   return name ? name.toLowerCase().replace(/\s+/g, ' ').trim() : '';
+}
+
+function witnessKeyForName(name) {
+  const normalised = normaliseNameKey(name);
+  if (normalised) {
+    return normalised;
+  }
+  return nameToKey(name);
 }
 
 function formatDate(date) {
