@@ -1,6 +1,40 @@
 const COMBINED_DB_PATH = 'hearings_combined.db';
+const EXCLUDED_LEGISLATORS_PATH = 'excluded_legislator_keys.json';
+const MAX_HEARING_COUNT_PER_WITNESS = 55;
 const SQL_JS_CDN_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/';
+
+const NAME_TITLE_TOKENS = new Set([
+  'sen',
+  'senator',
+  'rep',
+  'representative',
+  'delegate',
+  'commissioner',
+  'chair',
+  'chairman',
+  'chairwoman',
+  'ranking',
+  'member',
+  'hon',
+  'honorable',
+  'mr',
+  'mrs',
+  'ms',
+  'miss',
+  'dr',
+  'prof',
+  'reverend',
+  'rev',
+  'sir',
+  'madam',
+  'mayor',
+  'governor',
+]);
+
+const NAME_SUFFIX_TOKENS = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v']);
+
 let sqlJsInstancePromise;
+let excludedLegislatorKeysPromise;
 
 const state = {
   hearings: [],
@@ -51,7 +85,10 @@ async function initialise() {
   attachEventListeners();
 
   try {
-    const SQL = await loadSqlJsInstance();
+    const [SQL, excludedLegislatorKeys] = await Promise.all([
+      loadSqlJsInstance(),
+      loadExcludedLegislatorKeys(),
+    ]);
     const databaseBytes = await fetchDatabase(COMBINED_DB_PATH);
     const db = new SQL.Database(databaseBytes);
 
@@ -69,7 +106,7 @@ async function initialise() {
     state.dateRange = computeDateRange(hearings);
     applyDateBounds();
 
-    state.witnessMap = buildWitnessMap(hearings);
+    state.witnessMap = buildWitnessMap(hearings, { excludedLegislatorKeys });
     state.sortedWitnesses = Array.from(state.witnessMap.values()).sort(sortWitnesses);
     state.witnessElements = new Map();
     state.witnessMessage = null;
@@ -211,6 +248,47 @@ function loadSqlJsInstance() {
   });
 
   return sqlJsInstancePromise;
+}
+
+function loadExcludedLegislatorKeys() {
+  if (excludedLegislatorKeysPromise) {
+    return excludedLegislatorKeysPromise;
+  }
+
+  excludedLegislatorKeysPromise = fetch(EXCLUDED_LEGISLATORS_PATH, { cache: 'no-store' })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} while fetching ${EXCLUDED_LEGISLATORS_PATH}`);
+      }
+      return response.json();
+    })
+    .then((payload) => {
+      if (!Array.isArray(payload)) {
+        console.warn('Excluded legislator list is not an array; ignoring it.');
+        return new Set();
+      }
+
+      const keys = new Set();
+      payload.forEach((item) => {
+        if (typeof item !== 'string') return;
+        const normalised = normaliseNameKey(item);
+        if (!normalised) return;
+        keys.add(normalised);
+        if (normalised.includes('-')) {
+          keys.add(normalised.replace(/-/g, ' '));
+        }
+        if (normalised.includes("'")) {
+          keys.add(normalised.replace(/'/g, ''));
+        }
+      });
+      return keys;
+    })
+    .catch((error) => {
+      console.warn('Failed to load excluded legislator list; continuing without it.', error);
+      return new Set();
+    });
+
+  return excludedLegislatorKeysPromise;
 }
 
 async function fetchDatabase(path) {
@@ -357,7 +435,8 @@ function parseIsoDate(value) {
   return new Date(year, month - 1, day);
 }
 
-function buildWitnessMap(hearings) {
+function buildWitnessMap(hearings, options = {}) {
+  const { excludedLegislatorKeys = new Set() } = options;
   const map = new Map();
 
   hearings.forEach((hearing) => {
@@ -397,7 +476,64 @@ function buildWitnessMap(hearings) {
     entry.isDualChamber = entry.chambers.size >= 2;
   });
 
-  return map;
+  const filtered = new Map();
+  map.forEach((entry) => {
+    if (shouldIncludeWitness(entry, excludedLegislatorKeys)) {
+      filtered.set(entry.key, entry);
+    }
+  });
+
+  return filtered;
+}
+
+function shouldIncludeWitness(entry, excludedLegislatorKeys) {
+  if (!entry) return false;
+  if (entry.count > MAX_HEARING_COUNT_PER_WITNESS) {
+    return false;
+  }
+
+  if (!hasFirstAndLastName(entry.name)) {
+    return false;
+  }
+
+  const normalised = normaliseNameKey(entry.name);
+  if (normalised && excludedLegislatorKeys.has(normalised)) {
+    return false;
+  }
+
+  return true;
+}
+
+function hasFirstAndLastName(name) {
+  const normalised = normaliseNameKey(name);
+  if (!normalised) return false;
+  const parts = normalised.split(' ').filter(Boolean);
+  if (parts.length < 2) {
+    return false;
+  }
+  const first = parts[0];
+  const last = parts[parts.length - 1];
+  return first.length > 1 && last.length > 1;
+}
+
+function normaliseNameKey(rawName) {
+  if (!rawName || typeof rawName !== 'string') {
+    return '';
+  }
+
+  let text = rawName;
+  text = text.replace(/\([^)]*\)/g, ' ');
+  text = text.replace(/\b[RID]-[A-Z]{2}\b/g, ' ');
+  const normalized = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const cleaned = normalized.replace(/[^A-Za-z\s'-]/g, ' ');
+  const parts = cleaned
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter((token) => token.length > 1)
+    .filter((token) => !NAME_TITLE_TOKENS.has(token) && !NAME_SUFFIX_TOKENS.has(token));
+
+  return parts.join(' ');
 }
 
 function sortWitnesses(a, b) {
