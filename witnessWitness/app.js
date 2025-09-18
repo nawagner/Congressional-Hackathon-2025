@@ -234,7 +234,10 @@ async function initialise() {
 function attachEventListeners() {
   elements.witnessSearch.addEventListener('input', (event) => {
     state.filters.witnessQuery = event.target.value.trim();
-    renderWitnessList();
+    const selectionChanged = renderWitnessList();
+    if (selectionChanged) {
+      applyFilters();
+    }
   });
 
   elements.committeeFilter.addEventListener('change', (event) => {
@@ -289,6 +292,7 @@ function attachEventListeners() {
 
   if (elements.dualChamberToggle) {
     elements.dualChamberToggle.addEventListener('click', () => {
+      const previousSelectedKey = state.selectedWitnessKey;
       state.filters.dualChamberOnly = !state.filters.dualChamberOnly;
       if (state.filters.dualChamberOnly && state.selectedWitnessKey) {
         const selected = state.witnessMap.get(state.selectedWitnessKey);
@@ -297,8 +301,10 @@ function attachEventListeners() {
         }
       }
       updateDualChamberButton();
-      renderWitnessList();
-      applyFilters();
+      const selectionChanged = renderWitnessList();
+      if (selectionChanged || previousSelectedKey !== state.selectedWitnessKey) {
+        applyFilters();
+      }
     });
   }
 }
@@ -736,13 +742,19 @@ function populateFilterOptions() {
 
 function renderWitnessList() {
   const container = elements.witnessList;
-  if (!container) return;
+  if (!container) return false;
+
+  let selectionChanged = false;
 
   if (!state.sortedWitnesses.length) {
     container.textContent = 'No witnesses found.';
     state.witnessElements = new Map();
     state.witnessMessage = null;
-    return;
+    if (state.selectedWitnessKey) {
+      state.selectedWitnessKey = null;
+      selectionChanged = true;
+    }
+    return selectionChanged;
   }
 
   if (state.witnessElements.size === 0) {
@@ -810,9 +822,10 @@ function renderWitnessList() {
 
   if (state.selectedWitnessKey && !selectedVisible) {
     state.selectedWitnessKey = null;
-    applyFilters();
-    return;
+    selectionChanged = true;
   }
+
+  return selectionChanged;
 }
 
 function createWitnessButton(witness) {
