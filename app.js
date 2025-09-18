@@ -1,6 +1,155 @@
 const COMBINED_DB_PATH = 'hearings_combined.db';
+const EXCLUDED_LEGISLATORS_PATH = 'excluded_legislator_keys.json';
+const MAX_HEARING_COUNT_PER_WITNESS = 55;
 const SQL_JS_CDN_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/';
+
+const NAME_TITLE_TOKENS = new Set([
+  'the',
+  'sen',
+  'senator',
+  'rep',
+  'representative',
+  'delegate',
+  'commissioner',
+  'chair',
+  'chairman',
+  'chairwoman',
+  'secretary',
+  'acting',
+  'former',
+  'deputy',
+  'assistant',
+  'ranking',
+  'member',
+  'hon',
+  'honorable',
+  'mr',
+  'mrs',
+  'ms',
+  'miss',
+  'dr',
+  'prof',
+  'reverend',
+  'rev',
+  'sir',
+  'madam',
+  'mayor',
+  'governor',
+]);
+
+const NAME_SUFFIX_TOKENS = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v']);
+
+const LOCATION_KEYWORDS = new Set(['of', 'for', 'from']);
+
+const LOCATION_TOKENS = new Set([
+  'of',
+  'the',
+  'state',
+  'commonwealth',
+  'territory',
+  'district',
+  'columbia',
+  'washington',
+  'dc',
+  'united',
+  'states',
+  'america',
+  'at',
+  'large',
+  'puerto',
+  'rico',
+  'virgin',
+  'islands',
+  'northern',
+  'mariana',
+  'guam',
+  'samoa',
+  'american',
+  'alabama',
+  'alaska',
+  'arizona',
+  'arkansas',
+  'california',
+  'colorado',
+  'connecticut',
+  'delaware',
+  'florida',
+  'georgia',
+  'hawaii',
+  'idaho',
+  'illinois',
+  'indiana',
+  'iowa',
+  'kansas',
+  'kentucky',
+  'louisiana',
+  'maine',
+  'maryland',
+  'massachusetts',
+  'michigan',
+  'minnesota',
+  'mississippi',
+  'missouri',
+  'montana',
+  'nebraska',
+  'nevada',
+  'new',
+  'hampshire',
+  'jersey',
+  'mexico',
+  'york',
+  'north',
+  'carolina',
+  'dakota',
+  'south',
+  'ohio',
+  'oklahoma',
+  'oregon',
+  'pennsylvania',
+  'rhode',
+  'island',
+  'tennessee',
+  'texas',
+  'utah',
+  'vermont',
+  'virginia',
+  'west',
+  'wisconsin',
+  'wyoming',
+]);
+
+const NON_NAME_TOKENS = new Set([
+  'available',
+  'briefing',
+  'click',
+  'closing',
+  'committee',
+  'document',
+  'full',
+  'hearing',
+  'here',
+  'link',
+  'materials',
+  'opening',
+  'press',
+  'release',
+  'report',
+  'statement',
+  'submission',
+  'submitted',
+  'summary',
+  'testimony',
+  'transcript',
+  'video',
+  'webcast',
+  'written',
+]);
+
+const PARTY_AFFILIATION_REGEX = /\b(?:R|D|I|ID|IND|DEM|REP|GOP)\b\s*[-–]?\s*\(?[A-Z]{2}\)?\b/;
+const PARTY_WORD_REGEX = /\b(?:democrat|democratic|republican|independent|libertarian|green)\b/i;
+
 let sqlJsInstancePromise;
+let excludedLegislatorKeysPromise;
 
 const state = {
   hearings: [],
@@ -51,7 +200,10 @@ async function initialise() {
   attachEventListeners();
 
   try {
-    const SQL = await loadSqlJsInstance();
+    const [SQL, excludedLegislatorKeys] = await Promise.all([
+      loadSqlJsInstance(),
+      loadExcludedLegislatorKeys(),
+    ]);
     const databaseBytes = await fetchDatabase(COMBINED_DB_PATH);
     const db = new SQL.Database(databaseBytes);
 
@@ -69,11 +221,10 @@ async function initialise() {
     state.dateRange = computeDateRange(hearings);
     applyDateBounds();
 
-    state.witnessMap = buildWitnessMap(hearings);
+    state.witnessMap = buildWitnessMap(hearings, { excludedLegislatorKeys });
     state.sortedWitnesses = Array.from(state.witnessMap.values()).sort(sortWitnesses);
     state.witnessElements = new Map();
     state.witnessMessage = null;
-    elements.uniqueWitnesses.textContent = state.sortedWitnesses.length.toLocaleString();
 
     populateFilterOptions();
     renderWitnessList();
@@ -88,6 +239,7 @@ function attachEventListeners() {
   elements.witnessSearch.addEventListener('input', (event) => {
     state.filters.witnessQuery = event.target.value.trim();
     renderWitnessList();
+    applyFilters();
   });
 
   elements.committeeFilter.addEventListener('change', (event) => {
@@ -142,6 +294,7 @@ function attachEventListeners() {
 
   if (elements.dualChamberToggle) {
     elements.dualChamberToggle.addEventListener('click', () => {
+      const previousSelectedKey = state.selectedWitnessKey;
       state.filters.dualChamberOnly = !state.filters.dualChamberOnly;
       if (state.filters.dualChamberOnly && state.selectedWitnessKey) {
         const selected = state.witnessMap.get(state.selectedWitnessKey);
@@ -150,8 +303,12 @@ function attachEventListeners() {
         }
       }
       updateDualChamberButton();
-      renderWitnessList();
-      applyFilters();
+      const selectionChanged = renderWitnessList();
+      if (selectionChanged || previousSelectedKey !== state.selectedWitnessKey) {
+        applyFilters();
+      } else {
+        updateUniqueWitnessCount();
+      }
     });
   }
 }
@@ -213,6 +370,47 @@ function loadSqlJsInstance() {
   return sqlJsInstancePromise;
 }
 
+function loadExcludedLegislatorKeys() {
+  if (excludedLegislatorKeysPromise) {
+    return excludedLegislatorKeysPromise;
+  }
+
+  excludedLegislatorKeysPromise = fetch(EXCLUDED_LEGISLATORS_PATH, { cache: 'no-store' })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} while fetching ${EXCLUDED_LEGISLATORS_PATH}`);
+      }
+      return response.json();
+    })
+    .then((payload) => {
+      if (!Array.isArray(payload)) {
+        console.warn('Excluded legislator list is not an array; ignoring it.');
+        return new Set();
+      }
+
+      const keys = new Set();
+      payload.forEach((item) => {
+        if (typeof item !== 'string') return;
+        const normalised = normaliseNameKey(item);
+        if (!normalised) return;
+        keys.add(normalised);
+        if (normalised.includes('-')) {
+          keys.add(normalised.replace(/-/g, ' '));
+        }
+        if (normalised.includes("'")) {
+          keys.add(normalised.replace(/'/g, ''));
+        }
+      });
+      return keys;
+    })
+    .catch((error) => {
+      console.warn('Failed to load excluded legislator list; continuing without it.', error);
+      return new Set();
+    });
+
+  return excludedLegislatorKeysPromise;
+}
+
 async function fetchDatabase(path) {
   const response = await fetch(path, { cache: 'no-store' });
   if (!response.ok) {
@@ -220,6 +418,117 @@ async function fetchDatabase(path) {
   }
   const buffer = await response.arrayBuffer();
   return new Uint8Array(buffer);
+}
+
+function splitCommitteeName(raw) {
+  const text = typeof raw === 'string' ? raw.trim() : '';
+  if (!text) {
+    return { committee: '', subcommittee: '' };
+  }
+
+  const normalised = text.replace(/\s+/g, ' ');
+  const lower = normalised.toLowerCase();
+
+  const isCommittee = (value) => /committee/i.test(value);
+  const isSubcommittee = (value) => /subcommittee/i.test(value);
+
+  const result = { committee: '', subcommittee: '' };
+
+  // Patterns like "Subcommittee on Federal Lands (Committee on Natural Resources)".
+  const parenMatch = /^(.*?)(?:,\s*)?\(([^()]+)\)\s*$/.exec(normalised);
+  if (parenMatch) {
+    const outside = parenMatch[1].trim();
+    const inside = parenMatch[2].trim();
+    if (isSubcommittee(outside) && isCommittee(inside) && !isSubcommittee(inside)) {
+      result.subcommittee = outside;
+      result.committee = inside;
+      return result;
+    }
+    if (isCommittee(outside) && isSubcommittee(inside) && !isSubcommittee(outside)) {
+      result.committee = outside;
+      result.subcommittee = inside;
+      return result;
+    }
+  }
+
+  const commaMatch = /(.*?Committee[^,]*),\s*(Subcommittee.+)$/i.exec(normalised);
+  if (commaMatch) {
+    result.committee = commaMatch[1].trim();
+    result.subcommittee = commaMatch[2].trim();
+    return result;
+  }
+
+  const delimiterMatch =
+    /(.*?Committee[^-–—,:;]+)(?:\s*[-–—,:;]\s+|\s{2,})(Subcommittee.+)$/i.exec(normalised);
+  if (delimiterMatch) {
+    result.committee = delimiterMatch[1].trim();
+    result.subcommittee = delimiterMatch[2].trim();
+    return result;
+  }
+
+  const ofMatch = /(Subcommittee.+)\s+of\s+the\s+(.+Committee.+)/i.exec(normalised);
+  if (ofMatch) {
+    result.subcommittee = ofMatch[1].trim();
+    result.committee = ofMatch[2].trim();
+    return result;
+  }
+
+  if (lower.includes('subcommittee') && lower.includes('committee')) {
+    const subIndex = lower.indexOf('subcommittee');
+    const beforeSub = normalised.slice(0, subIndex).trim().replace(/[-–—,:;]+$/, '').trim();
+    const subPart = normalised.slice(subIndex).trim();
+    if (isCommittee(beforeSub) && isSubcommittee(subPart)) {
+      result.committee = beforeSub;
+      result.subcommittee = subPart;
+      return result;
+    }
+
+    const lastCommitteeIndex = lower.lastIndexOf('committee');
+    if (lastCommitteeIndex > subIndex) {
+      const possibleSub = normalised.slice(0, lastCommitteeIndex).trim();
+      const possibleCommittee = normalised.slice(lastCommitteeIndex).trim();
+      if (isSubcommittee(possibleSub) && !isSubcommittee(possibleCommittee)) {
+        result.subcommittee = possibleSub.replace(/[-–—,:;]+$/, '').trim();
+        result.committee = possibleCommittee;
+        return result;
+      }
+    }
+  }
+
+  if (isSubcommittee(normalised) && !isCommittee(normalised.replace(/subcommittee/gi, ''))) {
+    result.subcommittee = normalised;
+    return result;
+  }
+
+  result.committee = normalised;
+  return result;
+}
+
+function getCommitteeValue(hearing) {
+  if (!hearing) return '';
+  const candidate = hearing.committee || hearing.committeeOriginal || '';
+  return typeof candidate === 'string' ? candidate.trim() : '';
+}
+
+function hearingMatchesFilters(hearing, filters) {
+  if (!hearing) return false;
+  if (filters.committee !== 'all' && getCommitteeValue(hearing) !== filters.committee) {
+    return false;
+  }
+
+  if (filters.tag !== 'all' && !hearing.tags.includes(filters.tag)) {
+    return false;
+  }
+
+  if (filters.startDate && hearing.dateObj && hearing.dateObj < filters.startDate) {
+    return false;
+  }
+
+  if (filters.endDate && hearing.dateObj && hearing.dateObj > filters.endDate) {
+    return false;
+  }
+
+  return true;
 }
 
 // Pull hearings and witnesses into JS objects for the UI to consume.
@@ -243,27 +552,34 @@ function buildHearingsFromDatabase(db) {
     `,
   );
 
-  const hearings = hearingRows.map((row) => ({
-    id: Number(row.id),
-    chamber: (row.chamber || '').trim(),
-    sourceId: row.source_hearing_id ? String(row.source_hearing_id).trim() : null,
-    eventId: row.event_id !== null && row.event_id !== undefined ? Number(row.event_id) : null,
-    pageUrl: (row.url || '').trim(),
-    videoUrl: '',
-    title: (row.title || '').trim(),
-    date: row.date || '',
-    dateObj: parseIsoDate(row.date || ''),
-    time: row.time || '',
-    datetime: row.datetime || '',
-    location: (row.location || '').trim(),
-    committee: (row.committee || '').trim(),
-    tags: parseTagColumn(row.tags),
-    scrapedAt: row.scraped_at || '',
-    witnessListPdf: row.witness_list_pdf || '',
-    witnesses: [],
-    witnessDetails: [],
-    witnessKeys: [],
-  }));
+  const hearings = hearingRows.map((row) => {
+    const committeeOriginal = (row.committee || '').trim();
+    const { committee, subcommittee } = splitCommitteeName(committeeOriginal);
+
+    return {
+      id: Number(row.id),
+      chamber: (row.chamber || '').trim(),
+      sourceId: row.source_hearing_id ? String(row.source_hearing_id).trim() : null,
+      eventId: row.event_id !== null && row.event_id !== undefined ? Number(row.event_id) : null,
+      pageUrl: (row.url || '').trim(),
+      videoUrl: '',
+      title: (row.title || '').trim(),
+      date: row.date || '',
+      dateObj: parseIsoDate(row.date || ''),
+      time: row.time || '',
+      datetime: row.datetime || '',
+      location: (row.location || '').trim(),
+      committee,
+      subcommittee,
+      committeeOriginal,
+      tags: parseTagColumn(row.tags),
+      scrapedAt: row.scraped_at || '',
+      witnessListPdf: row.witness_list_pdf || '',
+      witnesses: [],
+      witnessDetails: [],
+      witnessKeys: [],
+    };
+  });
 
   attachWitnessesToHearings(hearings, witnessRows);
   return hearings;
@@ -306,7 +622,7 @@ function attachWitnessesToHearings(hearings, witnessRows) {
     const uniqueDetails = [];
 
     hearing.witnesses.forEach((name, index) => {
-      const key = nameToKey(name);
+      const key = witnessKeyForName(name);
       if (!key || seen.has(key)) {
         return;
       }
@@ -317,7 +633,7 @@ function attachWitnessesToHearings(hearings, witnessRows) {
 
     hearing.witnesses = uniqueNames;
     hearing.witnessDetails = uniqueDetails;
-    hearing.witnessKeys = uniqueNames.map((name) => nameToKey(name));
+    hearing.witnessKeys = uniqueNames.map((name) => witnessKeyForName(name));
   });
 }
 
@@ -357,7 +673,8 @@ function parseIsoDate(value) {
   return new Date(year, month - 1, day);
 }
 
-function buildWitnessMap(hearings) {
+function buildWitnessMap(hearings, options = {}) {
+  const { excludedLegislatorKeys = new Set() } = options;
   const map = new Map();
 
   hearings.forEach((hearing) => {
@@ -395,9 +712,119 @@ function buildWitnessMap(hearings) {
 
   map.forEach((entry) => {
     entry.isDualChamber = entry.chambers.size >= 2;
+    entry.nameLower = entry.name.toLowerCase();
   });
 
-  return map;
+  const filtered = new Map();
+  map.forEach((entry) => {
+    if (shouldIncludeWitness(entry, excludedLegislatorKeys)) {
+      filtered.set(entry.key, entry);
+    }
+  });
+
+  return filtered;
+}
+
+function shouldIncludeWitness(entry, excludedLegislatorKeys) {
+  if (!entry) return false;
+  if (entry.count > MAX_HEARING_COUNT_PER_WITNESS) {
+    return false;
+  }
+
+  if (!hasFirstAndLastName(entry.name)) {
+    return false;
+  }
+
+  if (containsPartyAffiliation(entry.name)) {
+    return false;
+  }
+
+  const normalised = normaliseNameKey(entry.name);
+  if (normalised && excludedLegislatorKeys.has(normalised)) {
+    return false;
+  }
+
+  return true;
+}
+
+function hasFirstAndLastName(name) {
+  const normalised = normaliseNameKey(name);
+  if (!normalised) return false;
+  const parts = normalised.split(' ').filter(Boolean);
+  if (containsNonNameTokens(parts)) {
+    return false;
+  }
+  if (parts.length < 2) {
+    return false;
+  }
+  const first = parts[0];
+  const last = parts[parts.length - 1];
+  return first.length > 1 && last.length > 1;
+}
+
+function normaliseNameKey(rawName) {
+  if (!rawName || typeof rawName !== 'string') {
+    return '';
+  }
+
+  let text = rawName;
+  text = text.replace(/\([^)]*\)/g, ' ');
+  text = text.replace(/\b[RID]-[A-Z]{2}\b/g, ' ');
+  const normalized = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const cleaned = normalized.replace(/[^A-Za-z\s'-]/g, ' ');
+  let parts = cleaned
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter((token) => token.length > 1)
+    .filter((token) => !NAME_TITLE_TOKENS.has(token) && !NAME_SUFFIX_TOKENS.has(token));
+  parts = stripTrailingLocationTokens(parts);
+
+  return parts.join(' ');
+}
+
+function stripTrailingLocationTokens(tokens) {
+  if (!tokens.length) {
+    return tokens;
+  }
+
+  for (let index = 0; index < tokens.length; index += 1) {
+    const token = tokens[index];
+    if (!LOCATION_KEYWORDS.has(token)) {
+      continue;
+    }
+
+    const tail = tokens.slice(index + 1);
+    if (!tail.length) {
+      continue;
+    }
+
+    if (tail.every((part) => LOCATION_TOKENS.has(part))) {
+      return tokens.slice(0, index);
+    }
+  }
+
+  return tokens;
+}
+
+function containsNonNameTokens(tokens) {
+  return tokens.some((token) => NON_NAME_TOKENS.has(token));
+}
+
+function containsPartyAffiliation(text) {
+  if (!text || typeof text !== 'string') {
+    return false;
+  }
+
+  if (PARTY_AFFILIATION_REGEX.test(text.toUpperCase())) {
+    return true;
+  }
+
+  if (PARTY_WORD_REGEX.test(text) && /\([A-Z]{2}\)/.test(text.toUpperCase())) {
+    return true;
+  }
+
+  return false;
 }
 
 function sortWitnesses(a, b) {
@@ -409,7 +836,7 @@ function sortWitnesses(a, b) {
 
 function populateFilterOptions() {
   const committees = Array.from(
-    new Set(state.hearings.map((hearing) => hearing.committee).filter(Boolean)),
+    new Set(state.hearings.map((hearing) => getCommitteeValue(hearing)).filter(Boolean)),
   ).sort((a, b) => a.localeCompare(b));
 
   elements.committeeFilter.innerHTML = '';
@@ -438,13 +865,19 @@ function populateFilterOptions() {
 
 function renderWitnessList() {
   const container = elements.witnessList;
-  if (!container) return;
+  if (!container) return false;
+
+  let selectionChanged = false;
 
   if (!state.sortedWitnesses.length) {
     container.textContent = 'No witnesses found.';
     state.witnessElements = new Map();
     state.witnessMessage = null;
-    return;
+    if (state.selectedWitnessKey) {
+      state.selectedWitnessKey = null;
+      selectionChanged = true;
+    }
+    return selectionChanged;
   }
 
   if (state.witnessElements.size === 0) {
@@ -482,6 +915,7 @@ function renderWitnessList() {
     if (match) {
       matches += 1;
       button.hidden = false;
+      button.style.display = '';
       button.setAttribute('aria-hidden', 'false');
       const isActive = state.selectedWitnessKey === witness.key;
       button.classList.toggle('active', isActive);
@@ -490,6 +924,7 @@ function renderWitnessList() {
       }
     } else {
       button.hidden = true;
+      button.style.display = 'none';
       button.setAttribute('aria-hidden', 'true');
       button.classList.remove('active');
     }
@@ -512,9 +947,10 @@ function renderWitnessList() {
 
   if (state.selectedWitnessKey && !selectedVisible) {
     state.selectedWitnessKey = null;
-    applyFilters();
-    return;
+    selectionChanged = true;
   }
+
+  return selectionChanged;
 }
 
 function createWitnessButton(witness) {
@@ -545,26 +981,19 @@ function createWitnessButton(witness) {
 
 function applyFilters() {
   const { hearings, filters, selectedWitnessKey } = state;
+  const witnessQuery = filters.witnessQuery ? filters.witnessQuery.toLowerCase() : '';
 
-  let filtered = hearings.filter((hearing) => {
-    if (filters.committee !== 'all' && hearing.committee !== filters.committee) {
-      return false;
-    }
+  let baseHearings;
+  if (selectedWitnessKey) {
+    const entry = state.witnessMap.get(selectedWitnessKey);
+    baseHearings = entry ? entry.hearings : [];
+  } else if (witnessQuery) {
+    baseHearings = collectHearingsForWitnessQuery(witnessQuery);
+  } else {
+    baseHearings = hearings;
+  }
 
-    if (filters.tag !== 'all' && !hearing.tags.includes(filters.tag)) {
-      return false;
-    }
-
-    if (filters.startDate && hearing.dateObj && hearing.dateObj < filters.startDate) {
-      return false;
-    }
-
-    if (filters.endDate && hearing.dateObj && hearing.dateObj > filters.endDate) {
-      return false;
-    }
-
-    return true;
-  });
+  let filtered = baseHearings.filter((hearing) => hearingMatchesFilters(hearing, filters));
 
   if (selectedWitnessKey) {
     filtered = filtered.filter((hearing) => hearing.witnessKeys.includes(selectedWitnessKey));
@@ -574,7 +1003,41 @@ function applyFilters() {
   state.filteredHearings = sortedHearings;
   renderHearingsTable(sortedHearings);
   updateSummary(sortedHearings);
+  updateUniqueWitnessCount();
   refreshSortIndicators();
+}
+
+function updateUniqueWitnessCount() {
+  if (!elements.uniqueWitnesses) return;
+
+  const { filters, selectedWitnessKey } = state;
+  const query = filters.witnessQuery ? filters.witnessQuery.toLowerCase() : '';
+  const dualOnly = filters.dualChamberOnly;
+
+  let count = 0;
+  state.sortedWitnesses.forEach((witness) => {
+    if (selectedWitnessKey && witness.key !== selectedWitnessKey) {
+      return;
+    }
+
+    if (dualOnly && !witness.isDualChamber) {
+      return;
+    }
+
+    const nameLower = witness.nameLower || witness.name.toLowerCase();
+    if (query && !nameLower.includes(query)) {
+      return;
+    }
+
+    const hasMatchingHearing = witness.hearings.some((hearing) => hearingMatchesFilters(hearing, filters));
+    if (!hasMatchingHearing) {
+      return;
+    }
+
+    count += 1;
+  });
+
+  elements.uniqueWitnesses.textContent = count.toLocaleString();
 }
 
 function renderHearingsTable(hearings) {
@@ -584,7 +1047,7 @@ function renderHearingsTable(hearings) {
   if (!hearings.length) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 6;
+    cell.colSpan = 7;
     cell.className = 'empty-state';
     cell.textContent = 'No hearings match the current filters.';
     row.append(cell);
@@ -643,8 +1106,13 @@ function renderHearingsTable(hearings) {
     row.append(titleCell);
 
     const committeeCell = document.createElement('td');
-    committeeCell.textContent = hearing.committee || '—';
+    const committeeText = hearing.committee || (!hearing.subcommittee ? hearing.committeeOriginal : '');
+    committeeCell.textContent = committeeText || '—';
     row.append(committeeCell);
+
+    const subcommitteeCell = document.createElement('td');
+    subcommitteeCell.textContent = hearing.subcommittee || '—';
+    row.append(subcommitteeCell);
 
     const witnessesCell = document.createElement('td');
     if (!hearing.witnesses.length) {
@@ -716,6 +1184,10 @@ function describeFilters() {
     parts.push(`tag: ${tag}`);
   }
 
+  if (state.filters.witnessQuery) {
+    parts.push(`witness search: "${state.filters.witnessQuery}"`);
+  }
+
   if (startDate) {
     parts.push(`from ${formatDate(startDate)}`);
   }
@@ -742,6 +1214,34 @@ function formatChamber(chamber) {
 
 function nameToKey(name) {
   return name ? name.toLowerCase().replace(/\s+/g, ' ').trim() : '';
+}
+
+function witnessKeyForName(name) {
+  const normalised = normaliseNameKey(name);
+  if (normalised) {
+    return normalised;
+  }
+  return nameToKey(name);
+}
+
+function collectHearingsForWitnessQuery(query) {
+  const matches = [];
+  const seenIds = new Set();
+  state.sortedWitnesses.forEach((witness) => {
+    if (!witness.nameLower) {
+      witness.nameLower = witness.name.toLowerCase();
+    }
+    if (!witness.nameLower.includes(query)) {
+      return;
+    }
+    witness.hearings.forEach((hearing) => {
+      if (!seenIds.has(hearing.id)) {
+        seenIds.add(hearing.id);
+        matches.push(hearing);
+      }
+    });
+  });
+  return matches;
 }
 
 function formatDate(date) {
@@ -797,7 +1297,9 @@ function compareByKey(key, a, b) {
     case 'chamber':
       return compareStrings(formatChamber(a.chamber), formatChamber(b.chamber));
     case 'committee':
-      return compareStrings(a.committee, b.committee);
+      return compareStrings(getCommitteeValue(a), getCommitteeValue(b));
+    case 'subcommittee':
+      return compareStrings(a.subcommittee, b.subcommittee);
     case 'witnesses':
       return compareStrings(a.witnesses.join(' | '), b.witnesses.join(' | '));
     case 'tags':
@@ -890,7 +1392,7 @@ function showTableMessage(message) {
   tbody.innerHTML = '';
   const row = document.createElement('tr');
   const cell = document.createElement('td');
-  cell.colSpan = 6;
+  cell.colSpan = 7;
   cell.className = 'empty-state';
   cell.textContent = message;
   row.append(cell);
