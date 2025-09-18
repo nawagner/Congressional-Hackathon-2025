@@ -419,6 +419,96 @@ async function fetchDatabase(path) {
   return new Uint8Array(buffer);
 }
 
+function splitCommitteeName(raw) {
+  const text = typeof raw === 'string' ? raw.trim() : '';
+  if (!text) {
+    return { committee: '', subcommittee: '' };
+  }
+
+  const normalised = text.replace(/\s+/g, ' ');
+  const lower = normalised.toLowerCase();
+
+  const isCommittee = (value) => /committee/i.test(value);
+  const isSubcommittee = (value) => /subcommittee/i.test(value);
+
+  const result = { committee: '', subcommittee: '' };
+
+  // Patterns like "Subcommittee on Federal Lands (Committee on Natural Resources)".
+  const parenMatch = /^(.*?)(?:,\s*)?\(([^()]+)\)\s*$/.exec(normalised);
+  if (parenMatch) {
+    const outside = parenMatch[1].trim();
+    const inside = parenMatch[2].trim();
+    if (isSubcommittee(outside) && isCommittee(inside) && !isSubcommittee(inside)) {
+      result.subcommittee = outside;
+      result.committee = inside;
+      return result;
+    }
+    if (isCommittee(outside) && isSubcommittee(inside) && !isSubcommittee(outside)) {
+      result.committee = outside;
+      result.subcommittee = inside;
+      return result;
+    }
+  }
+
+  const commaMatch = /(.*?Committee[^,]*),\s*(Subcommittee.+)$/i.exec(normalised);
+  if (commaMatch) {
+    result.committee = commaMatch[1].trim();
+    result.subcommittee = commaMatch[2].trim();
+    return result;
+  }
+
+  const delimiterMatch =
+    /(.*?Committee[^-–—,:;]+)(?:\s*[-–—,:;]\s+|\s{2,})(Subcommittee.+)$/i.exec(normalised);
+  if (delimiterMatch) {
+    result.committee = delimiterMatch[1].trim();
+    result.subcommittee = delimiterMatch[2].trim();
+    return result;
+  }
+
+  const ofMatch = /(Subcommittee.+)\s+of\s+the\s+(.+Committee.+)/i.exec(normalised);
+  if (ofMatch) {
+    result.subcommittee = ofMatch[1].trim();
+    result.committee = ofMatch[2].trim();
+    return result;
+  }
+
+  if (lower.includes('subcommittee') && lower.includes('committee')) {
+    const subIndex = lower.indexOf('subcommittee');
+    const beforeSub = normalised.slice(0, subIndex).trim().replace(/[-–—,:;]+$/, '').trim();
+    const subPart = normalised.slice(subIndex).trim();
+    if (isCommittee(beforeSub) && isSubcommittee(subPart)) {
+      result.committee = beforeSub;
+      result.subcommittee = subPart;
+      return result;
+    }
+
+    const lastCommitteeIndex = lower.lastIndexOf('committee');
+    if (lastCommitteeIndex > subIndex) {
+      const possibleSub = normalised.slice(0, lastCommitteeIndex).trim();
+      const possibleCommittee = normalised.slice(lastCommitteeIndex).trim();
+      if (isSubcommittee(possibleSub) && !isSubcommittee(possibleCommittee)) {
+        result.subcommittee = possibleSub.replace(/[-–—,:;]+$/, '').trim();
+        result.committee = possibleCommittee;
+        return result;
+      }
+    }
+  }
+
+  if (isSubcommittee(normalised) && !isCommittee(normalised.replace(/subcommittee/gi, ''))) {
+    result.subcommittee = normalised;
+    return result;
+  }
+
+  result.committee = normalised;
+  return result;
+}
+
+function getCommitteeValue(hearing) {
+  if (!hearing) return '';
+  const candidate = hearing.committee || hearing.committeeOriginal || '';
+  return typeof candidate === 'string' ? candidate.trim() : '';
+}
+
 // Pull hearings and witnesses into JS objects for the UI to consume.
 function buildHearingsFromDatabase(db) {
   const hearingRows = selectAll(
@@ -440,27 +530,34 @@ function buildHearingsFromDatabase(db) {
     `,
   );
 
-  const hearings = hearingRows.map((row) => ({
-    id: Number(row.id),
-    chamber: (row.chamber || '').trim(),
-    sourceId: row.source_hearing_id ? String(row.source_hearing_id).trim() : null,
-    eventId: row.event_id !== null && row.event_id !== undefined ? Number(row.event_id) : null,
-    pageUrl: (row.url || '').trim(),
-    videoUrl: '',
-    title: (row.title || '').trim(),
-    date: row.date || '',
-    dateObj: parseIsoDate(row.date || ''),
-    time: row.time || '',
-    datetime: row.datetime || '',
-    location: (row.location || '').trim(),
-    committee: (row.committee || '').trim(),
-    tags: parseTagColumn(row.tags),
-    scrapedAt: row.scraped_at || '',
-    witnessListPdf: row.witness_list_pdf || '',
-    witnesses: [],
-    witnessDetails: [],
-    witnessKeys: [],
-  }));
+  const hearings = hearingRows.map((row) => {
+    const committeeOriginal = (row.committee || '').trim();
+    const { committee, subcommittee } = splitCommitteeName(committeeOriginal);
+
+    return {
+      id: Number(row.id),
+      chamber: (row.chamber || '').trim(),
+      sourceId: row.source_hearing_id ? String(row.source_hearing_id).trim() : null,
+      eventId: row.event_id !== null && row.event_id !== undefined ? Number(row.event_id) : null,
+      pageUrl: (row.url || '').trim(),
+      videoUrl: '',
+      title: (row.title || '').trim(),
+      date: row.date || '',
+      dateObj: parseIsoDate(row.date || ''),
+      time: row.time || '',
+      datetime: row.datetime || '',
+      location: (row.location || '').trim(),
+      committee,
+      subcommittee,
+      committeeOriginal,
+      tags: parseTagColumn(row.tags),
+      scrapedAt: row.scraped_at || '',
+      witnessListPdf: row.witness_list_pdf || '',
+      witnesses: [],
+      witnessDetails: [],
+      witnessKeys: [],
+    };
+  });
 
   attachWitnessesToHearings(hearings, witnessRows);
   return hearings;
@@ -717,7 +814,7 @@ function sortWitnesses(a, b) {
 
 function populateFilterOptions() {
   const committees = Array.from(
-    new Set(state.hearings.map((hearing) => hearing.committee).filter(Boolean)),
+    new Set(state.hearings.map((hearing) => getCommitteeValue(hearing)).filter(Boolean)),
   ).sort((a, b) => a.localeCompare(b));
 
   elements.committeeFilter.innerHTML = '';
@@ -875,7 +972,7 @@ function applyFilters() {
   }
 
   let filtered = baseHearings.filter((hearing) => {
-    if (filters.committee !== 'all' && hearing.committee !== filters.committee) {
+    if (filters.committee !== 'all' && getCommitteeValue(hearing) !== filters.committee) {
       return false;
     }
 
@@ -912,7 +1009,7 @@ function renderHearingsTable(hearings) {
   if (!hearings.length) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 6;
+    cell.colSpan = 7;
     cell.className = 'empty-state';
     cell.textContent = 'No hearings match the current filters.';
     row.append(cell);
@@ -971,8 +1068,13 @@ function renderHearingsTable(hearings) {
     row.append(titleCell);
 
     const committeeCell = document.createElement('td');
-    committeeCell.textContent = hearing.committee || '—';
+    const committeeText = hearing.committee || (!hearing.subcommittee ? hearing.committeeOriginal : '');
+    committeeCell.textContent = committeeText || '—';
     row.append(committeeCell);
+
+    const subcommitteeCell = document.createElement('td');
+    subcommitteeCell.textContent = hearing.subcommittee || '—';
+    row.append(subcommitteeCell);
 
     const witnessesCell = document.createElement('td');
     if (!hearing.witnesses.length) {
@@ -1157,7 +1259,9 @@ function compareByKey(key, a, b) {
     case 'chamber':
       return compareStrings(formatChamber(a.chamber), formatChamber(b.chamber));
     case 'committee':
-      return compareStrings(a.committee, b.committee);
+      return compareStrings(getCommitteeValue(a), getCommitteeValue(b));
+    case 'subcommittee':
+      return compareStrings(a.subcommittee, b.subcommittee);
     case 'witnesses':
       return compareStrings(a.witnesses.join(' | '), b.witnesses.join(' | '));
     case 'tags':
@@ -1250,7 +1354,7 @@ function showTableMessage(message) {
   tbody.innerHTML = '';
   const row = document.createElement('tr');
   const cell = document.createElement('td');
-  cell.colSpan = 6;
+  cell.colSpan = 7;
   cell.className = 'empty-state';
   cell.textContent = message;
   row.append(cell);
