@@ -4,6 +4,7 @@ const MAX_HEARING_COUNT_PER_WITNESS = 55;
 const SQL_JS_CDN_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/';
 
 const NAME_TITLE_TOKENS = new Set([
+  'the',
   'sen',
   'senator',
   'rep',
