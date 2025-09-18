@@ -239,10 +239,8 @@ async function initialise() {
 function attachEventListeners() {
   elements.witnessSearch.addEventListener('input', (event) => {
     state.filters.witnessQuery = event.target.value.trim();
-    const selectionChanged = renderWitnessList();
-    if (selectionChanged) {
-      applyFilters();
-    }
+    renderWitnessList();
+    applyFilters();
   });
 
   elements.committeeFilter.addEventListener('change', (event) => {
@@ -517,6 +515,7 @@ function attachWitnessesToHearings(hearings, witnessRows) {
     hearing.witnesses = uniqueNames;
     hearing.witnessDetails = uniqueDetails;
     hearing.witnessKeys = uniqueNames.map((name) => witnessKeyForName(name));
+    hearing.witnessNamesLower = uniqueNames.map((name) => name.toLowerCase());
   });
 }
 
@@ -797,6 +796,7 @@ function renderWitnessList() {
     if (match) {
       matches += 1;
       button.hidden = false;
+      button.style.display = '';
       button.setAttribute('aria-hidden', 'false');
       const isActive = state.selectedWitnessKey === witness.key;
       button.classList.toggle('active', isActive);
@@ -805,6 +805,7 @@ function renderWitnessList() {
       }
     } else {
       button.hidden = true;
+      button.style.display = 'none';
       button.setAttribute('aria-hidden', 'true');
       button.classList.remove('active');
     }
@@ -861,6 +862,7 @@ function createWitnessButton(witness) {
 
 function applyFilters() {
   const { hearings, filters, selectedWitnessKey } = state;
+  const witnessQuery = filters.witnessQuery ? filters.witnessQuery.toLowerCase() : '';
 
   let filtered = hearings.filter((hearing) => {
     if (filters.committee !== 'all' && hearing.committee !== filters.committee) {
@@ -877,6 +879,14 @@ function applyFilters() {
 
     if (filters.endDate && hearing.dateObj && hearing.dateObj > filters.endDate) {
       return false;
+    }
+
+    if (witnessQuery) {
+      const names = hearing.witnessNamesLower || hearing.witnesses.map((name) => name.toLowerCase());
+      const matchesQuery = names.some((name) => name.includes(witnessQuery));
+      if (!matchesQuery) {
+        return false;
+      }
     }
 
     return true;
@@ -1030,6 +1040,10 @@ function describeFilters() {
 
   if (tag !== 'all') {
     parts.push(`tag: ${tag}`);
+  }
+
+  if (state.filters.witnessQuery) {
+    parts.push(`witness search: "${state.filters.witnessQuery}"`);
   }
 
   if (startDate) {
