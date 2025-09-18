@@ -1,6 +1,155 @@
 const COMBINED_DB_PATH = 'hearings_combined.db';
+const EXCLUDED_LEGISLATORS_PATH = 'excluded_legislator_keys.json';
+const MAX_HEARING_COUNT_PER_WITNESS = 55;
 const SQL_JS_CDN_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/';
+
+const NAME_TITLE_TOKENS = new Set([
+  'the',
+  'sen',
+  'senator',
+  'rep',
+  'representative',
+  'delegate',
+  'commissioner',
+  'chair',
+  'chairman',
+  'chairwoman',
+  'secretary',
+  'acting',
+  'former',
+  'deputy',
+  'assistant',
+  'ranking',
+  'member',
+  'hon',
+  'honorable',
+  'mr',
+  'mrs',
+  'ms',
+  'miss',
+  'dr',
+  'prof',
+  'reverend',
+  'rev',
+  'sir',
+  'madam',
+  'mayor',
+  'governor',
+]);
+
+const NAME_SUFFIX_TOKENS = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v']);
+
+const LOCATION_KEYWORDS = new Set(['of', 'for', 'from']);
+
+const LOCATION_TOKENS = new Set([
+  'of',
+  'the',
+  'state',
+  'commonwealth',
+  'territory',
+  'district',
+  'columbia',
+  'washington',
+  'dc',
+  'united',
+  'states',
+  'america',
+  'at',
+  'large',
+  'puerto',
+  'rico',
+  'virgin',
+  'islands',
+  'northern',
+  'mariana',
+  'guam',
+  'samoa',
+  'american',
+  'alabama',
+  'alaska',
+  'arizona',
+  'arkansas',
+  'california',
+  'colorado',
+  'connecticut',
+  'delaware',
+  'florida',
+  'georgia',
+  'hawaii',
+  'idaho',
+  'illinois',
+  'indiana',
+  'iowa',
+  'kansas',
+  'kentucky',
+  'louisiana',
+  'maine',
+  'maryland',
+  'massachusetts',
+  'michigan',
+  'minnesota',
+  'mississippi',
+  'missouri',
+  'montana',
+  'nebraska',
+  'nevada',
+  'new',
+  'hampshire',
+  'jersey',
+  'mexico',
+  'york',
+  'north',
+  'carolina',
+  'dakota',
+  'south',
+  'ohio',
+  'oklahoma',
+  'oregon',
+  'pennsylvania',
+  'rhode',
+  'island',
+  'tennessee',
+  'texas',
+  'utah',
+  'vermont',
+  'virginia',
+  'west',
+  'wisconsin',
+  'wyoming',
+]);
+
+const NON_NAME_TOKENS = new Set([
+  'available',
+  'briefing',
+  'click',
+  'closing',
+  'committee',
+  'document',
+  'full',
+  'hearing',
+  'here',
+  'link',
+  'materials',
+  'opening',
+  'press',
+  'release',
+  'report',
+  'statement',
+  'submission',
+  'submitted',
+  'summary',
+  'testimony',
+  'transcript',
+  'video',
+  'webcast',
+  'written',
+]);
+
+const PARTY_AFFILIATION_REGEX = /\b(?:R|D|I|ID|IND|DEM|REP|GOP)\b\s*[-–]?\s*\(?[A-Z]{2}\)?\b/;
+const PARTY_WORD_REGEX = /\b(?:democrat|democratic|republican|independent|libertarian|green)\b/i;
+
 let sqlJsInstancePromise;
+let excludedLegislatorKeysPromise;
 
 const state = {
   hearings: [],
@@ -51,7 +200,10 @@ async function initialise() {
   attachEventListeners();
 
   try {
-    const SQL = await loadSqlJsInstance();
+    const [SQL, excludedLegislatorKeys] = await Promise.all([
+      loadSqlJsInstance(),
+      loadExcludedLegislatorKeys(),
+    ]);
     const databaseBytes = await fetchDatabase(COMBINED_DB_PATH);
     const db = new SQL.Database(databaseBytes);
 
@@ -69,7 +221,7 @@ async function initialise() {
     state.dateRange = computeDateRange(hearings);
     applyDateBounds();
 
-    state.witnessMap = buildWitnessMap(hearings);
+    state.witnessMap = buildWitnessMap(hearings, { excludedLegislatorKeys });
     state.sortedWitnesses = Array.from(state.witnessMap.values()).sort(sortWitnesses);
     state.witnessElements = new Map();
     state.witnessMessage = null;
@@ -88,6 +240,7 @@ function attachEventListeners() {
   elements.witnessSearch.addEventListener('input', (event) => {
     state.filters.witnessQuery = event.target.value.trim();
     renderWitnessList();
+    applyFilters();
   });
 
   elements.committeeFilter.addEventListener('change', (event) => {
@@ -142,6 +295,7 @@ function attachEventListeners() {
 
   if (elements.dualChamberToggle) {
     elements.dualChamberToggle.addEventListener('click', () => {
+      const previousSelectedKey = state.selectedWitnessKey;
       state.filters.dualChamberOnly = !state.filters.dualChamberOnly;
       if (state.filters.dualChamberOnly && state.selectedWitnessKey) {
         const selected = state.witnessMap.get(state.selectedWitnessKey);
@@ -150,8 +304,10 @@ function attachEventListeners() {
         }
       }
       updateDualChamberButton();
-      renderWitnessList();
-      applyFilters();
+      const selectionChanged = renderWitnessList();
+      if (selectionChanged || previousSelectedKey !== state.selectedWitnessKey) {
+        applyFilters();
+      }
     });
   }
 }
@@ -211,6 +367,47 @@ function loadSqlJsInstance() {
   });
 
   return sqlJsInstancePromise;
+}
+
+function loadExcludedLegislatorKeys() {
+  if (excludedLegislatorKeysPromise) {
+    return excludedLegislatorKeysPromise;
+  }
+
+  excludedLegislatorKeysPromise = fetch(EXCLUDED_LEGISLATORS_PATH, { cache: 'no-store' })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} while fetching ${EXCLUDED_LEGISLATORS_PATH}`);
+      }
+      return response.json();
+    })
+    .then((payload) => {
+      if (!Array.isArray(payload)) {
+        console.warn('Excluded legislator list is not an array; ignoring it.');
+        return new Set();
+      }
+
+      const keys = new Set();
+      payload.forEach((item) => {
+        if (typeof item !== 'string') return;
+        const normalised = normaliseNameKey(item);
+        if (!normalised) return;
+        keys.add(normalised);
+        if (normalised.includes('-')) {
+          keys.add(normalised.replace(/-/g, ' '));
+        }
+        if (normalised.includes("'")) {
+          keys.add(normalised.replace(/'/g, ''));
+        }
+      });
+      return keys;
+    })
+    .catch((error) => {
+      console.warn('Failed to load excluded legislator list; continuing without it.', error);
+      return new Set();
+    });
+
+  return excludedLegislatorKeysPromise;
 }
 
 async function fetchDatabase(path) {
@@ -306,7 +503,7 @@ function attachWitnessesToHearings(hearings, witnessRows) {
     const uniqueDetails = [];
 
     hearing.witnesses.forEach((name, index) => {
-      const key = nameToKey(name);
+      const key = witnessKeyForName(name);
       if (!key || seen.has(key)) {
         return;
       }
@@ -317,7 +514,7 @@ function attachWitnessesToHearings(hearings, witnessRows) {
 
     hearing.witnesses = uniqueNames;
     hearing.witnessDetails = uniqueDetails;
-    hearing.witnessKeys = uniqueNames.map((name) => nameToKey(name));
+    hearing.witnessKeys = uniqueNames.map((name) => witnessKeyForName(name));
   });
 }
 
@@ -357,7 +554,8 @@ function parseIsoDate(value) {
   return new Date(year, month - 1, day);
 }
 
-function buildWitnessMap(hearings) {
+function buildWitnessMap(hearings, options = {}) {
+  const { excludedLegislatorKeys = new Set() } = options;
   const map = new Map();
 
   hearings.forEach((hearing) => {
@@ -395,9 +593,119 @@ function buildWitnessMap(hearings) {
 
   map.forEach((entry) => {
     entry.isDualChamber = entry.chambers.size >= 2;
+    entry.nameLower = entry.name.toLowerCase();
   });
 
-  return map;
+  const filtered = new Map();
+  map.forEach((entry) => {
+    if (shouldIncludeWitness(entry, excludedLegislatorKeys)) {
+      filtered.set(entry.key, entry);
+    }
+  });
+
+  return filtered;
+}
+
+function shouldIncludeWitness(entry, excludedLegislatorKeys) {
+  if (!entry) return false;
+  if (entry.count > MAX_HEARING_COUNT_PER_WITNESS) {
+    return false;
+  }
+
+  if (!hasFirstAndLastName(entry.name)) {
+    return false;
+  }
+
+  if (containsPartyAffiliation(entry.name)) {
+    return false;
+  }
+
+  const normalised = normaliseNameKey(entry.name);
+  if (normalised && excludedLegislatorKeys.has(normalised)) {
+    return false;
+  }
+
+  return true;
+}
+
+function hasFirstAndLastName(name) {
+  const normalised = normaliseNameKey(name);
+  if (!normalised) return false;
+  const parts = normalised.split(' ').filter(Boolean);
+  if (containsNonNameTokens(parts)) {
+    return false;
+  }
+  if (parts.length < 2) {
+    return false;
+  }
+  const first = parts[0];
+  const last = parts[parts.length - 1];
+  return first.length > 1 && last.length > 1;
+}
+
+function normaliseNameKey(rawName) {
+  if (!rawName || typeof rawName !== 'string') {
+    return '';
+  }
+
+  let text = rawName;
+  text = text.replace(/\([^)]*\)/g, ' ');
+  text = text.replace(/\b[RID]-[A-Z]{2}\b/g, ' ');
+  const normalized = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const cleaned = normalized.replace(/[^A-Za-z\s'-]/g, ' ');
+  let parts = cleaned
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter((token) => token.length > 1)
+    .filter((token) => !NAME_TITLE_TOKENS.has(token) && !NAME_SUFFIX_TOKENS.has(token));
+  parts = stripTrailingLocationTokens(parts);
+
+  return parts.join(' ');
+}
+
+function stripTrailingLocationTokens(tokens) {
+  if (!tokens.length) {
+    return tokens;
+  }
+
+  for (let index = 0; index < tokens.length; index += 1) {
+    const token = tokens[index];
+    if (!LOCATION_KEYWORDS.has(token)) {
+      continue;
+    }
+
+    const tail = tokens.slice(index + 1);
+    if (!tail.length) {
+      continue;
+    }
+
+    if (tail.every((part) => LOCATION_TOKENS.has(part))) {
+      return tokens.slice(0, index);
+    }
+  }
+
+  return tokens;
+}
+
+function containsNonNameTokens(tokens) {
+  return tokens.some((token) => NON_NAME_TOKENS.has(token));
+}
+
+function containsPartyAffiliation(text) {
+  if (!text || typeof text !== 'string') {
+    return false;
+  }
+
+  if (PARTY_AFFILIATION_REGEX.test(text.toUpperCase())) {
+    return true;
+  }
+
+  if (PARTY_WORD_REGEX.test(text) && /\([A-Z]{2}\)/.test(text.toUpperCase())) {
+    return true;
+  }
+
+  return false;
 }
 
 function sortWitnesses(a, b) {
@@ -438,13 +746,19 @@ function populateFilterOptions() {
 
 function renderWitnessList() {
   const container = elements.witnessList;
-  if (!container) return;
+  if (!container) return false;
+
+  let selectionChanged = false;
 
   if (!state.sortedWitnesses.length) {
     container.textContent = 'No witnesses found.';
     state.witnessElements = new Map();
     state.witnessMessage = null;
-    return;
+    if (state.selectedWitnessKey) {
+      state.selectedWitnessKey = null;
+      selectionChanged = true;
+    }
+    return selectionChanged;
   }
 
   if (state.witnessElements.size === 0) {
@@ -482,6 +796,7 @@ function renderWitnessList() {
     if (match) {
       matches += 1;
       button.hidden = false;
+      button.style.display = '';
       button.setAttribute('aria-hidden', 'false');
       const isActive = state.selectedWitnessKey === witness.key;
       button.classList.toggle('active', isActive);
@@ -490,6 +805,7 @@ function renderWitnessList() {
       }
     } else {
       button.hidden = true;
+      button.style.display = 'none';
       button.setAttribute('aria-hidden', 'true');
       button.classList.remove('active');
     }
@@ -512,9 +828,10 @@ function renderWitnessList() {
 
   if (state.selectedWitnessKey && !selectedVisible) {
     state.selectedWitnessKey = null;
-    applyFilters();
-    return;
+    selectionChanged = true;
   }
+
+  return selectionChanged;
 }
 
 function createWitnessButton(witness) {
@@ -545,8 +862,19 @@ function createWitnessButton(witness) {
 
 function applyFilters() {
   const { hearings, filters, selectedWitnessKey } = state;
+  const witnessQuery = filters.witnessQuery ? filters.witnessQuery.toLowerCase() : '';
 
-  let filtered = hearings.filter((hearing) => {
+  let baseHearings;
+  if (selectedWitnessKey) {
+    const entry = state.witnessMap.get(selectedWitnessKey);
+    baseHearings = entry ? entry.hearings : [];
+  } else if (witnessQuery) {
+    baseHearings = collectHearingsForWitnessQuery(witnessQuery);
+  } else {
+    baseHearings = hearings;
+  }
+
+  let filtered = baseHearings.filter((hearing) => {
     if (filters.committee !== 'all' && hearing.committee !== filters.committee) {
       return false;
     }
@@ -716,6 +1044,10 @@ function describeFilters() {
     parts.push(`tag: ${tag}`);
   }
 
+  if (state.filters.witnessQuery) {
+    parts.push(`witness search: "${state.filters.witnessQuery}"`);
+  }
+
   if (startDate) {
     parts.push(`from ${formatDate(startDate)}`);
   }
@@ -742,6 +1074,34 @@ function formatChamber(chamber) {
 
 function nameToKey(name) {
   return name ? name.toLowerCase().replace(/\s+/g, ' ').trim() : '';
+}
+
+function witnessKeyForName(name) {
+  const normalised = normaliseNameKey(name);
+  if (normalised) {
+    return normalised;
+  }
+  return nameToKey(name);
+}
+
+function collectHearingsForWitnessQuery(query) {
+  const matches = [];
+  const seenIds = new Set();
+  state.sortedWitnesses.forEach((witness) => {
+    if (!witness.nameLower) {
+      witness.nameLower = witness.name.toLowerCase();
+    }
+    if (!witness.nameLower.includes(query)) {
+      return;
+    }
+    witness.hearings.forEach((hearing) => {
+      if (!seenIds.has(hearing.id)) {
+        seenIds.add(hearing.id);
+        matches.push(hearing);
+      }
+    });
+  });
+  return matches;
 }
 
 function formatDate(date) {
