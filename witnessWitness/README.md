@@ -36,6 +36,16 @@ If running from the `witnessWitness` folder, follow these steps:
 
 The web app is a simple static page (`index.html`) that queries the combined SQLite database (`hearings_combined.db`).  It allows you to search for witnesses, filter hearings by date range and keywords, and view details about each hearing.
 
+#### Witness filtering rules
+
+The witness roster intentionally omits a few categories so results focus on expert testimony:
+
+- Anyone tied to more than 55 hearings (usually clerical testifiers or template records).
+- Entries without a usable first and last name after normalizing titles (`Hon.`, `Dr.`, etc.), suffixes, or all-caps formatting.
+- Current members of the House or Senate, plus all living former U.S. Senators. These names are stored in `excluded_legislator_keys.json` and matched using normalised keys, including hyphen/apostrophe variants.
+
+To refresh the exclusions, rebuild `excluded_legislator_keys.json` from the latest rosters before serving the UI.
+
 Some example searches to try:
 
 |      |
