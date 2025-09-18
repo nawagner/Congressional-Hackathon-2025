@@ -225,7 +225,6 @@ async function initialise() {
     state.sortedWitnesses = Array.from(state.witnessMap.values()).sort(sortWitnesses);
     state.witnessElements = new Map();
     state.witnessMessage = null;
-    elements.uniqueWitnesses.textContent = state.sortedWitnesses.length.toLocaleString();
 
     populateFilterOptions();
     renderWitnessList();
@@ -307,6 +306,8 @@ function attachEventListeners() {
       const selectionChanged = renderWitnessList();
       if (selectionChanged || previousSelectedKey !== state.selectedWitnessKey) {
         applyFilters();
+      } else {
+        updateUniqueWitnessCount();
       }
     });
   }
@@ -507,6 +508,27 @@ function getCommitteeValue(hearing) {
   if (!hearing) return '';
   const candidate = hearing.committee || hearing.committeeOriginal || '';
   return typeof candidate === 'string' ? candidate.trim() : '';
+}
+
+function hearingMatchesFilters(hearing, filters) {
+  if (!hearing) return false;
+  if (filters.committee !== 'all' && getCommitteeValue(hearing) !== filters.committee) {
+    return false;
+  }
+
+  if (filters.tag !== 'all' && !hearing.tags.includes(filters.tag)) {
+    return false;
+  }
+
+  if (filters.startDate && hearing.dateObj && hearing.dateObj < filters.startDate) {
+    return false;
+  }
+
+  if (filters.endDate && hearing.dateObj && hearing.dateObj > filters.endDate) {
+    return false;
+  }
+
+  return true;
 }
 
 // Pull hearings and witnesses into JS objects for the UI to consume.
@@ -971,25 +993,7 @@ function applyFilters() {
     baseHearings = hearings;
   }
 
-  let filtered = baseHearings.filter((hearing) => {
-    if (filters.committee !== 'all' && getCommitteeValue(hearing) !== filters.committee) {
-      return false;
-    }
-
-    if (filters.tag !== 'all' && !hearing.tags.includes(filters.tag)) {
-      return false;
-    }
-
-    if (filters.startDate && hearing.dateObj && hearing.dateObj < filters.startDate) {
-      return false;
-    }
-
-    if (filters.endDate && hearing.dateObj && hearing.dateObj > filters.endDate) {
-      return false;
-    }
-
-    return true;
-  });
+  let filtered = baseHearings.filter((hearing) => hearingMatchesFilters(hearing, filters));
 
   if (selectedWitnessKey) {
     filtered = filtered.filter((hearing) => hearing.witnessKeys.includes(selectedWitnessKey));
@@ -999,7 +1003,41 @@ function applyFilters() {
   state.filteredHearings = sortedHearings;
   renderHearingsTable(sortedHearings);
   updateSummary(sortedHearings);
+  updateUniqueWitnessCount();
   refreshSortIndicators();
+}
+
+function updateUniqueWitnessCount() {
+  if (!elements.uniqueWitnesses) return;
+
+  const { filters, selectedWitnessKey } = state;
+  const query = filters.witnessQuery ? filters.witnessQuery.toLowerCase() : '';
+  const dualOnly = filters.dualChamberOnly;
+
+  let count = 0;
+  state.sortedWitnesses.forEach((witness) => {
+    if (selectedWitnessKey && witness.key !== selectedWitnessKey) {
+      return;
+    }
+
+    if (dualOnly && !witness.isDualChamber) {
+      return;
+    }
+
+    const nameLower = witness.nameLower || witness.name.toLowerCase();
+    if (query && !nameLower.includes(query)) {
+      return;
+    }
+
+    const hasMatchingHearing = witness.hearings.some((hearing) => hearingMatchesFilters(hearing, filters));
+    if (!hasMatchingHearing) {
+      return;
+    }
+
+    count += 1;
+  });
+
+  elements.uniqueWitnesses.textContent = count.toLocaleString();
 }
 
 function renderHearingsTable(hearings) {
