@@ -139,6 +139,9 @@ const NON_NAME_TOKENS = new Set([
   'written',
 ]);
 
+const PARTY_AFFILIATION_REGEX = /\b(?:R|D|I|ID|IND|DEM|REP|GOP)\b\s*[-–]?\s*\(?[A-Z]{2}\)?\b/;
+const PARTY_WORD_REGEX = /\b(?:democrat|democratic|republican|independent|libertarian|green)\b/i;
+
 let sqlJsInstancePromise;
 let excludedLegislatorKeysPromise;
 
@@ -602,6 +605,10 @@ function shouldIncludeWitness(entry, excludedLegislatorKeys) {
     return false;
   }
 
+  if (containsPartyAffiliation(entry.name)) {
+    return false;
+  }
+
   const normalised = normaliseNameKey(entry.name);
   if (normalised && excludedLegislatorKeys.has(normalised)) {
     return false;
@@ -672,6 +679,22 @@ function stripTrailingLocationTokens(tokens) {
 
 function containsNonNameTokens(tokens) {
   return tokens.some((token) => NON_NAME_TOKENS.has(token));
+}
+
+function containsPartyAffiliation(text) {
+  if (!text || typeof text !== 'string') {
+    return false;
+  }
+
+  if (PARTY_AFFILIATION_REGEX.test(text.toUpperCase())) {
+    return true;
+  }
+
+  if (PARTY_WORD_REGEX.test(text) && /\([A-Z]{2}\)/.test(text.toUpperCase())) {
+    return true;
+  }
+
+  return false;
 }
 
 function sortWitnesses(a, b) {
